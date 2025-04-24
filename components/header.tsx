@@ -21,50 +21,55 @@ export function SiteHeader() {
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-4" : "bg-transparent py-6"
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-6" : "bg-transparent py-6"
                 }`}
         >
-            <div className="container mx-auto px-4 flex items-center justify-between">
-                <Link href="/" className="flex items-center">
-                    <Image
-                        src="/bunader-logo"
-                        alt="Bunader Logo"
-                        width={32}
-                        height={32}
-                        className="h-20 w-80"
-                    />
-                </Link>
+            <div className="relative container mx-auto flex items-center justify-between px-2">
+                <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+                    <Link href="/" className="flex items-center">
+                        <Image
+                            src="/bunader-logo.png"
+                            alt="Bunader Logo"
+                            width={180}
+                            height={180}
+                        />
+                    </Link>
+                </div>
 
-                <nav className="hidden md:flex items-center gap-8">
+                {/* Contenido del header */}
+                <nav className="hidden md:flex items-center gap-6 ml-auto">
                     <Link
                         href="/"
-                        className={`text-lg font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Inicio
                     </Link>
                     <Link
                         href="/properties"
-                        className={`text-lg font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Propiedades
                     </Link>
                     <Link
                         href="/about"
-                        className={`text-lg font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Nosotros
                     </Link>
                     <Link
                         href="/contact"
-                        className={`text-lg font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Contacto
                     </Link>
-                    <Button className="bg-red-600 hover:bg-red-700 ml-4">Publica Tu Propiedad</Button>
+                    <Link
+                        href="#">
+                        <Button className="bg-red-600 hover:bg-red-700 ml-4 text-sm">Publica Tu Propiedad</Button>
+                    </Link>
                 </nav>
 
                 <Button
