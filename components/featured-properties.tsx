@@ -103,7 +103,7 @@ export function FeaturedProperties() {
                     <div>
                         <h2 className="text-5xl font-bold mb-4">Propiedades Destacadas</h2>
                         <p className="text-xl text-gray-600 max-w-2xl">
-                            Descubre nuestra selección de propiedades premium disponibles ahora mismo.
+                            Descubre nuestra selección de propiedades disponibles ahora mismo.
                         </p>
                     </div>
                     <div className="flex gap-2">
