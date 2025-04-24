@@ -19,20 +19,19 @@ export function SiteHeader() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    // Determinar si el header debe tener estilo de "scrolled"
+    const shouldShowScrolledStyle = isScrolled || isMenuOpen
+
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md py-6" : "bg-transparent py-6"
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${shouldShowScrolledStyle ? "bg-white shadow-md py-6" : "bg-transparent py-6"
                 }`}
         >
             <div className="relative container mx-auto flex items-center justify-between px-2">
-                <div className="absolute left-0 top-1/2 transform -translate-y-1/2">
+                {/* Logo - posicionado a la izquierda en desktop, centrado en móvil */}
+                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-20">
                     <Link href="/" className="flex items-center">
-                        <Image
-                            src="/bunader-logo.png"
-                            alt="Bunader Logo"
-                            width={180}
-                            height={180}
-                        />
+                        <Image src="/bunader-logo.png" alt="Bunader Logo" width={180} height={180} />
                     </Link>
                 </div>
 
@@ -40,42 +39,42 @@ export function SiteHeader() {
                 <nav className="hidden md:flex items-center gap-6 ml-auto">
                     <Link
                         href="/"
-                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Inicio
                     </Link>
                     <Link
                         href="/properties"
-                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Propiedades
                     </Link>
                     <Link
                         href="/about"
-                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Nosotros
                     </Link>
                     <Link
                         href="/contact"
-                        className={`text-base font-medium hover:text-red-600 transition-colors ${isScrolled ? "text-gray-800" : "text-white"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Contacto
                     </Link>
-                    <Link
-                        href="#">
+                    <Link href="#">
                         <Button className="bg-red-600 hover:bg-red-700 ml-4 text-sm">Publica Tu Propiedad</Button>
                     </Link>
                 </nav>
 
+                {/* Botón de menú móvil - posicionado a la derecha */}
                 <Button
-                    variant={isScrolled ? "outline" : "ghost"}
+                    variant={shouldShowScrolledStyle ? "outline" : "ghost"}
                     size="icon"
-                    className={`md:hidden ${!isScrolled && "text-white hover:bg-white/10"}`}
+                    className={`md:hidden ml-auto ${!shouldShowScrolledStyle && "text-white hover:bg-white/10"}`}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
                     {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
