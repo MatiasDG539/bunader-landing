@@ -27,7 +27,7 @@ export function BrowseWebsiteSection() {
                     <div className="bg-white p-6 flex flex-col items-center text-center">
                         <div className="relative w-full h-[200px] mb-6">
                             <Image
-                                src="https://images.unsplash.com/photo-1582643381669-c05be8b9a81f?q=80&w=2070&auto=format&fit=crop"
+                                src="https://www.caminodelosjesuitas.com/wp-content/uploads/2023/06/18_Tucuman-Casa-Historica-de-la-Independencia.jpg"
                                 alt="Edificio histórico"
                                 fill
                                 className="object-cover"
