@@ -1,6 +1,9 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight } from "lucide-react"
+import { ArrowDown } from "lucide-react"
+import Link from "next/link";
 
 export function HeroSection() {
     return (
@@ -23,21 +26,18 @@ export function HeroSection() {
                         No solo encontramos casas, encontramos hogares. Deja que nuestros expertos te guíen en tu camino para
                         encontrar el lugar perfecto.
                     </p>
-                    <div className="flex flex-wrap gap-4">
-                        <Button size="lg" className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6">
-                            Explorar Propiedades
-                        </Button>
-                        <Button size="lg" className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6">
-                            Contáctanos
-                        </Button>
-                    </div>
                 </div>
             </div>
 
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-                <Button variant="ghost" size="lg" className="text-white hover:bg-white/10 group">
-                    Desplázate Abajo <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
+                <Link href="#about">
+                    <Button variant="ghost" size="lg" className="text-white text-md hover:bg-white/10 group">
+                        Desplázate Abajo
+                        <ArrowDown
+                            className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform animate-bounce"
+                        />
+                    </Button>
+                </Link>
             </div>
         </section>
     )

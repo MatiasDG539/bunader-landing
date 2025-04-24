@@ -3,28 +3,28 @@ import { Button } from "@/components/ui/button"
 
 export function AboutSection() {
     return (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
+        <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
                 <div className="order-2 lg:order-1">
                     <h2 className="text-5xl font-bold mb-8">
-                        Sobre <span className="text-red-600">Prime</span>Estate
+                        Sobre <span className="text-red-600">Bunader</span>
                     </h2>
                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                        Durante más de 15 años, hemos sido más que simples agentes inmobiliarios - hemos sido asesores de confianza,
-                        vecinos y amigos para innumerables familias en nuestra comunidad. Nuestro enfoque es simple: primero
-                        escuchamos, entendemos tus necesidades y luego te guiamos en cada paso de tu viaje inmobiliario.
+                        Durante más de 20 años, hemos sido más que simples agentes inmobiliarios - hemos sido asesores de confianza,
+                        vecinos y amigos para innumerables familias. Nuestro enfoque es simple: primero
+                        escuchamos a nuestros clientes, entendemos sus necesidades y luego los guiamos en cada paso de su viaje inmobiliario.
                     </p>
                     <div className="grid grid-cols-2 gap-8 mb-8">
                         <div>
                             <h3 className="text-3xl font-bold text-red-600 mb-2">350+</h3>
-                            <p className="text-gray-600">Propiedades Vendidas</p>
+                            <p className="text-gray-600">Propiedades Vendidas/Alquiladas</p>
                         </div>
                         <div>
-                            <h3 className="text-3xl font-bold text-red-600 mb-2">98%</h3>
-                            <p className="text-gray-600">Satisfacción del Cliente</p>
+                            <h3 className="text-3xl font-bold text-red-600 mb-2">100%</h3>
+                            <p className="text-gray-600">Acompañamiento al Cliente</p>
                         </div>
                         <div>
-                            <h3 className="text-3xl font-bold text-red-600 mb-2">15+</h3>
+                            <h3 className="text-3xl font-bold text-red-600 mb-2">20+</h3>
                             <p className="text-gray-600">Años de Experiencia</p>
                         </div>
                         <div>
