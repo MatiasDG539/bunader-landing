@@ -3,7 +3,7 @@ import { SiteFooter } from "@/components/footer";
 import { HeroSection } from "@/components/home/hero-section";
 import { AboutSection } from "@/components/home/about-section";
 import { FeaturedProperties } from "@/components/home/featured-properties";
-import { BrowseWebsiteSection } from "@/components/home/browse-website-section";
+// import { BrowseWebsiteSection } from "@/components/home/browse-website-section";
 import { TestimonialsSection } from "@/components/home/reviews-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { ValuesSection } from "@/components/home/values-section";
