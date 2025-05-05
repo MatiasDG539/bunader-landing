@@ -7,7 +7,7 @@ export function ValuesSection() {
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-4xl font-bold mb-6">Nuestros Valores</h2>
                     <p className="text-lg text-gray-600">
-                        En Bunader, creemos que encontrar un hogar es una de las decisiones más importantes en la vida. Por eso, nos
+                        En Bunader Negocios Inmobiliarios, creemos que encontrar el lugar adecuado es una de las decisiones más importantes en la vida. Por eso, nos
                         guiamos por valores que ponen a las personas en el centro de todo lo que hacemos.
                     </p>
                 </div>
