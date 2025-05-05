@@ -6,6 +6,7 @@ import { FeaturedProperties } from "@/components/featured-properties";
 import { BrowseWebsiteSection } from "@/components/browse-website-section";
 import { TestimonialsSection } from "@/components/reviews-section";
 import { ContactSection } from "@/components/contact-section";
+import { ValuesSection } from "@/components/values-section";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <AboutSection />
+        <ValuesSection />
         <BrowseWebsiteSection />
         <FeaturedProperties />
         <TestimonialsSection />

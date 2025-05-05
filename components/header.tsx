@@ -19,24 +19,21 @@ export function SiteHeader() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
-    // Determinar si el header debe tener estilo de "scrolled"
     const shouldShowScrolledStyle = isScrolled || isMenuOpen
 
     return (
         <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${shouldShowScrolledStyle ? "bg-white shadow-md py-6" : "bg-transparent py-6"
+            className={`fixed top-0 left-0 right-0 z-50 ${shouldShowScrolledStyle ? "bg-white shadow-md py-6" : "bg-transparent py-6"
                 }`}
         >
             <div className="relative container mx-auto flex items-center justify-between px-2">
-                {/* Logo - posicionado a la izquierda en desktop, centrado en móvil */}
-                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-20">
+                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-40">
                     <Link href="/" className="flex items-center">
                         <Image src="/bunader-logo.png" alt="Bunader Logo" width={180} height={180} />
                     </Link>
                 </div>
 
-                {/* Contenido del header */}
-                <nav className="hidden md:flex items-center gap-6 ml-auto">
+                <nav className="hidden md:flex items-center gap-6 ml-auto mr-10">
                     <Link
                         href="/"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
@@ -66,18 +63,17 @@ export function SiteHeader() {
                         Contacto
                     </Link>
                     <Link href="#">
-                        <Button className="bg-red-600 hover:bg-red-700 ml-4 text-sm">Publica Tu Propiedad</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 ml-4 text-sm cursor-pointer">Publica Tu Propiedad</Button>
                     </Link>
                 </nav>
 
-                {/* Botón de menú móvil - posicionado a la derecha */}
                 <Button
                     variant={shouldShowScrolledStyle ? "outline" : "ghost"}
                     size="icon"
-                    className={`md:hidden ml-auto ${!shouldShowScrolledStyle && "text-white hover:bg-white/10"}`}
+                    className={`md:hidden ml-auto ${!shouldShowScrolledStyle ? "text-white hover:bg-white/10" : "text-black"}`}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6 text-black"/>}
                     <span className="sr-only">Alternar menú</span>
                 </Button>
             </div>

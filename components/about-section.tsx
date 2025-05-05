@@ -14,25 +14,13 @@ export function AboutSection() {
                         vecinos y amigos para innumerables familias. Nuestro enfoque es simple: primero
                         escuchamos a nuestros clientes, entendemos sus necesidades y luego los guiamos en cada paso de su viaje inmobiliario.
                     </p>
-                    <div className="grid grid-cols-2 gap-8 mb-8">
-                        <div>
-                            <h3 className="text-3xl font-bold text-red-600 mb-2">350+</h3>
-                            <p className="text-gray-600">Propiedades Vendidas/Alquiladas</p>
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold text-red-600 mb-2">100%</h3>
-                            <p className="text-gray-600">Acompañamiento al Cliente</p>
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold text-red-600 mb-2">20+</h3>
-                            <p className="text-gray-600">Años de Experiencia</p>
-                        </div>
-                        <div>
-                            <h3 className="text-3xl font-bold text-red-600 mb-2">24/7</h3>
-                            <p className="text-gray-600">Atención al Cliente</p>
-                        </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Sobre Nosotros</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Nuestro blog</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Trabaja con nosotros</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Sin designar</Button>
                     </div>
-                    <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6">Conoce Más Sobre Nosotros</Button>
                 </div>
                 <div className="order-1 lg:order-2 relative">
                     <div className="relative h-[500px] w-full rounded-lg overflow-hidden shadow-2xl">
