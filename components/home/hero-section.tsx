@@ -20,10 +20,10 @@ export function HeroSection() {
             <div className="absolute inset-0 flex flex-col justify-center items-start px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
                 <div className="max-w-3xl">
                     <h1 className="text-xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-wide">
-                        Encontra Tu Casa Soñada Con <span className="text-red-600">Bunader</span>
+                        Encontrá Tu Lugar Soñado Con <span className="text-red-600">Bunader</span>
                     </h1>
                     <p className="text-xl text-white/90 mb-8 max-w-2xl font-semibold">
-                        Tu socio confiable en cada etapa de tu viaje inmobiliario. Transformamos tu experiencia en bienes raíces.
+                        Tu socio confiable en cada etapa de tu viaje inmobiliario. Encargados de transformar tu experiencia en bienes raíces.
                     </p>
                 </div>
             </div>

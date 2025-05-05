@@ -1,12 +1,12 @@
 import { SiteHeader } from "@/components/header";
 import { SiteFooter } from "@/components/footer";
-import { HeroSection } from "@/components/hero-section";
-import { AboutSection } from "@/components/about-section";
-import { FeaturedProperties } from "@/components/featured-properties";
-import { BrowseWebsiteSection } from "@/components/browse-website-section";
-import { TestimonialsSection } from "@/components/reviews-section";
-import { ContactSection } from "@/components/contact-section";
-import { ValuesSection } from "@/components/values-section";
+import { HeroSection } from "@/components/home/hero-section";
+import { AboutSection } from "@/components/home/about-section";
+import { FeaturedProperties } from "@/components/home/featured-properties";
+import { BrowseWebsiteSection } from "@/components/home/browse-website-section";
+import { TestimonialsSection } from "@/components/home/reviews-section";
+import { ContactSection } from "@/components/home/contact-section";
+import { ValuesSection } from "@/components/home/values-section";
 
 export default function Home() {
   return (

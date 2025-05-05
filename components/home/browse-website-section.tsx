@@ -8,7 +8,6 @@ export function BrowseWebsiteSection() {
                 <h2 className="text-3xl font-bold mb-12 text-center">RECORRÉ NUESTRA WEB</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Appraisals Column */}
                     <div className="bg-white p-6 flex flex-col items-center text-center">
                         <div className="relative w-full h-[200px] mb-6">
                             <Image
@@ -23,7 +22,6 @@ export function BrowseWebsiteSection() {
                         <Button className="bg-black hover:bg-gray-800 text-white">Click Aquí</Button>
                     </div>
 
-                    {/* Heritage Column */}
                     <div className="bg-white p-6 flex flex-col items-center text-center">
                         <div className="relative w-full h-[200px] mb-6">
                             <Image
@@ -38,7 +36,6 @@ export function BrowseWebsiteSection() {
                         <Button className="bg-black hover:bg-gray-800 text-white">Click Aquí</Button>
                     </div>
 
-                    {/* Photography Column */}
                     <div className="bg-white p-6 flex flex-col items-center text-center">
                         <div className="relative w-full h-[200px] mb-6">
                             <Image
