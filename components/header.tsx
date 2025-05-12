@@ -42,19 +42,62 @@ export function SiteHeader() {
                         Inicio
                     </Link>
                     <Link
-                        href="/properties"
-                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
-                            }`}
-                    >
-                        Propiedades
-                    </Link>
-                    <Link
                         href="/about"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
                         Nosotros
                     </Link>
+                    <div className="relative group">
+                        <Link
+                            href="/properties"
+                            className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                                } flex items-center gap-1`}
+                        >
+                            Propiedades
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform group-hover:rotate-180">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </Link>
+                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div className="py-1">
+                                <Link href="/properties/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                    En Venta
+                                </Link>
+                                <Link href="/properties/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                    En Alquiler
+                                </Link>
+                                <Link href="/properties/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                    Proyectos Nuevos
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="relative group">
+                        <Link
+                            href="/services"
+                            className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                                } flex items-center gap-1`}
+                        >
+                            Servicios
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform group-hover:rotate-180">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </Link>
+                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div className="py-1">
+                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                    Asesoramiento
+                                </Link>
+                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                    Tasaciones
+                                </Link>
+                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                    Cobranzas
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
                     <Link
                         href="/contact"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
@@ -73,7 +116,7 @@ export function SiteHeader() {
                     className={`md:hidden ml-auto ${!shouldShowScrolledStyle ? "text-white hover:bg-white/10" : "text-black"}`}
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                 >
-                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6 text-black"/>}
+                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6 text-black" />}
                     <span className="sr-only">Alternar menú</span>
                 </Button>
             </div>
