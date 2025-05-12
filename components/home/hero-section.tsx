@@ -26,6 +26,41 @@ export function HeroSection() {
                         Tu socio confiable en cada etapa de tu viaje inmobiliario. Encargados de transformar tu experiencia en bienes raíces.
                     </p>
                 </div>
+
+                <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-4">
+                    <div className="grid grid-cols-2 sm:contents gap-4">
+                        <Link href="/#" className="col-span-1">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                                Quiero Comprar
+                            </Button>
+                        </Link>
+
+                        <Link href="/#" className="col-span-1">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                                Quiero Vender
+                            </Button>
+                        </Link>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 sm:contents gap-4">
+                        <Link href="/#" className="col-span-1">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                                Quiero Alquilar
+                            </Button>
+                        </Link>
+
+                        <Link href="/#" className="col-span-1">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                                <span className="sm:hidden whitespace-normal text-center leading-tight">
+                                    Invertir en<br />el exterior
+                                </span>
+                                <span className="hidden sm:inline">
+                                    Invertir en el exterior
+                                </span>
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
             </div>
 
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
