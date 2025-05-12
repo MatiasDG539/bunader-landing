@@ -5,10 +5,10 @@ export function AboutSection() {
     return (
         <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
+                <div className="order-2 lg:order-1 flex flex-col justify-start -mt-38">
+                    {/* <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
                         Sobre <span className="text-red-600 block mt-1">Bunader Negocios Inmobiliarios</span>
-                    </h2>
+                    </h2> */} {/*Not sure*/}
                     <p className="text-xl text-gray-600 mb-8 leading-relaxed">
                         Durante más de 20 años, hemos sido más que simples agentes inmobiliarios - hemos sido asesores de confianza,
                         vecinos y amigos para innumerables familias. Nuestro enfoque es simple: primero
