@@ -41,7 +41,7 @@ export function SiteHeaderDark() {
                         Inicio
                     </Link>
                     <Link
-                        href="/about"
+                        href="/aboutUs"
                         className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors"
                     >
                         Nosotros
@@ -95,7 +95,7 @@ export function SiteHeaderDark() {
                         </div>
                     </div>
                     <Link
-                        href="/contact"
+                        href="/contactUs"
                         className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors"
                     >
                         Contacto

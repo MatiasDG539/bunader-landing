@@ -42,7 +42,7 @@ export function SiteHeader() {
                         Inicio
                     </Link>
                     <Link
-                        href="/about"
+                        href="/aboutUs"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
@@ -99,7 +99,7 @@ export function SiteHeader() {
                         </div>
                     </div>
                     <Link
-                        href="/contact"
+                        href="/contactUs"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >

@@ -6,7 +6,7 @@ export default function ContactPage() {
     return (
         <div className="flex min-h-screen flex-col">
             <SiteHeaderDark />
-            <main className="flex-1 pt-32">
+            <main className="flex-1 pt-18">
                 <ContactPageContent />
             </main>
             <SiteFooter />
