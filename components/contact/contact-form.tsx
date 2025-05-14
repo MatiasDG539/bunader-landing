@@ -45,7 +45,7 @@ export function ContactForm() {
                 subject: "",
                 message: ""
             })
-        } catch (error) {
+        } catch {
             setSubmitError(true)
         } finally {
             setIsSubmitting(false)

@@ -1,6 +1,7 @@
 import { SiteHeaderDark } from "@/components/header-dark";
 import { SiteFooter } from "@/components/footer";
 import { Users, MapPin, Briefcase, Heart, Shield, Home } from "lucide-react";
+import Image from "next/image";
 
 export default function AboutUsPage() {
     return (
@@ -27,11 +28,13 @@ export default function AboutUsPage() {
                                 Suspendisse potenti. Donec fermentum tortor ac magna facilisis, nec imperdiet ligula pulvinar. Morbi eu tellus quam. Integer tristique turpis vel lectus pulvinar, quis ultrices nisi finibus. Quisque elementum a nulla eu feugiat.
                             </p>
                         </div>
-                        <div>
-                            <img
+                        <div className="relative h-[400px] w-full">
+                            <Image
                                 src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
                                 alt="Imagen de oficina"
-                                className="rounded-xl shadow-lg w-full object-cover h-[400px]"
+                                className="rounded-xl shadow-lg object-cover"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 50vw"
                             />
                         </div>
                     </div>
@@ -95,11 +98,15 @@ export default function AboutUsPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             {/* Team member 1 */}
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2384&q=80"
-                                    alt="Miembro del equipo"
-                                    className="w-full h-64 object-cover"
-                                />
+                                <div className="relative w-full h-64">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2384&q=80"
+                                        alt="Miembro del equipo"
+                                        className="object-cover"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 25vw"
+                                    />
+                                </div>
                                 <div className="p-6">
                                     <h3 className="text-xl font-semibold mb-1">Carlos Rodríguez</h3>
                                     <p className="text-red-600 mb-3">CEO & Fundador</p>
@@ -108,11 +115,15 @@ export default function AboutUsPage() {
                             </div>
                             {/* Team member 2 */}
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2376&q=80"
-                                    alt="Miembro del equipo"
-                                    className="w-full h-64 object-cover"
-                                />
+                                <div className="relative w-full h-64">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2376&q=80"
+                                        alt="Miembro del equipo"
+                                        className="object-cover"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 25vw"
+                                    />
+                                </div>
                                 <div className="p-6">
                                     <h3 className="text-xl font-semibold mb-1">Laura González</h3>
                                     <p className="text-red-600 mb-3">Directora de Ventas</p>
@@ -121,11 +132,15 @@ export default function AboutUsPage() {
                             </div>
                             {/* Team member 3 */}
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2374&q=80"
-                                    alt="Miembro del equipo"
-                                    className="w-full h-64 object-cover"
-                                />
+                                <div className="relative w-full h-64">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2374&q=80"
+                                        alt="Miembro del equipo"
+                                        className="object-cover"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 25vw"
+                                    />
+                                </div>
                                 <div className="p-6">
                                     <h3 className="text-xl font-semibold mb-1">Miguel Torres</h3>
                                     <p className="text-red-600 mb-3">Asesor Inmobiliario</p>
@@ -134,11 +149,15 @@ export default function AboutUsPage() {
                             </div>
                             {/* Team member 4 */}
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2361&q=80"
-                                    alt="Miembro del equipo"
-                                    className="w-full h-64 object-cover"
-                                />
+                                <div className="relative w-full h-64">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2361&q=80"
+                                        alt="Miembro del equipo"
+                                        className="object-cover"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 25vw"
+                                    />
+                                </div>
                                 <div className="p-6">
                                     <h3 className="text-xl font-semibold mb-1">Ana Martínez</h3>
                                     <p className="text-red-600 mb-3">Directora de Marketing</p>
@@ -153,11 +172,15 @@ export default function AboutUsPage() {
                         <h2 className="text-3xl font-bold mb-8 text-center">Dónde Encontrarnos</h2>
                         <div className="grid md:grid-cols-2 gap-12 items-center">
                             <div>
-                                <img
-                                    src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2301&q=80"
-                                    alt="Imagen de nuestra oficina"
-                                    className="rounded-xl shadow-lg w-full object-cover h-[350px]"
-                                />
+                                <div className="relative w-full h-[350px]">
+                                    <Image
+                                        src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2301&q=80"
+                                        alt="Imagen de nuestra oficina"
+                                        className="rounded-xl shadow-lg object-cover"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <h3 className="text-2xl font-semibold mb-4">Oficina Principal</h3>
