@@ -41,14 +41,14 @@ export function SiteHeaderDark() {
                         Inicio
                     </Link>
                     <Link
-                        href="/aboutUs"
+                        href="/sobre-nosotros"
                         className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors"
                     >
                         Nosotros
                     </Link>
                     <div className="relative group">
                         <Link
-                            href="/properties"
+                            href="/propiedades"
                             className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors flex items-center gap-1"
                         >
                             Propiedades
@@ -58,13 +58,13 @@ export function SiteHeaderDark() {
                         </Link>
                         <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div className="py-1">
-                                <Link href="/properties/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
                                     En Venta
                                 </Link>
-                                <Link href="/properties/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
                                     En Alquiler
                                 </Link>
-                                <Link href="/properties/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
                                     Proyectos Nuevos
                                 </Link>
                             </div>
@@ -72,7 +72,7 @@ export function SiteHeaderDark() {
                     </div>
                     <div className="relative group">
                         <Link
-                            href="/services"
+                            href="/servicios"
                             className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors flex items-center gap-1"
                         >
                             Servicios
@@ -95,7 +95,7 @@ export function SiteHeaderDark() {
                         </div>
                     </div>
                     <Link
-                        href="/contactUs"
+                        href="/contacto"
                         className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors"
                     >
                         Contacto
@@ -127,21 +127,21 @@ export function SiteHeaderDark() {
                             Inicio
                         </Link>
                         <Link
-                            href="/properties"
+                            href="/propiedades"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Propiedades
                         </Link>
                         <Link
-                            href="/about"
+                            href="/sobre-nosotros"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Nosotros
                         </Link>
                         <Link
-                            href="/contact"
+                            href="/contacto"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >

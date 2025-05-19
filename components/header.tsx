@@ -42,7 +42,7 @@ export function SiteHeader() {
                         Inicio
                     </Link>
                     <Link
-                        href="/aboutUs"
+                        href="/sobre-nosotros"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
@@ -50,7 +50,7 @@ export function SiteHeader() {
                     </Link>
                     <div className="relative group">
                         <Link
-                            href="/properties"
+                            href="/propiedades"
                             className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                                 } flex items-center gap-1`}
                         >
@@ -75,7 +75,7 @@ export function SiteHeader() {
                     </div>
                     <div className="relative group">
                         <Link
-                            href="/services"
+                            href="/servicios"
                             className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                                 } flex items-center gap-1`}
                         >
@@ -99,7 +99,7 @@ export function SiteHeader() {
                         </div>
                     </div>
                     <Link
-                        href="/contactUs"
+                        href="/contacto"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
                             }`}
                     >
@@ -132,21 +132,21 @@ export function SiteHeader() {
                             Inicio
                         </Link>
                         <Link
-                            href="/properties"
+                            href="/propiedades"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Propiedades
                         </Link>
                         <Link
-                            href="/about"
+                            href="/sobre-nosotros"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >
                             Nosotros
                         </Link>
                         <Link
-                            href="/contact"
+                            href="/contacto"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >
