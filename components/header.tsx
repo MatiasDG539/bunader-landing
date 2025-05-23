@@ -106,7 +106,7 @@ export function SiteHeader() {
                         Contacto
                     </Link>
                     <Link href="#">
-                        <Button className="bg-red-600 hover:bg-red-700 ml-4 text-sm cursor-pointer">Publica Tu Propiedad</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 ml-4 text-base cursor-pointer">Publica Tu Propiedad</Button>
                     </Link>
                 </nav>
 

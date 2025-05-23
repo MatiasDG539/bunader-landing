@@ -101,7 +101,7 @@ export function SiteHeaderDark() {
                         Contacto
                     </Link>
                     <Link href="#">
-                        <Button className="bg-white text-black border border-red-600 hover:bg-red-600 hover:text-white ml-4 text-sm cursor-pointer transition-colors">Publica Tu Propiedad</Button>
+                        <Button className="text-base text-white bg-red-600 hover:bg-red-800 hover:text-white ml-4 cursor-pointer transition-colors">Publica Tu Propiedad</Button>
                     </Link>
                 </nav>
 
