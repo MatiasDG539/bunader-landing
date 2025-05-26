@@ -1,5 +1,5 @@
-import { SiteHeader } from "@/components/header";
-import { SiteFooter } from "@/components/footer";
+import { SiteHeader } from "@/components/ui/header";
+import { SiteFooter } from "@/components/ui/footer";
 import { HeroSection } from "@/components/home/hero-section";
 import { AboutSection } from "@/components/home/about-section";
 import { FeaturedProperties } from "@/components/home/featured-properties";
