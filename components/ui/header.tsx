@@ -61,13 +61,13 @@ export function SiteHeader() {
                         </Link>
                         <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                             <div className="py-1">
-                                <Link href="/properties/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
                                     En Venta
                                 </Link>
-                                <Link href="/properties/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
                                     En Alquiler
                                 </Link>
-                                <Link href="/properties/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
                                     Proyectos Nuevos
                                 </Link>
                             </div>
