@@ -1,9 +1,38 @@
-// @ts-nocheck
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
+
+interface ProjectLocation {
+    full_location: string;
+}
+
+interface ProjectPhoto {
+    image?: string;
+    thumb?: string;
+    original?: string;
+    description?: string;
+    is_front_cover?: boolean;
+    order?: number;
+    is_blueprint?: boolean;
+}
+
+interface ProjectType {
+    name?: string;
+}
+
+interface Project {
+    id?: number;
+    name?: string;
+    address?: string;
+    location?: ProjectLocation;
+    status?: number;
+    completion_date?: string;
+    units?: number;
+    photos?: ProjectPhoto[];
+    type?: ProjectType;
+}
 
 export async function GET() {
     try {
@@ -21,7 +50,7 @@ export async function GET() {
         });
 
         // Transformar los datos antes de enviarlos al cliente
-        const formattedProjects = response.data.objects.map((project) => ({
+        const formattedProjects = response.data.objects.map((project: Project) => ({
             id: project.id || 0,
             title: project.name || project.address || 'Proyecto Inmobiliario',
             location: project.address || '',
@@ -38,7 +67,7 @@ export async function GET() {
                 order: photo?.order,
                 is_blueprint: photo?.is_blueprint
             })) || [{ image: '/placeholder.svg' }],
-            type: project.type?.name || getProjectType(project.type || 0)
+            type: project.type?.name || getProjectType(typeof project.type === 'number' ? project.type : 0)
         }));
 
         // Retornar los datos procesados
@@ -50,7 +79,7 @@ export async function GET() {
 }
 
 // Funciones auxiliares
-function formatImageUrl(imageUrl) {
+function formatImageUrl(imageUrl: string | undefined): string {
     if (!imageUrl) return '/placeholder.svg';
 
     if (imageUrl.startsWith('http')) {
@@ -60,8 +89,8 @@ function formatImageUrl(imageUrl) {
     }
 }
 
-function getProjectType(typeId) {
-    const types = {
+function getProjectType(typeId: number): string {
+    const types: Record<number, string> = {
         1: 'Apartamentos',
         2: 'Condominios',
         3: 'Villas',
@@ -73,8 +102,8 @@ function getProjectType(typeId) {
     return types[typeId] || 'Desarrollo';
 }
 
-function getProjectStatus(statusId) {
-    const statuses = {
+function getProjectStatus(statusId: number): string {
+    const statuses: Record<number, string> = {
         1: 'Planeamiento',
         2: 'Pre-venta',
         3: 'En Construcción',
@@ -84,7 +113,7 @@ function getProjectStatus(statusId) {
     return statuses[statusId] || 'En Desarrollo';
 }
 
-function getCompletionDate(dateString) {
+function getCompletionDate(dateString: string | undefined): string {
     if (!dateString) return 'A confirmar';
 
     const date = new Date(dateString);

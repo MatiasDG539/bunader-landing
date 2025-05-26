@@ -1,9 +1,57 @@
-// @ts-nocheck
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
+
+interface PropertyLocation {
+    full_location: string;
+}
+
+interface PropertyPhoto {
+    image?: string;
+    thumb?: string;
+    original?: string;
+    description?: string;
+    is_front_cover?: boolean;
+    order?: number;
+    is_blueprint?: boolean;
+}
+
+interface PropertyPrice {
+    price?: number;
+    currency?: string;
+    period?: string;
+}
+
+interface PropertyOperation {
+    operation_id: number;
+    operation_type?: string;
+    prices?: PropertyPrice[];
+}
+
+interface Property {
+    id?: number;
+    title?: string;
+    description?: string;
+    address?: string;
+    location?: PropertyLocation;
+    operations?: PropertyOperation[];
+    price?: number;
+    currency?: string;
+    room_amount?: number;
+    bathroom_amount?: number;
+    total_surface?: number;
+    photos?: PropertyPhoto[];
+    orientation?: string;
+    type?: {
+        name?: string;
+    };
+    type_id?: number;
+    starred?: boolean;
+    age?: number;
+    parking_lot_amount?: number;
+}
 
 export async function GET() {
     try {
@@ -21,16 +69,16 @@ export async function GET() {
             }
         });
 
-        const rentProperties = response.data.objects.filter((property) => {
+        const rentProperties = response.data.objects.filter((property: Property) => {
             const operations = property.operations || [];
-            return operations.some((op) => op.operation_id === 2);
+            return operations.some((op: PropertyOperation) => op.operation_id === 2);
         });
 
         // Transformar los datos antes de enviarlos al cliente
-        const formattedProperties = rentProperties.map((property) => {
+        const formattedProperties = rentProperties.map((property: Property) => {
             const operations = property.operations || [];
-            const rentOperation = operations.find((op) => op.operation_id === 2) || {};
-            const priceInfo = rentOperation.prices?.[0] || {};
+            const rentOperation = operations.find((op: PropertyOperation) => op.operation_id === 2) || {} as PropertyOperation;
+            const priceInfo = rentOperation.prices?.[0] || {} as PropertyPrice;
 
             return {
                 id: property.id || 0,
@@ -43,7 +91,7 @@ export async function GET() {
                 bedrooms: property.room_amount || 0,
                 bathrooms: property.bathroom_amount || 0,
                 sqft: property.total_surface || 0,
-                images: property.photos?.map((photo) => ({
+                images: property.photos?.map((photo: PropertyPhoto) => ({
                     image: formatImageUrl(photo?.image),
                     thumb: photo?.thumb ? formatImageUrl(photo.thumb) : undefined,
                     original: photo?.original ? formatImageUrl(photo.original) : undefined,
@@ -58,7 +106,7 @@ export async function GET() {
                 age: property.age || 0,
                 parking_lot_amount: property.parking_lot_amount || 0,
                 orientation: property.orientation,
-                operations: operations.map((op) => ({
+                operations: operations.map((op: PropertyOperation) => ({
                     operation_id: op.operation_id,
                     operation_type: op.operation_type,
                     price: op.prices?.[0]?.price || 0,
@@ -77,7 +125,7 @@ export async function GET() {
 }
 
 // Funciones auxiliares
-function formatPrice(price, currency) {
+function formatPrice(price: number, currency: string): string {
     if (currency === 'USD') {
         return `USD $${price.toLocaleString('es-AR')}`;
     } else {
@@ -85,7 +133,7 @@ function formatPrice(price, currency) {
     }
 }
 
-function formatImageUrl(imageUrl) {
+function formatImageUrl(imageUrl: string | undefined): string {
     if (!imageUrl) return '/placeholder.svg';
 
     if (imageUrl.startsWith('http')) {
@@ -95,8 +143,8 @@ function formatImageUrl(imageUrl) {
     }
 }
 
-function getPropertyType(typeId) {
-    const types = {
+function getPropertyType(typeId: number): string {
+    const types: Record<number, string> = {
         1: 'Casa',
         2: 'Apartamento',
         3: 'Terreno',

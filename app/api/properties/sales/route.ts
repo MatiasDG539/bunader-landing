@@ -1,9 +1,57 @@
-// @ts-nocheck
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
+
+interface PropertyLocation {
+    full_location: string;
+}
+
+interface PropertyPhoto {
+    image?: string;
+    thumb?: string;
+    original?: string;
+    description?: string;
+    is_front_cover?: boolean;
+    order?: number;
+    is_blueprint?: boolean;
+}
+
+interface PropertyPrice {
+    price?: number;
+    currency?: string;
+    period?: string;
+}
+
+interface PropertyOperation {
+    operation_id: number;
+    operation_type?: string;
+    prices?: PropertyPrice[];
+}
+
+interface Property {
+    id?: number;
+    title?: string;
+    description?: string;
+    address?: string;
+    location?: PropertyLocation;
+    operations?: PropertyOperation[];
+    price?: number;
+    currency?: string;
+    room_amount?: number;
+    bathroom_amount?: number;
+    total_surface?: number;
+    photos?: PropertyPhoto[];
+    orientation?: string;
+    type?: {
+        name?: string;
+    };
+    type_id?: number;
+    starred?: boolean;
+    age?: number;
+    parking_lot_amount?: number;
+}
 
 export async function GET() {
     try {
@@ -21,16 +69,16 @@ export async function GET() {
             }
         });
 
-        const salesProperties = response.data.objects.filter((property) => {
+        const salesProperties = response.data.objects.filter((property: Property) => {
             const operations = property.operations || [];
-            return operations.some((op) => op.operation_id === 1);
+            return operations.some((op: PropertyOperation) => op.operation_id === 1);
         });
 
         // Transformar los datos antes de enviarlos al cliente
-        const formattedProperties = salesProperties.map((property) => {
+        const formattedProperties = salesProperties.map((property: Property) => {
             const operations = property.operations || [];
-            const saleOperation = operations.find((op) => op.operation_id === 1) || {};
-            const priceInfo = saleOperation.prices?.[0] || {};
+            const saleOperation = operations.find((op: PropertyOperation) => op.operation_id === 1) || {} as PropertyOperation;
+            const priceInfo = saleOperation.prices?.[0] || {} as PropertyPrice;
 
             return {
                 id: property.id || 0,
@@ -77,7 +125,7 @@ export async function GET() {
 }
 
 // Funciones auxiliares
-function formatPrice(price, currency) {
+function formatPrice(price: number, currency: string): string {
     if (currency === 'USD') {
         return `USD $${price.toLocaleString('es-AR')}`;
     } else {
@@ -85,7 +133,7 @@ function formatPrice(price, currency) {
     }
 }
 
-function formatImageUrl(imageUrl) {
+function formatImageUrl(imageUrl: string | undefined): string {
     if (!imageUrl) return '/placeholder.svg';
 
     if (imageUrl.startsWith('http')) {
@@ -95,8 +143,8 @@ function formatImageUrl(imageUrl) {
     }
 }
 
-function getPropertyType(typeId) {
-    const types = {
+function getPropertyType(typeId: number): string {
+    const types: Record<number, string> = {
         1: 'Casa',
         2: 'Apartamento',
         3: 'Terreno',
