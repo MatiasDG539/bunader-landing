@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize, MapPin } from "lucide-react"
 import { getRentProperties, Property } from "@/actions/tokkoApi"
+import Link from "next/link"
 
 export function RentSection() {
     const [rentProperties, setRentProperties] = useState<Property[]>([])
@@ -207,9 +208,11 @@ export function RentSection() {
             </div>
 
             <div className="mt-10 text-center">
-                <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-gray-300">
-                    Ver Todas las Propiedades en Alquiler
-                </Button>
+                <Link href='/alquiler'>
+                    <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-gray-300">
+                        Ver Todas las Propiedades en Alquiler
+                    </Button>
+                </Link>
             </div>
         </section>
     )
