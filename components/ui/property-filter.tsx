@@ -41,14 +41,13 @@ export function PropertyFilter({ onFilter, isRental = false }: PropertyFilterPro
         minParkingSpots: undefined,
     })
 
-    const [showMoreFilters, setShowMoreFilters] = useState(false)
 
-    const handleFilterChange = (key: keyof PropertyFilters, value: any) => {
-        setFilters(prev => ({
-            ...prev,
-            [key]: value
-        }))
-    }
+    // const handleFilterChange = (key: keyof PropertyFilters, value: string | number | string[] | undefined) => {
+    //     setFilters(prev => ({
+    //         ...prev,
+    //         [key]: value
+    //     }))
+    // }
 
     const handlePropertyTypeToggle = (type: string) => {
         setFilters(prev => {

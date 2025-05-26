@@ -18,6 +18,7 @@ const Card = React.forwardRef<
     />
   )
 })
+Card.displayName = "Card"
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
