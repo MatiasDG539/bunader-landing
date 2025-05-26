@@ -19,7 +19,7 @@ export function AboutSection() {
                         <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Sobre Nosotros</Button>
                         <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Nuestro blog</Button>
                         <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Trabaja con nosotros</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Sin designar</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Prensa</Button>
                     </div>
                 </div>
                 <div className="order-1 lg:order-2 relative">

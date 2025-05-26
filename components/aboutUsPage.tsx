@@ -1,5 +1,5 @@
-import { SiteHeaderDark } from "@/components/header-dark";
-import { SiteFooter } from "@/components/footer";
+import { SiteHeaderDark } from "@/components/ui/header-dark";
+import { SiteFooter } from "@/components/ui/footer";
 import { Users, MapPin, Briefcase, Heart, Shield, Home } from "lucide-react";
 import Image from "next/image";
 
@@ -7,17 +7,11 @@ export default function AboutUsPage() {
     return (
         <div className="flex min-h-screen flex-col bg-white">
             <SiteHeaderDark />
-            <main className="flex-1 pt-24">
+            <main className="flex-1">
                 <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                    {/* Hero section */}
-                    <div className="text-center my-20">
-                        <h1 className="text-6xl font-bold mb-6">Sobre Nosotros</h1>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                            Conoce nuestro equipo y descubre por qué somos líderes en el mercado inmobiliario.
-                        </p>
-                    </div>
 
                     {/* Company story section */}
+
                     <div className="grid md:grid-cols-2 gap-12 mb-20 items-center">
                         <div>
                             <h2 className="text-3xl font-bold mb-4">Nuestra Historia</h2>

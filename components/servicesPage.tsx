@@ -1,5 +1,5 @@
-import { SiteHeaderDark } from "@/components/header-dark";
-import { SiteFooter } from "@/components/footer";
+import { SiteHeaderDark } from "@/components/ui/header-dark";
+import { SiteFooter } from "@/components/ui/footer";
 import {
     Home,
     Building,
@@ -16,7 +16,6 @@ export default function ServicesPage() {
         <div>
             <SiteHeaderDark />
             <main className="container mx-auto px-4">
-                <h1 className="text-4xl font-bold mt-20 mb-8 text-center">Indícanos como podemos ayudarte!</h1>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
                     <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">

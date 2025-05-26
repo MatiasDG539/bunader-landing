@@ -6,14 +6,6 @@ import { ContactFAQ } from "./contact-faq"
 export function ContactPageContent() {
     return (
         <div className="py-5 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
-            {/* Hero section for contact page */}
-            <div className="text-center mb-16">
-                <h1 className="text-6xl font-bold mb-4">Contacto</h1>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Estamos aquí para atender todas tus necesidades inmobiliarias.
-                    Ponte en contacto con nosotros y descubre cómo podemos ayudarte.
-                </p>
-            </div>
 
             {/* Main contact section with form and info */}
             <div className="grid lg:grid-cols-2 gap-12 items-start">
