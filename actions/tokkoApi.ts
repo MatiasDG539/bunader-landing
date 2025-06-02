@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// Cliente de axios para llamadas a nuestra API interna (que actúa como proxy)
+// Cliente de axios para llamadas a nuestra API interna
 const apiClient = axios.create({
     baseURL: '/api/properties'
 });
@@ -35,7 +35,7 @@ export interface PropertyLocation {
 export interface Property {
     id: number;
     title: string;
-    description?: string;
+    description_only?: string;
     location: string;
     full_location?: string;
     price: string;
@@ -69,7 +69,26 @@ export interface Project {
 export const getSalesProperties = async (): Promise<Property[]> => {
     try {
         const response = await apiClient.get("/sales");
-        return response.data;
+
+        const propertiesWithOrderedImages = response.data.map((property: Property) => {
+            if (property.images && property.images.length > 0) {
+
+                property.images.sort((a, b) => {
+
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+
+                    return 0;
+                });
+            }
+            return property;
+        });
+
+        return propertiesWithOrderedImages;
     } catch (error) {
         console.error('Error al obtener propiedades en venta:', error);
         return [];
@@ -80,7 +99,26 @@ export const getSalesProperties = async (): Promise<Property[]> => {
 export const getRentProperties = async (): Promise<Property[]> => {
     try {
         const response = await apiClient.get("/rent");
-        return response.data;
+
+        const propertiesWithOrderedImages = response.data.map((property: Property) => {
+            if (property.images && property.images.length > 0) {
+
+                property.images.sort((a, b) => {
+
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+
+                    return 0;
+                });
+            }
+            return property;
+        });
+
+        return propertiesWithOrderedImages;
     } catch (error) {
         console.error('Error al obtener propiedades en alquiler:', error);
         return [];
@@ -91,9 +129,57 @@ export const getRentProperties = async (): Promise<Property[]> => {
 export const getProjects = async (): Promise<Project[]> => {
     try {
         const response = await apiClient.get("/projects");
-        return response.data;
+
+        const projectsWithOrderedImages = response.data.map((project: Project) => {
+            if (project.images && project.images.length > 0) {
+
+                project.images.sort((a, b) => {
+
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+
+                    return 0;
+                });
+            }
+            return project;
+        });
+
+        return projectsWithOrderedImages;
     } catch (error) {
         console.error('Error al obtener proyectos:', error);
         return [];
+    }
+};
+
+// Función para obtener una propiedad individual por su ID
+export const getPropertyById = async (id: number): Promise<Property | null> => {
+    try {
+        const response = await apiClient.get(`/${id}`);
+
+        if (response.data) {
+            const property = response.data;
+
+            if (property.images && property.images.length > 0) {
+                property.images.sort((a: PropertyImage, b: PropertyImage) => {
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+                    return 0;
+                });
+            }
+
+            return property;
+        }
+
+        return null;
+    } catch (error) {
+        console.error(`Error al obtener la propiedad con ID ${id}:`, error);
+        return null;
     }
 };

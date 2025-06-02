@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
+const LANG = process.env.LANG;
 
 interface ProjectLocation {
     full_location: string;
@@ -39,7 +40,8 @@ export async function GET() {
         const apiClient = axios.create({
             baseURL: BASE_URL,
             params: {
-                key: API_KEY
+                key: API_KEY,
+                lang: LANG
             }
         });
 
