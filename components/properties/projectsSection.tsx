@@ -102,7 +102,7 @@ export function ProjectsSection() {
             >
                 {loading ? (
                     <div className="flex justify-center items-center w-full py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-700"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
                     </div>
                 ) : projects.length > 0 ? (
                     projects.map((project) => (

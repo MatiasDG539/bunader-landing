@@ -103,7 +103,7 @@ export function RentSection() {
             >
                 {loading ? (
                     <div className="flex justify-center items-center w-full py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-700"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
                     </div>
                 ) : rentProperties.length > 0 ? (
                     rentProperties.map((property) => (

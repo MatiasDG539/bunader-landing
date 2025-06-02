@@ -103,7 +103,7 @@ export function SalesSection() {
             >
                 {loading ? (
                     <div className="flex justify-center items-center w-full py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-700"></div>
+                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
                     </div>
                 ) : salesProperties.length > 0 ? (
                     salesProperties.map((property) => (
@@ -206,7 +206,7 @@ export function SalesSection() {
             </div>
 
             <div className="mt-10 text-center">
-                <Link href="/venta">
+                <Link href="/propiedades/venta">
                     <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-gray-300">
                         Ver Todas las Propiedades en Venta
                     </Button>
