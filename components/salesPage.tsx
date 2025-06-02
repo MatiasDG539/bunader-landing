@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { PromoBanner } from '@/components/promoBanner';
 
 export default function SalesPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -112,7 +113,6 @@ export default function SalesPage() {
 
         setFilteredProperties(filtered);
         setCurrentPage(1);
-        // También resetear las propiedades visibles y el estado "hasMore"
         setVisibleProperties(filtered.slice(0, propertiesPerPage));
         setHasMore(filtered.length > propertiesPerPage);
     };
@@ -351,12 +351,27 @@ export default function SalesPage() {
                                             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"></div>
                                         </div>
                                     )}
+                                    
+                                    {!loadingMore && visibleProperties.length > 0 && (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                            <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                                <PromoBanner 
+                                                    title="¿No encontraste lo que buscabas?"
+                                                    description="Contamos con un equipo de agentes especializados para ayudarte a encontrar el lugar perfecto para vos."
+                                                    buttonText="Contáctanos"
+                                                    buttonLink="/contacto"
+                                                />
+                                            </Card>
+                                        </div>
+                                    )}
 
                                     {!hasMore && visibleProperties.length > 0 && filteredProperties.length > propertiesPerPage && (
                                         <div className="text-center text-gray-500 py-8">
                                             Has llegado al final de la lista
                                         </div>
                                     )}
+
+
                                 </>
                             )}
                         </div>

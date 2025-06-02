@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { PromoBanner } from '@/components/promoBanner';
 
 export default function RentPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -353,11 +354,26 @@ export default function RentPage() {
                                         </div>
                                     )}
 
+                                    {!loadingMore && visibleProperties.length > 0 && (
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                            <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                                <PromoBanner 
+                                                    title="¿No encontraste lo que buscabas?"
+                                                    description="Contamos con un equipo de agentes especializados para ayudarte a encontrar el lugar perfecto para vos."
+                                                    buttonText="Contáctanos"
+                                                    buttonLink="/contacto"
+                                                />
+                                            </Card>
+                                        </div>
+                                    )}
+
                                     {!hasMore && visibleProperties.length > 0 && filteredProperties.length > propertiesPerPage && (
                                         <div className="text-center text-gray-500 py-8">
                                             Has llegado al final de la lista
                                         </div>
                                     )}
+
+
                                 </>
                             )}
                         </div>
