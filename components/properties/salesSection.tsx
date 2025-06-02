@@ -194,7 +194,9 @@ export function SalesSection() {
                                         <span>{property.sqft} m²</span>
                                     </div>
                                 </div>
-                                <Button className="w-full bg-red-600 hover:bg-red-800">Ver Detalles</Button>
+                                <Link href={`/propiedades/${property.id}`}>
+                                    <Button className="w-full bg-red-600 hover:bg-red-800">Ver Detalles</Button>
+                                </Link>
                             </div>
                         </Card>
                     ))

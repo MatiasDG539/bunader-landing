@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PromoBanner } from '@/components/promoBanner';
+import Link from 'next/link';
 
 export default function RentPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -249,7 +250,8 @@ export default function RentPage() {
                                                     <Card
                                                         key={property.id}
                                                         ref={isLastElement ? lastPropertyElementRef : undefined}
-                                                        className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                                        className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                                                        onClick={() => window.location.href = `/propiedades/${property.id}`}>
                                                         <div className="relative h-[250px] w-full">
                                                             <Image
                                                                 src={currentImage}
@@ -336,9 +338,11 @@ export default function RentPage() {
                                                                     <span>{property.sqft} m²</span>
                                                                 </div>
                                                             </div>
-                                                            <Button className="w-full bg-red-600 hover:bg-red-700">
-                                                                Ver Detalles
-                                                            </Button>
+                                                            <Link href={`/propiedades/${property.id}`}>
+                                                                <Button className="w-full bg-red-600 hover:bg-red-700">
+                                                                    Ver Detalles
+                                                                </Button>
+                                                            </Link>
                                                         </div>
                                                     </Card>
                                                 );

@@ -195,7 +195,9 @@ export function RentSection() {
                                     </div>
                                 </div>
                                 <div className="mt-auto">
-                                    <Button className="w-full bg-red-600 hover:bg-red-800">Ver Detalles</Button>
+                                    <Link href={`/propiedades/${property.id}`}>
+                                        <Button className="w-full bg-red-600 hover:bg-red-800">Ver Detalles</Button>
+                                    </Link>
                                 </div>
                             </div>
                         </Card>
