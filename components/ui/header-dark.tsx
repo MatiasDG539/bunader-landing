@@ -26,20 +26,20 @@ export function SiteHeaderDark() {
             className={`fixed top-0 left-0 right-0 z-50 ${shouldShowScrolledStyle ? "bg-white shadow-md py-6" : "bg-white py-6"
                 }`}
         >
-            <div className="relative container mx-auto flex items-center justify-between px-2 overflow-hidden">
-                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-40 md:max-w-[180px] max-w-[150px]">
-                    <Link href="/" className="flex items-center">
+            <div className="relative container mx-auto flex items-center justify-between px-2">
+                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-40 md:w-[250px] w-[200px] md:h-[100px] h-[80px] overflow-hidden">
+                    <Link href="/" className="flex items-center w-full h-full">
                         <Image 
                             src="/bunader-logo.png" 
                             alt="Bunader Logo" 
-                            width={180} 
-                            height={180} 
-                            className="w-full h-auto object-contain"
+                            width={250} 
+                            height={100} 
+                            className="w-full h-full object-cover"
                         />
                     </Link>
                 </div>
 
-                <nav className="hidden md:flex items-center gap-6 ml-auto mr-10">
+                <nav className="hidden md:flex items-center gap-6 ml-auto mr-10 relative z-[100]">
                     <Link
                         href="/"
                         className="text-base font-medium text-gray-800 hover:text-red-600 transition-colors"
@@ -62,15 +62,15 @@ export function SiteHeaderDark() {
                                 <path d="m6 9 6 6 6-6" />
                             </svg>
                         </Link>
-                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
                             <div className="py-1">
-                                <Link href="/propiedades/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     En Venta
                                 </Link>
-                                <Link href="/propiedades/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     En Alquiler
                                 </Link>
-                                <Link href="/propiedades/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/propiedades/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     Proyectos Nuevos
                                 </Link>
                             </div>
@@ -86,15 +86,15 @@ export function SiteHeaderDark() {
                                 <path d="m6 9 6 6 6-6" />
                             </svg>
                         </Link>
-                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
                             <div className="py-1">
-                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     Asesoramiento
                                 </Link>
-                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     Tasaciones
                                 </Link>
-                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600">
+                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     Cobranzas
                                 </Link>
                             </div>
