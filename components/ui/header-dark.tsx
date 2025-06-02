@@ -26,10 +26,16 @@ export function SiteHeaderDark() {
             className={`fixed top-0 left-0 right-0 z-50 ${shouldShowScrolledStyle ? "bg-white shadow-md py-6" : "bg-white py-6"
                 }`}
         >
-            <div className="relative container mx-auto flex items-center justify-between px-2">
-                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-40">
+            <div className="relative container mx-auto flex items-center justify-between px-2 overflow-hidden">
+                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-40 md:max-w-[180px] max-w-[150px]">
                     <Link href="/" className="flex items-center">
-                        <Image src="/bunader-logo.png" alt="Bunader Logo" width={180} height={180} />
+                        <Image 
+                            src="/bunader-logo.png" 
+                            alt="Bunader Logo" 
+                            width={180} 
+                            height={180} 
+                            className="w-full h-auto object-contain"
+                        />
                     </Link>
                 </div>
 
