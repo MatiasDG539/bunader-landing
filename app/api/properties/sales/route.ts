@@ -116,7 +116,6 @@ export async function GET() {
             };
         });
 
-        // Retornar los datos procesados
         return NextResponse.json(formattedProperties);
     } catch (error) {
         console.error('Error al obtener propiedades en venta:', error);

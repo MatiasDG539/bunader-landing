@@ -49,7 +49,6 @@ export async function GET() {
             }
         });
 
-        // Transformar los datos antes de enviarlos al cliente
         const formattedProjects = response.data.objects.map((project: Project) => ({
             id: project.id || 0,
             title: project.name || project.address || 'Proyecto Inmobiliario',
@@ -70,7 +69,6 @@ export async function GET() {
             type: project.type?.name || getProjectType(typeof project.type === 'number' ? project.type : 0)
         }));
 
-        // Retornar los datos procesados
         return NextResponse.json(formattedProjects);
     } catch (error) {
         console.error('Error al obtener proyectos:', error);
