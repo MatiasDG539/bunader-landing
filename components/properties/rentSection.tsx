@@ -208,7 +208,7 @@ export function RentSection() {
             </div>
 
             <div className="mt-10 text-center">
-                <Link href='/alquiler'>
+                <Link href='/propiedades/alquiler'>
                     <Button variant="outline" size="lg" className="text-lg px-8 py-6 border-gray-300">
                         Ver Todas las Propiedades en Alquiler
                     </Button>
