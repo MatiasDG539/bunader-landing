@@ -37,18 +37,9 @@ interface Project {
 
 export async function GET() {
     try {
-        const apiClient = axios.create({
-            baseURL: BASE_URL,
-            params: {
-                key: API_KEY,
-                lang: LANG
-            }
-        });
+        const url = `${BASE_URL}development/?lang=${LANG}&key=${API_KEY}&limit=10`;
 
-        const response = await apiClient.get("development/", {
-            params: {
-                limit: 10
-            }
+        const response = await axios.get(url, {
         });
 
         const formattedProjects = response.data.objects.map((project: Project) => ({
@@ -56,8 +47,8 @@ export async function GET() {
             title: project.name || project.address || 'Proyecto Inmobiliario',
             location: project.address || '',
             full_location: project.location?.full_location || '',
-            status: getProjectStatus(project.status || 0),
-            completion: getCompletionDate(project.completion_date),
+            status: getProjectStatus(project.status || 0, LANG),
+            completion: getCompletionDate(project.completion_date, LANG),
             units: project.units || 0,
             images: project.photos?.map((photo) => ({
                 image: formatImageUrl(photo?.image),
@@ -68,7 +59,7 @@ export async function GET() {
                 order: photo?.order,
                 is_blueprint: photo?.is_blueprint
             })) || [{ image: '/placeholder.svg' }],
-            type: project.type?.name || getProjectType(typeof project.type === 'number' ? project.type : 0)
+            type: project.type?.name || getProjectType(typeof project.type === 'number' ? project.type : 0, LANG)
         }));
 
         return NextResponse.json(formattedProjects);
@@ -89,38 +80,65 @@ function formatImageUrl(imageUrl: string | undefined): string {
     }
 }
 
-function getProjectType(typeId: number): string {
-    const types: Record<number, string> = {
-        1: 'Apartamentos',
-        2: 'Condominios',
-        3: 'Villas',
-        4: 'Casas',
-        5: 'Oficinas',
-        6: 'Locales Comerciales'
+function getProjectType(typeId: number, lang: string = 'es_ar'): string {
+    const types: Record<string, Record<number, string>> = {
+        'es_ar': {
+            1: 'Apartamentos',
+            2: 'Condominios',
+            3: 'Villas',
+            4: 'Casas',
+            5: 'Oficinas',
+            6: 'Locales Comerciales'
+        },
+        'en': {
+            1: 'Apartments',
+            2: 'Condominiums',
+            3: 'Villas',
+            4: 'Houses',
+            5: 'Offices',
+            6: 'Commercial Spaces'
+        }
     };
 
-    return types[typeId] || 'Desarrollo';
+    const langTypes = types[lang] || types['es_ar'];
+    return langTypes[typeId] || (lang === 'en' ? 'Development' : 'Desarrollo');
 }
 
-function getProjectStatus(statusId: number): string {
-    const statuses: Record<number, string> = {
-        1: 'Planeamiento',
-        2: 'Pre-venta',
-        3: 'En Construcción',
-        4: 'Terminado'
+function getProjectStatus(statusId: number, lang: string = 'es_ar'): string {
+    const statuses: Record<string, Record<number, string>> = {
+        'es_ar': {
+            1: 'Planeamiento',
+            2: 'Pre-venta',
+            3: 'En Construcción',
+            4: 'Terminado'
+        },
+        'en': {
+            1: 'Planning',
+            2: 'Pre-sale',
+            3: 'Under Construction',
+            4: 'Completed'
+        }
     };
 
-    return statuses[statusId] || 'En Desarrollo';
+    const langStatuses = statuses[lang] || statuses['es_ar'];
+    return langStatuses[statusId] || (lang === 'en' ? 'In Development' : 'En Desarrollo');
 }
 
-function getCompletionDate(dateString: string | undefined): string {
-    if (!dateString) return 'A confirmar';
+function getCompletionDate(dateString: string | undefined, lang: string = 'es_ar'): string {
+    if (!dateString) return lang === 'en' ? 'To be confirmed' : 'A confirmar';
 
     const date = new Date(dateString);
-    const months = [
-        'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-    ];
+    const months: Record<string, string[]> = {
+        'es_ar': [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ],
+        'en': [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ]
+    };
 
-    return `${months[date.getMonth()]} ${date.getFullYear()}`;
+    const langMonths = months[lang] || months['es_ar'];
+    return `${langMonths[date.getMonth()]} ${date.getFullYear()}`;
 }

@@ -31,6 +31,22 @@ interface PropertyOperation {
     prices?: PropertyPrice[];
 }
 
+interface PropertyProducer {
+    cellphone?: string;
+    email?: string;
+    id?: number;
+    name?: string;
+    phone?: string;
+    picture?: string;
+    position?: string;
+}
+
+interface PropertyTag {
+    id: number;
+    name: string;
+    type: number;
+}
+
 interface Property {
     id?: number;
     title?: string;
@@ -42,9 +58,13 @@ interface Property {
     currency?: string;
     room_amount?: number;
     bathroom_amount?: number;
+    toilet_amount?: number;
     total_surface?: number;
+    roofed_surface?: string;
+    semiroofed_surface?: string;
+    unroofed_surface?: string;
     photos?: PropertyPhoto[];
-    orientation?: string;
+    disposition?: string;
     type?: {
         name?: string;
     };
@@ -52,21 +72,23 @@ interface Property {
     starred?: boolean;
     age?: number;
     parking_lot_amount?: number;
+    property_condition?: string;
+    situation?: string;
+    expenses?: number;
+    tags?: PropertyTag[];
+    producer?: PropertyProducer;
+    reference_code?: string;
+    public_url?: string;
+    publication_title?: string;
 }
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     try {
         const { id } = params;
 
-        const apiClient = axios.create({
-            baseURL: BASE_URL,
-            params: {
-                key: API_KEY,
-                lang: LANG
-            }
-        });
+        const url = `${BASE_URL}property/${id}/?lang=es_ar&key=${API_KEY}`;
 
-        const response = await apiClient.get(`property/${id}/`);
+        const response = await axios.get(url);
         const property: Property = response.data;
 
         if (!property) {
@@ -110,19 +132,32 @@ export async function GET(request: Request, { params }: { params: { id: string }
                 order: photo?.order,
                 is_blueprint: photo?.is_blueprint
             })) || [{ image: '/placeholder.svg' }],
-            type: property.type?.name || getPropertyType(property.type_id || 0),
+            type: property.type?.name || getPropertyType(property.type_id || 0, LANG),
             operation_type: operationType,
             featured: property.starred || false,
             age: property.age || 0,
             parking_lot_amount: property.parking_lot_amount || 0,
-            orientation: property.orientation,
+            disposition: property.disposition,
             operations: operations.map((op) => ({
                 operation_id: op.operation_id,
                 operation_type: op.operation_type,
                 price: op.prices?.[0]?.price || 0,
                 currency: op.prices?.[0]?.currency || 'USD',
                 period: op.prices?.[0]?.period
-            }))
+            })),
+            total_surface: property.total_surface,
+            property_condition: property.property_condition,
+            situation: property.situation,
+            expenses: property.expenses,
+            toilet_amount: property.toilet_amount,
+            roofed_surface: property.roofed_surface,
+            semiroofed_surface: property.semiroofed_surface,
+            unroofed_surface: property.unroofed_surface,
+            tags: property.tags,
+            producer: property.producer,
+            reference_code: property.reference_code,
+            public_url: property.public_url,
+            publication_title: property.publication_title
         };
 
         return NextResponse.json(formattedProperty);
@@ -151,19 +186,34 @@ function formatImageUrl(imageUrl: string | undefined): string {
     }
 }
 
-function getPropertyType(typeId: number): string {
-    const types: Record<number, string> = {
-        1: 'Casa',
-        2: 'Apartamento',
-        3: 'Terreno',
-        4: 'Oficina',
-        5: 'Local Comercial',
-        6: 'Condominio',
-        7: 'Campo',
-        8: 'Galpón',
-        9: 'Estudio',
-        10: 'Edificio'
+function getPropertyType(typeId: number, lang: string = 'es_ar'): string {
+    const types: Record<string, Record<number, string>> = {
+        'es_ar': {
+            1: 'Casa',
+            2: 'Departamento',
+            3: 'Terreno',
+            4: 'Oficina',
+            5: 'Local Comercial',
+            6: 'Condominio',
+            7: 'Campo',
+            8: 'Galpón',
+            9: 'Estudio',
+            10: 'Edificio'
+        },
+        'en': {
+            1: 'House',
+            2: 'Apartment',
+            3: 'Land',
+            4: 'Office',
+            5: 'Commercial Space',
+            6: 'Condominium',
+            7: 'Farm',
+            8: 'Warehouse',
+            9: 'Studio',
+            10: 'Building'
+        }
     };
 
-    return types[typeId] || 'Propiedad';
+    const langTypes = types[lang] || types['es_ar'];
+    return langTypes[typeId] || (lang === 'en' ? 'Property' : 'Propiedad');
 }

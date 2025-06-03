@@ -45,7 +45,7 @@ interface Property {
     bathroom_amount?: number;
     total_surface?: number;
     photos?: PropertyPhoto[];
-    orientation?: string;
+    disposition?: string;
     type?: {
         name?: string;
     };
@@ -57,20 +57,10 @@ interface Property {
 
 export async function GET() {
     try {
-        const apiClient = axios.create({
-            baseURL: BASE_URL,
-            params: {
-                key: API_KEY,
-                lang: LANG
-            }
-        });
+        
+        const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&operation_type=2&limit=20`;
 
-        const response = await apiClient.get("property/", {
-            params: {
-                operation_type: 2,
-                limit: 20
-            }
-        });
+        const response = await axios.get(url);
 
         const rentProperties = response.data.objects.filter((property: Property) => {
             const operations = property.operations || [];
@@ -104,12 +94,12 @@ export async function GET() {
                     order: photo?.order,
                     is_blueprint: photo?.is_blueprint
                 })) || [{ image: '/placeholder.svg' }],
-                type: property.type?.name || getPropertyType(property.type_id || 0),
+                type: property.type?.name || getPropertyType(property.type_id || 0, LANG),
                 operation_type: 'rent',
                 featured: property.starred || false,
                 age: property.age || 0,
                 parking_lot_amount: property.parking_lot_amount || 0,
-                orientation: property.orientation,
+                disposition: property.disposition,
                 operations: operations.map((op: PropertyOperation) => ({
                     operation_id: op.operation_id,
                     operation_type: op.operation_type,
@@ -146,19 +136,34 @@ function formatImageUrl(imageUrl: string | undefined): string {
     }
 }
 
-function getPropertyType(typeId: number): string {
-    const types: Record<number, string> = {
-        1: 'Casa',
-        2: 'Apartamento',
-        3: 'Terreno',
-        4: 'Oficina',
-        5: 'Local Comercial',
-        6: 'Condominio',
-        7: 'Campo',
-        8: 'Galpón',
-        9: 'Estudio',
-        10: 'Edificio'
+function getPropertyType(typeId: number, lang: string = 'es_ar'): string {
+    const types: Record<string, Record<number, string>> = {
+        'es_ar': {
+            1: 'Casa',
+            2: 'Departamento',
+            3: 'Terreno',
+            4: 'Oficina',
+            5: 'Local Comercial',
+            6: 'Condominio',
+            7: 'Campo',
+            8: 'Galpón',
+            9: 'Estudio',
+            10: 'Edificio'
+        },
+        'en': {
+            1: 'House',
+            2: 'Apartment',
+            3: 'Land',
+            4: 'Office',
+            5: 'Commercial Space',
+            6: 'Condominium',
+            7: 'Farm',
+            8: 'Warehouse',
+            9: 'Studio',
+            10: 'Building'
+        }
     };
 
-    return types[typeId] || 'Propiedad';
+    const langTypes = types[lang] || types['es_ar'];
+    return langTypes[typeId] || (lang === 'en' ? 'Property' : 'Propiedad');
 }
