@@ -7,6 +7,7 @@ const LANG = process.env.LANG;
 
 interface PropertyLocation {
     full_location: string;
+    short_location?: string;
 }
 
 interface PropertyPhoto {
@@ -88,6 +89,7 @@ export async function GET() {
                 description: property.description || '',
                 location: property.address || '',
                 full_location: property.location?.full_location || '',
+                short_location: property.location?.short_location || '',
                 price: formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'USD'),
                 currency: priceInfo.currency || property.currency || 'USD',
                 bedrooms: property.room_amount || 0,

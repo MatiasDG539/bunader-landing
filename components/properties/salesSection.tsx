@@ -178,7 +178,7 @@ export function SalesSection() {
                                 <h3 className="text-xl font-bold mb-2">{property.title}</h3>
                                 <div className="flex items-center text-gray-500 mb-4">
                                     <MapPin className="h-4 w-4 mr-1" />
-                                    {property.location}
+                                    {property.short_location}
                                 </div>
                                 <div className="flex justify-between mb-6">
                                     <div className="flex items-center">

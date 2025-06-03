@@ -174,11 +174,11 @@ export function RentSection() {
                                     <div className="text-2xl font-bold">{property.price || 'Consultar'}</div>
                                 </div>
                             </div>
-                            <div className="p-6 flex flex-col h-[180px]">
+                            <div className="p-6 flex flex-col h-[220px]">
                                 <h3 className="text-xl font-bold mb-2">{property.title}</h3>
                                 <div className="flex items-center text-gray-500 mb-4">
                                     <MapPin className="h-4 w-4 mr-1" />
-                                    {property.location}
+                                    {property.short_location|| property.short_location || 'Ubicación no disponible'}
                                 </div>
                                 <div className="flex justify-between mb-6">
                                     <div className="flex items-center">
