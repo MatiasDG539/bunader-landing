@@ -25,18 +25,15 @@ export interface PropertyOperation {
 }
 
 export interface PropertyLocation {
-    full_location?: string;
     short_location?: string;
-    name?: string;
-    state?: string | null;
-    zip_code?: string | null;
 }
 
 export interface Property {
     id: number;
     title: string;
     description_only?: string;
-    location: string;
+    address: string;
+    short_location?: string;
     full_location?: string;
     price: string;
     currency?: string;
@@ -49,8 +46,35 @@ export interface Property {
     featured?: boolean;
     age?: number;
     parking_lot_amount?: number;
-    orientation?: string | null;
     operations?: PropertyOperation[];
+    rooms?: number;
+    toilets?: number;
+    disposition?: string;
+    property_condition?: string;
+    situation?: string;
+    expenses?: number;
+    total_surface?: number;
+    covered_surface?: number;
+    land_surface?: number;
+    floors?: number;
+    floor?: number;
+    units_per_floor?: number;
+    antiquity?: number;
+    construction_year?: number;
+    half_bathrooms?: number;
+    garages?: number;
+    balconies?: number;
+    terraces?: number;
+    laundry?: boolean;
+    storage?: boolean;
+    pool?: boolean;
+    gym?: boolean;
+    sum?: boolean;
+    grill?: boolean;
+    garden?: boolean;
+    elevator?: boolean;
+    doorman?: boolean;
+    security?: boolean;
 }
 
 export interface Project {
