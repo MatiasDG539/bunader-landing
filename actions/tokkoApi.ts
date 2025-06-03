@@ -75,6 +75,8 @@ export interface Property {
     elevator?: boolean;
     doorman?: boolean;
     security?: boolean;
+    geo_lat?: string;
+    geo_long?: string;
 }
 
 export interface Project {

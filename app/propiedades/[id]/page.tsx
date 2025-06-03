@@ -4,10 +4,11 @@ import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Bed, Bath, Grid3X3, Car, MapPin, Home, Calendar, Building, Users } from "lucide-react"
+import { ChevronLeft, ChevronRight, Bed, Bath, Grid3X3, Car, MapPin, Home, Calendar, Building } from "lucide-react"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
+import PropertyMap from "@/components/ui/property-map"
 
 import { getPropertyById, Property } from "@/actions/tokkoApi"
 
@@ -196,101 +197,117 @@ export default function PropertyPage() {
                             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
                             
                                 <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8 text-center">
-                                    {property.total_surface && (
+                                    {property.total_surface !== undefined && property.total_surface > 0 && (
                                         <div className="flex flex-col items-center p-4">
                                             <Grid3X3 className="h-8 w-8 text-gray-600 mb-2" />
                                             <span className="text-lg font-bold text-gray-900">{property.total_surface} m²</span>
                                             <span className="text-sm text-gray-500">construido</span>
                                         </div>
                                     )}
-                                    {property.bedrooms && (
+                                    {property.bedrooms !== undefined && property.bedrooms > 0 && (
                                         <div className="flex flex-col items-center p-4">
                                             <Home className="h-8 w-8 text-gray-600 mb-2" />
                                             <span className="text-lg font-bold text-gray-900">{property.bedrooms}</span>
                                             <span className="text-sm text-gray-500">ambiente{property.bedrooms > 1 ? 's' : ''}</span>
                                         </div>
                                     )}
-                                    {property.bathrooms && (
+                                    {property.bathrooms !== undefined && property.bathrooms > 0 && (
                                         <div className="flex flex-col items-center p-4">
                                             <Bath className="h-8 w-8 text-gray-600 mb-2" />
                                             <span className="text-lg font-bold text-gray-900">{property.bathrooms}</span>
                                             <span className="text-sm text-gray-500">baño{property.bathrooms > 1 ? 's' : ''}</span>
                                         </div>
                                     )}
-                                    {property.age && (
+                                    {property.age !== undefined && (
                                         <div className="flex flex-col items-center p-4">
                                             <Calendar className="h-8 w-8 text-gray-600 mb-2" />
-                                            <span className="text-lg font-bold text-gray-900">{property.age}</span>
-                                            <span className="text-sm text-gray-500">años</span>
+                                            <span className="text-lg font-bold text-gray-900">
+                                                {property.age === 0 ? "A estrenar" : `${property.age} años`}
+                                            </span>
+                                            <span className="text-sm text-gray-500">antigüedad</span>
                                         </div>
                                     )}
-                                    <div className="flex flex-col items-center p-4">
-                                        <Building className="h-8 w-8 text-gray-600 mb-2" />
-                                        <span className="text-lg font-bold text-gray-900">{property.disposition}</span>
-                                        <span className="text-sm text-gray-500">orientación</span>
-                                    </div>
+                                    {property.disposition && property.disposition.trim() !== '' && (
+                                        <div className="flex flex-col items-center p-4">
+                                            <Building className="h-8 w-8 text-gray-600 mb-2" />
+                                            <span className="text-lg font-bold text-gray-900">{property.disposition}</span>
+                                            <span className="text-sm text-gray-500">orientación</span>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Información general */}
-                                <div className="mb-8">
-                                    <h2 className="text-2xl font-bold mb-6">Información general</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
-                                        {property.bedrooms && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Ambiente:</span>
-                                                <span className="font-medium">{property.bedrooms}</span>
-                                            </div>
-                                        )}
-                                        {property.age && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Antigüedad:</span>
-                                                <span className="font-medium">{property.age} años</span>
-                                            </div>
-                                        )}
-                                        {property.bathrooms && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Baño:</span>
-                                                <span className="font-medium">{property.bathrooms}</span>
-                                            </div>
-                                        )}
-                                        {property.disposition && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Disposición:</span>
-                                                <span className="font-medium">{property.disposition || 'Interno'}</span>
-                                            </div>
-                                        )}
-                                        {(property as any).property_condition && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Condición:</span>
-                                                <span className="font-medium">{(property as any).property_condition}</span>
-                                            </div>
-                                        )}
-                                        {(property as any).situation && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Situación:</span>
-                                                <span className="font-medium">{(property as any).situation}</span>
-                                            </div>
-                                        )}
-                                        {(property as any).expenses && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Expensas:</span>
-                                                <span className="font-medium">{(property as any).expenses.toLocaleString()}</span>
-                                            </div>
-                                        )}
-                                        {(property as any).toilet_amount !== undefined && (property as any).toilet_amount > 0 && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Toilettes:</span>
-                                                <span className="font-medium">{(property as any).toilet_amount}</span>
-                                            </div>
-                                        )}
-                                        {property.parking_lot_amount !== undefined && property.parking_lot_amount > 0 && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Cocheras:</span>
-                                                <span className="font-medium">{property.parking_lot_amount}</span>
-                                            </div>
-                                        )}
+                                {((property.bedrooms !== undefined && property.bedrooms > 0) ||
+                                  (property.age !== undefined) ||
+                                  (property.bathrooms !== undefined && property.bathrooms > 0) ||
+                                  (property.disposition && property.disposition.trim() !== '') ||
+                                  ((property as any).property_condition && (property as any).property_condition.trim() !== '') ||
+                                  ((property as any).situation && (property as any).situation.trim() !== '') ||
+                                  ((property as any).expenses !== undefined && (property as any).expenses > 0) ||
+                                  ((property as any).toilet_amount !== undefined && (property as any).toilet_amount > 0) ||
+                                  (property.parking_lot_amount !== undefined && property.parking_lot_amount > 0)) && (
+                                    <div className="mb-8">
+                                        <h2 className="text-2xl font-bold mb-6">Información general</h2>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+                                            {property.bedrooms !== undefined && property.bedrooms > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Ambiente:</span>
+                                                    <span className="font-medium">{property.bedrooms}</span>
+                                                </div>
+                                            )}
+                                            {property.age !== undefined && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Antigüedad:</span>
+                                                    <span className="font-medium">
+                                                        {property.age === 0 ? "A estrenar" : `${property.age} años`}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {property.bathrooms !== undefined && property.bathrooms > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Baño:</span>
+                                                    <span className="font-medium">{property.bathrooms}</span>
+                                                </div>
+                                            )}
+                                            {property.disposition && property.disposition.trim() !== '' && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Disposición:</span>
+                                                    <span className="font-medium">{property.disposition}</span>
+                                                </div>
+                                            )}
+                                            {(property as any).property_condition && (property as any).property_condition.trim() !== '' && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Condición:</span>
+                                                    <span className="font-medium">{(property as any).property_condition}</span>
+                                                </div>
+                                            )}
+                                            {(property as any).situation && (property as any).situation.trim() !== '' && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Situación:</span>
+                                                    <span className="font-medium">{(property as any).situation}</span>
+                                                </div>
+                                            )}
+                                            {(property as any).expenses !== undefined && (property as any).expenses > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Expensas:</span>
+                                                    <span className="font-medium">${(property as any).expenses.toLocaleString()}</span>
+                                                </div>
+                                            )}
+                                            {(property as any).toilet_amount !== undefined && (property as any).toilet_amount > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Toilettes:</span>
+                                                    <span className="font-medium">{(property as any).toilet_amount}</span>
+                                                </div>
+                                            )}
+                                            {property.parking_lot_amount !== undefined && property.parking_lot_amount > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Cocheras:</span>
+                                                    <span className="font-medium">{property.parking_lot_amount}</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 {/* Ambientes */}
                                 {(property as any).tags && (property as any).tags.filter((tag: any) => tag.type === 2).length > 0 && (
@@ -331,35 +348,40 @@ export default function PropertyPage() {
                                 )}
 
                                 {/* Superficies y medidas */}
-                                <div className="mb-8">
-                                    <h2 className="text-2xl font-bold mb-6">Superficies y medidas</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
-                                        {property.total_surface && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Total construido:</span>
-                                                <span className="font-medium">{property.total_surface} m²</span>
-                                            </div>
-                                        )}
-                                        {(property as any).roofed_surface && parseFloat((property as any).roofed_surface) > 0 && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Superficie techada:</span>
-                                                <span className="font-medium">{(property as any).roofed_surface} m²</span>
-                                            </div>
-                                        )}
-                                        {(property as any).semiroofed_surface && parseFloat((property as any).semiroofed_surface) > 0 && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Superficie semi-techada:</span>
-                                                <span className="font-medium">{(property as any).semiroofed_surface} m²</span>
-                                            </div>
-                                        )}
-                                        {(property as any).unroofed_surface && parseFloat((property as any).unroofed_surface) > 0 && (
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Superficie descubierta:</span>
-                                                <span className="font-medium">{(property as any).unroofed_surface} m²</span>
-                                            </div>
-                                        )}
+                                {((property.total_surface !== undefined && property.total_surface > 0) ||
+                                  ((property as any).roofed_surface && parseFloat((property as any).roofed_surface) > 0) ||
+                                  ((property as any).semiroofed_surface && parseFloat((property as any).semiroofed_surface) > 0) ||
+                                  ((property as any).unroofed_surface && parseFloat((property as any).unroofed_surface) > 0)) && (
+                                    <div className="mb-8">
+                                        <h2 className="text-2xl font-bold mb-6">Superficies y medidas</h2>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+                                            {property.total_surface !== undefined && property.total_surface > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Total construido:</span>
+                                                    <span className="font-medium">{property.total_surface} m²</span>
+                                                </div>
+                                            )}
+                                            {(property as any).roofed_surface && parseFloat((property as any).roofed_surface) > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Superficie techada:</span>
+                                                    <span className="font-medium">{(property as any).roofed_surface} m²</span>
+                                                </div>
+                                            )}
+                                            {(property as any).semiroofed_surface && parseFloat((property as any).semiroofed_surface) > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Superficie semi-techada:</span>
+                                                    <span className="font-medium">{(property as any).semiroofed_surface} m²</span>
+                                                </div>
+                                            )}
+                                            {(property as any).unroofed_surface && parseFloat((property as any).unroofed_surface) > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Superficie descubierta:</span>
+                                                    <span className="font-medium">{(property as any).unroofed_surface} m²</span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 <div className="mt-8">
                                     <h2 className="text-2xl font-bold mb-4">Descripción</h2>
@@ -432,16 +454,18 @@ export default function PropertyPage() {
 
                             </div>
 
-                            {property.address && (
-                                <div className="bg-white rounded-xl shadow-md p-6">
-                                    <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
-                                    <div className="aspect-video w-full bg-gray-200 rounded-lg">
-                                        <div className="w-full h-full flex items-center justify-center text-gray-500 p-4">
-                                            <p>{property.short_location || property.address}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
+                            {/* Sección del Mapa */}
+                            {/* Debug: Mostramos siempre el mapa para ver si funciona */}
+                            <div className="bg-white rounded-xl shadow-md p-6 mb-6">
+                                <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
+                                <PropertyMap
+                                    address={property.full_location || property.address || "Buenos Aires, Argentina"}
+                                    title={property.title}
+                                    className="aspect-video w-full"
+                                    geoLat={property.geo_lat}
+                                    geoLong={property.geo_long}
+                                />
+                            </div>
                         </div>
 
                         <div className="lg:col-span-1">

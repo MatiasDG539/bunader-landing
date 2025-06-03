@@ -80,6 +80,8 @@ interface Property {
     reference_code?: string;
     public_url?: string;
     publication_title?: string;
+    geo_lat?: string;
+    geo_long?: string;
 }
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
@@ -157,7 +159,9 @@ export async function GET(request: Request, { params }: { params: { id: string }
             producer: property.producer,
             reference_code: property.reference_code,
             public_url: property.public_url,
-            publication_title: property.publication_title
+            publication_title: property.publication_title,
+            geo_lat: property.geo_lat || '',
+            geo_long: property.geo_long || ''
         };
 
         return NextResponse.json(formattedProperty);
