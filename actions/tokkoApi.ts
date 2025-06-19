@@ -209,3 +209,29 @@ export const getPropertyById = async (id: number): Promise<Property | null> => {
         return null;
     }
 };
+
+// Función para obtener propiedades destacadas (starred)
+export const getFeaturedProperties = async (): Promise<Property[]> => {
+    try {
+        const response = await apiClient.get("/featured");
+
+        const propertiesWithOrderedImages = response.data.map((property: Property) => {
+            if (property.images && property.images.length > 0) {
+                property.images.sort((a, b) => {
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+                    return 0;
+                });
+            }
+            return property;
+        });
+
+        return propertiesWithOrderedImages;
+    } catch (error) {
+        console.error('Error al obtener propiedades destacadas:', error);
+        return [];
+    }
+};
