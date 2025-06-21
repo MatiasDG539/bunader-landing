@@ -25,7 +25,7 @@ export function AboutSection() {
                 <div className="order-1 lg:order-2 relative">
                     <div className="relative h-[500px] w-full rounded-lg overflow-hidden shadow-2xl">
                         <Image
-                            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2070&auto=format&fit=crop"
+                            src="/img/about_us.jpg"
                             alt="Nuestro Equipo"
                             fill
                             className="object-cover"

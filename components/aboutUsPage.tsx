@@ -22,9 +22,9 @@ export default function AboutUsPage() {
                                 Suspendisse potenti. Donec fermentum tortor ac magna facilisis, nec imperdiet ligula pulvinar. Morbi eu tellus quam. Integer tristique turpis vel lectus pulvinar, quis ultrices nisi finibus. Quisque elementum a nulla eu feugiat.
                             </p>
                         </div>
-                        <div className="relative h-[400px] w-full">
+                        <div className="relative h-[600px] w-full">
                             <Image
-                                src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80"
+                                src="/img/office_door.jpg"
                                 alt="Imagen de oficina"
                                 className="rounded-xl shadow-lg object-cover"
                                 fill
@@ -90,73 +90,81 @@ export default function AboutUsPage() {
                     <div className="mb-20">
                         <h2 className="text-3xl font-bold mb-8 text-center">Nuestro Equipo</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {/* Team member 1 */}
+
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                                 <div className="relative w-full h-64">
                                     <Image
-                                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2384&q=80"
+                                        src="/personas/federico.jpg"
                                         alt="Miembro del equipo"
                                         className="object-cover"
                                         fill
                                         sizes="(max-width: 768px) 100vw, 25vw"
                                     />
                                 </div>
+
                                 <div className="p-6">
-                                    <h3 className="text-xl font-semibold mb-1">Carlos Rodríguez</h3>
+                                    <h3 className="text-xl font-semibold mb-1">Federico Bunader</h3>
                                     <p className="text-red-600 mb-3">CEO & Fundador</p>
                                     <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
                                 </div>
+
                             </div>
-                            {/* Team member 2 */}
+                            
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                                 <div className="relative w-full h-64">
                                     <Image
-                                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2376&q=80"
+                                        src="/personas/sra_camisa_blanca.jpg"
                                         alt="Miembro del equipo"
                                         className="object-cover"
                                         fill
                                         sizes="(max-width: 768px) 100vw, 25vw"
                                     />
                                 </div>
+
                                 <div className="p-6">
-                                    <h3 className="text-xl font-semibold mb-1">Laura González</h3>
-                                    <p className="text-red-600 mb-3">Directora de Ventas</p>
+                                    <h3 className="text-xl font-semibold mb-1">Miembro 2</h3>
+                                    <p className="text-red-600 mb-3">Posición</p>
                                     <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
                                 </div>
+
                             </div>
-                            {/* Team member 3 */}
+                            
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                                 <div className="relative w-full h-64">
                                     <Image
-                                        src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2374&q=80"
+                                        src="/personas/sra_rubia.jpg"
                                         alt="Miembro del equipo"
                                         className="object-cover"
                                         fill
                                         sizes="(max-width: 768px) 100vw, 25vw"
                                     />
                                 </div>
+
                                 <div className="p-6">
-                                    <h3 className="text-xl font-semibold mb-1">Miguel Torres</h3>
-                                    <p className="text-red-600 mb-3">Asesor Inmobiliario</p>
+                                    <h3 className="text-xl font-semibold mb-1">Miembro 3</h3>
+                                    <p className="text-red-600 mb-3">Posición</p>
                                     <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
                                 </div>
+
                             </div>
-                            {/* Team member 4 */}
+                            
                             <div className="bg-white rounded-lg shadow-md overflow-hidden">
                                 <div className="relative w-full h-64">
                                     <Image
-                                        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2361&q=80"
+                                        src="/personas/sra_saco_negro.jpg"
                                         alt="Miembro del equipo"
                                         className="object-cover"
                                         fill
                                         sizes="(max-width: 768px) 100vw, 25vw"
                                     />
                                 </div>
+
                                 <div className="p-6">
-                                    <h3 className="text-xl font-semibold mb-1">Ana Martínez</h3>
-                                    <p className="text-red-600 mb-3">Directora de Marketing</p>
+                                    <h3 className="text-xl font-semibold mb-1">Miembro 4</h3>
+                                    <p className="text-red-600 mb-3">Posición</p>
                                     <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -168,7 +176,7 @@ export default function AboutUsPage() {
                             <div>
                                 <div className="relative w-full h-[350px]">
                                     <Image
-                                        src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2301&q=80"
+                                        src="/img/office.jpg"
                                         alt="Imagen de nuestra oficina"
                                         className="rounded-xl shadow-lg object-cover"
                                         fill
