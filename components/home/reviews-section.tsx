@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
+import Image from "next/image"
 
 export function TestimonialsSection() {
     useEffect(() => {
@@ -33,9 +34,11 @@ export function TestimonialsSection() {
                         className="powered-by-es es-summary-slider"
                         rel="noopener noreferrer"
                     >
-                        <img 
+                        <Image 
                             src="https://embedsocial.com/cdn/icon/embedsocial-logo.webp" 
-                            alt="EmbedSocial" 
+                            alt="EmbedSocial"
+                            width={24}
+                            height={24}
                         />
                         <span>Google reviews widget</span>
                     </a>

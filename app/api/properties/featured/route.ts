@@ -72,7 +72,43 @@ export async function GET() {
 
         console.log('Total featured properties found:', featuredProperties.length);
 
-        const allFormattedProperties: any[] = [];
+        interface FormattedProperty {
+            id: number;
+            title: string;
+            description: string;
+            address: string;
+            full_location: string;
+            short_location: string;
+            price: string;
+            currency: string;
+            bedrooms: number;
+            bathrooms: number;
+            sqft: number;
+            images: Array<{
+                image: string;
+                thumb?: string;
+                original?: string;
+                description?: string;
+                is_front_cover?: boolean;
+                order?: number;
+                is_blueprint?: boolean;
+            }>;
+            type: string;
+            operation_type: string;
+            featured: boolean;
+            age: number;
+            parking_lot_amount: number;
+            disposition?: string;
+            operations: Array<{
+                operation_id: number;
+                operation_type: string;
+                price: number;
+                currency: string;
+                period?: string;
+            }>;
+        }
+
+        const allFormattedProperties: FormattedProperty[] = [];
 
         featuredProperties.forEach((property: Property) => {
             const operations = property.operations || [];
@@ -141,8 +177,7 @@ export async function GET() {
             });
         });
 
-        const salesCount = allFormattedProperties.filter(p => p.operation_type === 'sale').length;
-        const rentCount = allFormattedProperties.filter(p => p.operation_type === 'rent').length;
+        console.log(`Propiedades destacadas procesadas: ${allFormattedProperties.length} (${allFormattedProperties.filter(p => p.operation_type === 'sale').length} ventas, ${allFormattedProperties.filter(p => p.operation_type === 'rent').length} alquileres)`);
 
         return NextResponse.json(allFormattedProperties);
     } catch (error) {

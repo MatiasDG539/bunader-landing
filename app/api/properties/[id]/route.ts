@@ -84,10 +84,12 @@ interface Property {
     geo_long?: string;
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(
+    request: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    const { id } = await params;
     try {
-        const { id } = params;
-
         const url = `${BASE_URL}property/${id}/?lang=es_ar&key=${API_KEY}`;
 
         const response = await axios.get(url);
@@ -166,7 +168,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
         return NextResponse.json(formattedProperty);
     } catch (error) {
-        console.error(`Error al obtener la propiedad con ID ${params.id}:`, error);
+        console.error(`Error al obtener la propiedad con ID ${id}:`, error);
         return NextResponse.json({ error: 'Error al obtener la propiedad' }, { status: 500 });
     }
 }

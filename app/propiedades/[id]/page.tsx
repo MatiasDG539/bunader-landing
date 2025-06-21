@@ -1,10 +1,10 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Bed, Bath, Grid3X3, Car, MapPin, Home, Calendar, Building } from "lucide-react"
+import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building } from "lucide-react"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
@@ -12,9 +12,33 @@ import PropertyMap from "@/components/ui/property-map"
 
 import { getPropertyById, Property } from "@/actions/tokkoApi"
 
+// Interface extendida para propiedades adicionales
+interface ExtendedProperty extends Property {
+    tags?: Array<{
+        id: number;
+        name: string;
+        type: number;
+    }>;
+    property_condition?: string;
+    situation?: string;
+    expenses?: number;
+    toilet_amount?: number;
+    roofed_surface?: string;
+    semiroofed_surface?: string;
+    unroofed_surface?: string;
+    rich_description?: string;
+    producer?: {
+        name?: string;
+        phone?: string;
+        cellphone?: string;
+        email?: string;
+    };
+    reference_code?: string;
+}
+
 export default function PropertyPage() {
     const { id } = useParams()
-    const [property, setProperty] = useState<Property | null>(null)
+    const [property, setProperty] = useState<ExtendedProperty | null>(null)
     const [loading, setLoading] = useState(true)
     const [activeImageIndex, setActiveImageIndex] = useState(0)
     const [isImageModalOpen, setIsImageModalOpen] = useState(false)
@@ -58,11 +82,11 @@ export default function PropertyPage() {
         setIsImageModalOpen(false)
     }
 
-    const handleKeyDown = (e: KeyboardEvent) => {
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
         if (e.key === 'Escape') {
             closeImageModal()
         }
-    }
+    }, [])
 
     useEffect(() => {
         if (isImageModalOpen) {
@@ -77,7 +101,7 @@ export default function PropertyPage() {
             document.removeEventListener('keydown', handleKeyDown)
             document.body.style.overflow = 'unset'
         }
-    }, [isImageModalOpen])
+    }, [isImageModalOpen, handleKeyDown])
 
     if (loading) {
         return (
@@ -241,10 +265,10 @@ export default function PropertyPage() {
                                   (property.age !== undefined) ||
                                   (property.bathrooms !== undefined && property.bathrooms > 0) ||
                                   (property.disposition && property.disposition.trim() !== '') ||
-                                  ((property as any).property_condition && (property as any).property_condition.trim() !== '') ||
-                                  ((property as any).situation && (property as any).situation.trim() !== '') ||
-                                  ((property as any).expenses !== undefined && (property as any).expenses > 0) ||
-                                  ((property as any).toilet_amount !== undefined && (property as any).toilet_amount > 0) ||
+                                  (property.property_condition && property.property_condition.trim() !== '') ||
+                                  (property.situation && property.situation.trim() !== '') ||
+                                  (property.expenses !== undefined && property.expenses > 0) ||
+                                  (property.toilet_amount !== undefined && property.toilet_amount > 0) ||
                                   (property.parking_lot_amount !== undefined && property.parking_lot_amount > 0)) && (
                                     <div className="mb-8">
                                         <h2 className="text-2xl font-bold mb-6">Información general</h2>
@@ -275,28 +299,28 @@ export default function PropertyPage() {
                                                     <span className="font-medium">{property.disposition}</span>
                                                 </div>
                                             )}
-                                            {(property as any).property_condition && (property as any).property_condition.trim() !== '' && (
+                                            {property.property_condition && property.property_condition.trim() !== '' && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Condición:</span>
-                                                    <span className="font-medium">{(property as any).property_condition}</span>
+                                                    <span className="font-medium">{property.property_condition}</span>
                                                 </div>
                                             )}
-                                            {(property as any).situation && (property as any).situation.trim() !== '' && (
+                                            {property.situation && property.situation.trim() !== '' && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Situación:</span>
-                                                    <span className="font-medium">{(property as any).situation}</span>
+                                                    <span className="font-medium">{property.situation}</span>
                                                 </div>
                                             )}
-                                            {(property as any).expenses !== undefined && (property as any).expenses > 0 && (
+                                            {property.expenses !== undefined && property.expenses > 0 && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Expensas:</span>
-                                                    <span className="font-medium">${(property as any).expenses.toLocaleString()}</span>
+                                                    <span className="font-medium">${property.expenses.toLocaleString()}</span>
                                                 </div>
                                             )}
-                                            {(property as any).toilet_amount !== undefined && (property as any).toilet_amount > 0 && (
+                                            {property.toilet_amount !== undefined && property.toilet_amount > 0 && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Toilettes:</span>
-                                                    <span className="font-medium">{(property as any).toilet_amount}</span>
+                                                    <span className="font-medium">{property.toilet_amount}</span>
                                                 </div>
                                             )}
                                             {property.parking_lot_amount !== undefined && property.parking_lot_amount > 0 && (
@@ -310,13 +334,13 @@ export default function PropertyPage() {
                                 )}
 
                                 {/* Ambientes */}
-                                {(property as any).tags && (property as any).tags.filter((tag: any) => tag.type === 2).length > 0 && (
+                                {property.tags && property.tags.filter((tag) => tag.type === 2).length > 0 && (
                                     <div className="mb-8">
                                         <h2 className="text-2xl font-bold mb-6">Ambientes</h2>
                                         <div className="flex flex-wrap gap-2">
-                                            {(property as any).tags
-                                                .filter((tag: any) => tag.type === 2)
-                                                .map((tag: any) => (
+                                            {property.tags
+                                                .filter((tag) => tag.type === 2)
+                                                .map((tag) => (
                                                     <span
                                                         key={tag.id}
                                                         className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-green-100 text-green-800"
@@ -329,13 +353,13 @@ export default function PropertyPage() {
                                 )}
 
                                 {/* Adicionales */}
-                                {(property as any).tags && (property as any).tags.filter((tag: any) => tag.type === 3).length > 0 && (
+                                {property.tags && property.tags.filter((tag) => tag.type === 3).length > 0 && (
                                     <div className="mb-8">
                                         <h2 className="text-2xl font-bold mb-6">Adicionales</h2>
                                         <div className="flex flex-wrap gap-2">
-                                            {(property as any).tags
-                                                .filter((tag: any) => tag.type === 3)
-                                                .map((tag: any) => (
+                                            {property.tags
+                                                .filter((tag) => tag.type === 3)
+                                                .map((tag) => (
                                                     <span
                                                         key={tag.id}
                                                         className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800"
@@ -349,9 +373,9 @@ export default function PropertyPage() {
 
                                 {/* Superficies y medidas */}
                                 {((property.total_surface !== undefined && property.total_surface > 0) ||
-                                  ((property as any).roofed_surface && parseFloat((property as any).roofed_surface) > 0) ||
-                                  ((property as any).semiroofed_surface && parseFloat((property as any).semiroofed_surface) > 0) ||
-                                  ((property as any).unroofed_surface && parseFloat((property as any).unroofed_surface) > 0)) && (
+                                  (property.roofed_surface && parseFloat(property.roofed_surface) > 0) ||
+                                  (property.semiroofed_surface && parseFloat(property.semiroofed_surface) > 0) ||
+                                  (property.unroofed_surface && parseFloat(property.unroofed_surface) > 0)) && (
                                     <div className="mb-8">
                                         <h2 className="text-2xl font-bold mb-6">Superficies y medidas</h2>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
@@ -361,22 +385,22 @@ export default function PropertyPage() {
                                                     <span className="font-medium">{property.total_surface} m²</span>
                                                 </div>
                                             )}
-                                            {(property as any).roofed_surface && parseFloat((property as any).roofed_surface) > 0 && (
+                                            {property.roofed_surface && parseFloat(property.roofed_surface) > 0 && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Superficie techada:</span>
-                                                    <span className="font-medium">{(property as any).roofed_surface} m²</span>
+                                                    <span className="font-medium">{property.roofed_surface} m²</span>
                                                 </div>
                                             )}
-                                            {(property as any).semiroofed_surface && parseFloat((property as any).semiroofed_surface) > 0 && (
+                                            {property.semiroofed_surface && parseFloat(property.semiroofed_surface) > 0 && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Superficie semi-techada:</span>
-                                                    <span className="font-medium">{(property as any).semiroofed_surface} m²</span>
+                                                    <span className="font-medium">{property.semiroofed_surface} m²</span>
                                                 </div>
                                             )}
-                                            {(property as any).unroofed_surface && parseFloat((property as any).unroofed_surface) > 0 && (
+                                            {property.unroofed_surface && parseFloat(property.unroofed_surface) > 0 && (
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Superficie descubierta:</span>
-                                                    <span className="font-medium">{(property as any).unroofed_surface} m²</span>
+                                                    <span className="font-medium">{property.unroofed_surface} m²</span>
                                                 </div>
                                             )}
                                         </div>
@@ -386,10 +410,10 @@ export default function PropertyPage() {
                                 <div className="mt-8">
                                     <h2 className="text-2xl font-bold mb-4">Descripción</h2>
                                     <div className="text-gray-700 leading-relaxed">
-                                        {(property as any).rich_description ? (
+                                        {property.rich_description ? (
                                             <div 
                                                 dangerouslySetInnerHTML={{ 
-                                                    __html: (property as any).rich_description
+                                                    __html: property.rich_description
                                                         .replace(/<br\s*\/?>/gi, '<br />')
                                                         .replace(/<p><br \/><\/p>/gi, '<br />')
                                                 }} 
@@ -409,40 +433,26 @@ export default function PropertyPage() {
                                     </div>
                                     
                                     {/* Información del agente */}
-                                    {/* {(property as any).producer && (
+                                    {/* {property.producer && (
                                         <div className="mt-8 p-6 bg-gray-50 rounded-lg">
                                             <h3 className="text-lg font-bold mb-4">Información del agente</h3>
                                             <div className="flex items-start space-x-4">
-                                                {(property as any).producer.picture && (
-                                                    <div className="flex-shrink-0">
-                                                        <Image
-                                                            src={(property as any).producer.picture}
-                                                            alt={(property as any).producer.name}
-                                                            width={60}
-                                                            height={60}
-                                                            className="rounded-full object-cover"
-                                                        />
-                                                    </div>
-                                                )}
                                                 <div className="flex-1">
-                                                    <h4 className="font-semibold text-gray-900">{(property as any).producer.name}</h4>
-                                                    {(property as any).producer.position && (
-                                                        <p className="text-sm text-gray-600 mb-2">{(property as any).producer.position}</p>
-                                                    )}
+                                                    <h4 className="font-semibold text-gray-900">{property.producer.name}</h4>
                                                     <div className="space-y-1 text-sm">
-                                                        {(property as any).producer.email && (
+                                                        {property.producer.email && (
                                                             <p className="text-gray-600">
-                                                                <span className="font-medium">Email:</span> {(property as any).producer.email}
+                                                                <span className="font-medium">Email:</span> {property.producer.email}
                                                             </p>
                                                         )}
-                                                        {(property as any).producer.phone && (
+                                                        {property.producer.phone && (
                                                             <p className="text-gray-600">
-                                                                <span className="font-medium">Teléfono:</span> {(property as any).producer.phone}
+                                                                <span className="font-medium">Teléfono:</span> {property.producer.phone}
                                                             </p>
                                                         )}
-                                                        {(property as any).producer.cellphone && (
+                                                        {property.producer.cellphone && (
                                                             <p className="text-gray-600">
-                                                                <span className="font-medium">Celular:</span> {(property as any).producer.cellphone}
+                                                                <span className="font-medium">Celular:</span> {property.producer.cellphone}
                                                             </p>
                                                         )}
                                                     </div>
