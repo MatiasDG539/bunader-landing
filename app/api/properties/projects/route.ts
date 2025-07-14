@@ -3,8 +3,7 @@ import axios from 'axios';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
-const LANG = process.env.LANG;
-
+const LANG = 'es_ar';
 interface ProjectLocation {
     full_location: string;
 }

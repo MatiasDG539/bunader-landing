@@ -5,7 +5,7 @@ import { unstable_cache } from 'next/cache';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
-const LANG = process.env.LANG || 'es_ar';
+const LANG = 'es_ar';
 
 const CACHE_TTL = 60 * 15;
 
@@ -245,7 +245,7 @@ const _getSalesProperties = async (): Promise<Property[]> => {
                     is_blueprint: photo?.is_blueprint
                 })) || [{ image: '/placeholder.svg' }],
                 type: property.type?.name || getPropertyType(property.type_id || 0, LANG),
-                operation_type: 'sale',
+                operation_type: 'venta',
                 featured: property.starred || false,
                 age: property.age || 0,
                 parking_lot_amount: property.parking_lot_amount || 0,
@@ -444,14 +444,14 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
         const saleOperation = operations.find((op: any) => op.operation_id === 1);
         const rentOperation = operations.find((op: any) => op.operation_id === 2);
 
-        let operationType = 'sale';
+        let operationType = 'venta';
         let priceInfo = {};
 
         if (saleOperation) {
-            operationType = 'sale';
+            operationType = 'venta';
             priceInfo = saleOperation.prices?.[0] || {};
         } else if (rentOperation) {
-            operationType = 'rent';
+            operationType = 'alquiler';
             priceInfo = rentOperation.prices?.[0] || {};
         }
 
@@ -571,7 +571,7 @@ const _getFeaturedProperties = async (): Promise<Property[]> => {
 
                 const formattedProperty: Property = {
                     id: property.id || 0,
-                    title: property.title || property.address || `Propiedad en ${operationType === 'sale' ? 'Venta' : 'Alquiler'}`,
+                    title: property.title || property.address || `Propiedad en ${operationType === 'venta' ? 'Venta' : 'Alquiler'}`,
                     description_only: property.description || '',
                     address: property.address || '',
                     full_location: property.location?.full_location || '',
