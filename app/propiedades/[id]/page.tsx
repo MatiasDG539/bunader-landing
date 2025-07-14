@@ -295,7 +295,7 @@ export default function PropertyPage() {
                                             )}
                                             {property.disposition && property.disposition.trim() !== '' && (
                                                 <div className="flex justify-between">
-                                                    <span className="text-gray-600">Disposición:</span>
+                                                    <span className="text-gray-600">Orientación:</span>
                                                     <span className="font-medium">{property.disposition}</span>
                                                 </div>
                                             )}

@@ -189,7 +189,7 @@ export default function RentPage() {
             <SiteHeaderDark />
 
             <main className="flex-1 py-8">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto px-4 lg:px-8">
 
                     {/* Hero */}
 
@@ -201,7 +201,7 @@ export default function RentPage() {
                         </div>
                     </section>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
 
                         {/* Filtros - columna izquierda */}
 
@@ -270,6 +270,7 @@ export default function RentPage() {
                                                                         className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
                                                                         onClick={(e) => {
                                                                             e.preventDefault();
+                                                                            e.stopPropagation();
                                                                             changePropertyImage(property.id, 'prev');
                                                                         }}
                                                                     >
@@ -281,6 +282,7 @@ export default function RentPage() {
                                                                         className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
                                                                         onClick={(e) => {
                                                                             e.preventDefault();
+                                                                            e.stopPropagation();
                                                                             changePropertyImage(property.id, 'next');
                                                                         }}
                                                                     >
