@@ -21,7 +21,7 @@ export function ContactSection() {
                             </div>
                             <div>
                                 <h3 className="text-xl font-bold mb-1">Llámanos</h3>
-                                <p className="text-gray-600">(381) 123-4567</p>
+                                <p className="text-gray-600">(0381) 4243087</p>
                             </div>
                         </div>
 
@@ -31,7 +31,7 @@ export function ContactSection() {
                             </div>
                             <div>
                                 <h3 className="text-xl font-bold mb-1">Envíanos un Email</h3>
-                                <p className="text-gray-600">info@primeestate.com</p>
+                                <p className="text-gray-600">info@bunader.com.ar</p>
                             </div>
                         </div>
 
@@ -42,11 +42,11 @@ export function ContactSection() {
                             <div>
                                 <h3 className="text-xl font-bold mb-1">Visítanos</h3>
                                 <p className="text-gray-600">
-                                    123 Av. Inmobiliaria
+                                    Buenos Aires 491
                                     <br />
-                                    Oficina 456
+                                    Piso 6
                                     <br />
-                                    San Miguel de Tucumán, Tucumán
+                                    San Miguel de Tucumán, Tucumán, Argentina.
                                 </p>
                             </div>
                         </div>
