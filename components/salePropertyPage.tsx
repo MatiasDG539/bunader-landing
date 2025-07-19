@@ -73,7 +73,7 @@ export default function SaleProperty() {
                                 </div>
                                 <h3 className="text-xl font-semibold mb-2">Máxima Visibilidad</h3>
                                 <p className="text-gray-600">
-                                    Tu inmueble aparecerá marcado como "Recientemente cargado" para máxima visibilidad.
+                                    Tu inmueble aparecerá marcado como &ldquo;Recientemente cargado&rdquo; para máxima visibilidad.
                                 </p>
                             </div>
                         </div>
