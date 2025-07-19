@@ -106,7 +106,7 @@ export function SiteHeaderDark() {
                     >
                         Contacto
                     </Link>
-                    <Link href="#">
+                    <Link href="/vender-propiedad" className="hidden md:inline-block">
                         <Button className="text-base text-white bg-red-600 hover:bg-red-800 hover:text-white ml-4 cursor-pointer transition-colors">Publica Tu Propiedad</Button>
                     </Link>
                 </nav>

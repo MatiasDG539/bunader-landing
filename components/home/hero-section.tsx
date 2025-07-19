@@ -35,7 +35,7 @@ export function HeroSection() {
                             </Button>
                         </Link>
 
-                        <Link href="/#" className="col-span-1">
+                        <Link href="/vender-propiedad" className="col-span-1">
                             <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
                                 Quiero Vender
                             </Button>

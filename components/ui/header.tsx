@@ -111,7 +111,7 @@ export function SiteHeader() {
                     >
                         Contacto
                     </Link>
-                    <Link href="#">
+                    <Link href="/vender-propiedad" className="hidden md:inline-block">
                         <Button className="bg-red-600 hover:bg-red-700 ml-4 text-base cursor-pointer">Publica Tu Propiedad</Button>
                     </Link>
                 </nav>

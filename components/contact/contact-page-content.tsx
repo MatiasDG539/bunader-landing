@@ -7,19 +7,15 @@ export function ContactPageContent() {
     return (
         <div className="py-5 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
 
-            {/* Main contact section with form and info */}
             <div className="grid lg:grid-cols-2 gap-12 items-start">
                 <ContactInfo />
                 <ContactForm />
             </div>
 
-            {/* Map section */}
             <ContactMap />
 
-            {/* FAQ section */}
             <ContactFAQ />
 
-            {/* CTA section */}
             <div className="bg-red-600 text-white rounded-xl p-12 my-16 text-center">
                 <h2 className="text-3xl font-bold mb-4">¿Listo para encontrar tu hogar ideal?</h2>
                 <p className="text-xl mb-8 max-w-2xl mx-auto">
