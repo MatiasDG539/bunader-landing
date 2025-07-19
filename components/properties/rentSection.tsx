@@ -14,6 +14,13 @@ export function RentSection() {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({})
 
+    // Helper function to check if a value is valid (not 0, "0", "00", null, undefined)
+    const isValidValue = (value: any): boolean => {
+        if (!value) return false;
+        const numValue = Number(value);
+        return numValue > 0;
+    };
+
     useEffect(() => {
         if (!rentProperties.length) return;
 
@@ -180,19 +187,25 @@ export function RentSection() {
                                     <MapPin className="h-4 w-4 mr-1" />
                                     {property.short_location|| property.short_location || 'Ubicación no disponible'}
                                 </div>
-                                <div className="flex justify-between mb-6">
-                                    <div className="flex items-center">
-                                        <Bed className="h-5 w-5 mr-1 text-gray-400" />
-                                        <span>{property.bedrooms || '-'} Hab</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <Bath className="h-5 w-5 mr-1 text-gray-400" />
-                                        <span>{property.bathrooms || '-'} Baños</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <Maximize className="h-5 w-5 mr-1 text-gray-400" />
-                                        <span>{property.sqft || '-'} m²</span>
-                                    </div>
+                                <div className="flex flex-wrap gap-4 mb-6">
+                                    {isValidValue(property.bedrooms) && (
+                                        <div className="flex items-center">
+                                            <Bed className="h-5 w-5 mr-1 text-gray-400" />
+                                            <span>{property.bedrooms} Hab</span>
+                                        </div>
+                                    )}
+                                    {isValidValue(property.bathrooms) && (
+                                        <div className="flex items-center">
+                                            <Bath className="h-5 w-5 mr-1 text-gray-400" />
+                                            <span>{property.bathrooms} Baños</span>
+                                        </div>
+                                    )}
+                                    {isValidValue(property.sqft) && (
+                                        <div className="flex items-center">
+                                            <Maximize className="h-5 w-5 mr-1 text-gray-400" />
+                                            <span>{property.sqft} m²</span>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="mt-auto">
                                     <Link href={`/propiedades/${property.id}`}>
