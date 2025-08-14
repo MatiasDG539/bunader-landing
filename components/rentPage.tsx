@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SiteHeaderDark } from '@/components/ui/header-dark';
 import { SiteFooter } from '@/components/ui/footer';
 import { PropertyFilter, PropertyFilters } from '@/components/ui/property-filter';
@@ -9,100 +9,95 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
-import { PromoBanner } from '@/components/promoBanner';
 import Link from 'next/link';
+import { PromoBanner } from '@/components/promoBanner';
 
 export default function RentPage() {
     const [properties, setProperties] = useState<Property[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
-    const [visibleProperties, setVisibleProperties] = useState<Property[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [loadingMore, setLoadingMore] = useState<boolean>(false);
     const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
-    const [currentPage, setCurrentPage] = useState(1);
-    const [hasMore, setHasMore] = useState(true);
-    const observer = useRef<IntersectionObserver | null>(null);
-    const propertiesPerPage = 6;
 
+    // Helper function to check if a value is valid (greater than 0)
+    const isValidValue = (value: string | number | null | undefined): boolean => {
+        const numValue = Number(value);
+        return numValue > 0;
+    };
+
+    // Cargar propiedades
+    const loadProperties = async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const data = await getRentProperties();
+            setProperties(data);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Error al cargar propiedades');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Cargar propiedades al montar el componente
     useEffect(() => {
-        const fetchProperties = async () => {
-            try {
-                setLoading(true);
-                const data = await getRentProperties();
-                setProperties(data);
-                setFilteredProperties(data);
-            } catch (error) {
-                console.error("Error fetching rental properties:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProperties();
+        loadProperties();
     }, []);
 
+    // Actualizar propiedades filtradas cuando cambian las propiedades
+    useEffect(() => {
+        setFilteredProperties(properties);
+    }, [properties]);
+
+    // Auto-scroll de imágenes
     useEffect(() => {
         if (!filteredProperties.length) return;
 
         const intervalIds: Record<number, NodeJS.Timeout> = {};
 
         filteredProperties.forEach(property => {
-            if (property.images.length > 1) {
+            if (property.images && property.images.length > 1) {
                 intervalIds[property.id] = setInterval(() => {
-                    setActiveImageIndex(prev => ({
-                        ...prev,
-                        [property.id]: ((prev[property.id] || 0) + 1) % property.images.length
-                    }));
-                }, 7000);
+                    setActiveImageIndex(prev => {
+                        const currentIndex = prev[property.id] || 0;
+                        const nextIndex = (currentIndex + 1) % property.images.length;
+                        return { ...prev, [property.id]: nextIndex };
+                    });
+                }, 5000);
             }
         });
 
         return () => {
-            Object.values(intervalIds).forEach(id => clearInterval(id));
+            Object.values(intervalIds).forEach(intervalId => clearInterval(intervalId));
         };
     }, [filteredProperties]);
 
-    const handleFilterProperties = (filters: PropertyFilters) => {
-        let filtered = [...properties];
+    const applyFilters = (filters: PropertyFilters) => {
+        let filtered = properties;
 
-        if (filters.location) {
-            const locationLower = filters.location.toLowerCase();
-            filtered = filtered.filter(property =>
-                property.short_location?.toLowerCase().includes(locationLower) ||
-                property.full_location?.toLowerCase().includes(locationLower)
-            );
-        }
-
-        if (filters.minPrice) {
+        if (filters.minPrice || filters.maxPrice) {
             filtered = filtered.filter(property => {
-                const price = parseFloat(property.price.replace(/[^0-9.-]+/g, ""));
-                return price >= filters.minPrice!;
+                const price = parseInt(property.price.replace(/[^\d]/g, ''));
+                const minPrice = filters.minPrice || 0;
+                const maxPrice = filters.maxPrice || Infinity;
+                return price >= minPrice && price <= maxPrice;
             });
         }
 
-        if (filters.maxPrice) {
-            filtered = filtered.filter(property => {
-                const price = parseFloat(property.price.replace(/[^0-9.-]+/g, ""));
-                return price <= filters.maxPrice!;
-            });
+        if (filters.minBedrooms && filters.minBedrooms > 0) {
+            filtered = filtered.filter(property => property.bedrooms >= filters.minBedrooms!);
+        }
+
+        if (filters.minBathrooms && filters.minBathrooms > 0) {
+            filtered = filtered.filter(property => property.bathrooms >= filters.minBathrooms!);
         }
 
         if (filters.propertyTypes && filters.propertyTypes.length > 0) {
             filtered = filtered.filter(property =>
-                filters.propertyTypes!.includes(property.type.toLowerCase())
+                filters.propertyTypes!.some(type => 
+                    property.type.toLowerCase().includes(type.toLowerCase())
+                )
             );
-        }
-
-        if (filters.minBedrooms) {
-            filtered = filtered.filter(property => property.bedrooms >= filters.minBedrooms!);
-        }
-
-        if (filters.minBathrooms) {
-            filtered = filtered.filter(property => property.bathrooms >= filters.minBathrooms!);
-        }
-
-        if (filters.minArea) {
-            filtered = filtered.filter(property => property.sqft >= filters.minArea!);
         }
 
         if (filters.minParkingSpots) {
@@ -113,10 +108,6 @@ export default function RentPage() {
         }
 
         setFilteredProperties(filtered);
-        setCurrentPage(1);
-        // También resetear las propiedades visibles y el estado "hasMore"
-        setVisibleProperties(filtered.slice(0, propertiesPerPage));
-        setHasMore(filtered.length > propertiesPerPage);
     };
 
     const changePropertyImage = (propertyId: number, direction: 'next' | 'prev') => {
@@ -137,52 +128,21 @@ export default function RentPage() {
             return { ...prev, [propertyId]: newIndex };
         });
     };
-    const loadMoreProperties = useCallback(() => {
-        if (loadingMore) return;
 
-        const nextPage = currentPage + 1;
-        const startIndex = currentPage * propertiesPerPage;
-        const endIndex = startIndex + propertiesPerPage;
-
-        if (endIndex >= filteredProperties.length) {
-            setHasMore(false);
-        }
-
-        setLoadingMore(true);
-
-        setTimeout(() => {
-            setVisibleProperties(prevVisible => {
-                const newItems = filteredProperties.slice(startIndex, endIndex);
-                const existingIds = new Set(prevVisible.map(p => p.id));
-                const uniqueNewItems = newItems.filter(item => !existingIds.has(item.id));
-
-                return [...prevVisible, ...uniqueNewItems];
-            });
-            setCurrentPage(nextPage);
-            setLoadingMore(false);
-        }, 500);
-    }, [currentPage, filteredProperties, loadingMore, propertiesPerPage]);
-
-    const lastPropertyElementRef = useCallback((node: HTMLDivElement | null) => {
-        if (loading || loadingMore) return;
-
-        if (observer.current) observer.current.disconnect();
-
-        observer.current = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting && hasMore) {
-                loadMoreProperties();
-            }
-        });
-
-        if (node) observer.current.observe(node);
-    }, [loading, loadingMore, hasMore, loadMoreProperties]);
-
-    useEffect(() => {
-        setCurrentPage(1);
-        setHasMore(filteredProperties.length > propertiesPerPage);
-        // Asegurarnos de iniciar con un conjunto limpio de propiedades
-        setVisibleProperties(() => [...filteredProperties.slice(0, propertiesPerPage)]);
-    }, [filteredProperties, propertiesPerPage]);
+    if (error) {
+        return (
+            <div className="flex min-h-screen flex-col bg-gray-50">
+                <SiteHeaderDark />
+                <main className="flex-1 py-8 flex items-center justify-center">
+                    <div className="text-center">
+                        <p className="text-red-600 mb-4">Error al cargar las propiedades: {error}</p>
+                        <Button onClick={loadProperties}>Reintentar</Button>
+                    </div>
+                </main>
+                <SiteFooter />
+            </div>
+        );
+    }
 
     return (
         <div className="flex min-h-screen flex-col bg-gray-50">
@@ -190,178 +150,153 @@ export default function RentPage() {
 
             <main className="flex-1 py-8">
                 <div className="container mx-auto px-4 lg:px-8">
-
                     {/* Hero */}
-
                     <section className="relative h-[300px] mb-12 overflow-hidden rounded-lg shadow-lg bg-red-600">
                         <div className="absolute inset-0 bg-black/20"></div>
                         <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center">
                             <h1 className="text-4xl md:text-5xl font-bold mb-4 mt-12">Propiedades en Alquiler</h1>
-                            <p className="text-xl max-w-2xl">Encuentra el lugar perfecto para alquilar entre nuestra selección de propiedades disponibles</p>
+                            <p className="text-xl max-w-2xl">Descubre el hogar perfecto para rentar entre nuestra selección de propiedades disponibles</p>
                         </div>
                     </section>
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-
                         {/* Filtros - columna izquierda */}
-
-                        <aside className="lg:col-span-1">
-                            <div className="sticky top-24">
-                                <PropertyFilter onFilter={handleFilterProperties} isRental={true} />
+                        <div className="lg:col-span-1">
+                            <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
+                                <PropertyFilter onFilter={applyFilters} />
                             </div>
-                        </aside>
+                        </div>
 
-                        {/* Listado de propiedades - columna derecha */}
-
+                        {/* Propiedades - columna derecha */}
                         <div className="lg:col-span-3">
-                            {loading ? (
-                                <div className="flex justify-center items-center h-64">
-                                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-red-600"></div>
+                            {loading && filteredProperties.length === 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {[...Array(6)].map((_, index) => (
+                                        <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden animate-pulse">
+                                            <div className="w-full h-64 bg-gray-200"></div>
+                                            <div className="p-6">
+                                                <div className="h-6 bg-gray-200 rounded mb-4"></div>
+                                                <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                                                <div className="h-4 bg-gray-200 rounded mb-4"></div>
+                                                <div className="flex justify-between">
+                                                    <div className="h-4 bg-gray-200 rounded w-20"></div>
+                                                    <div className="h-4 bg-gray-200 rounded w-20"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             ) : (
                                 <>
-                                    <div className="flex justify-between items-center mb-6">
-                                        <h2 className="text-xl font-semibold">
-                                            {filteredProperties.length} propiedades encontradas
-                                        </h2>
-                                    </div>
-
-                                    {filteredProperties.length === 0 ? (
-                                        <div className="bg-white p-8 rounded-lg text-center shadow-md">
-                                            <p className="text-lg text-gray-600 mb-4">No se encontraron propiedades que coincidan con los filtros seleccionados.</p>
-                                            <Button
-                                                variant="outline"
-                                                className="hover:bg-red-50 hover:text-red-600"
-                                                onClick={() => handleFilterProperties({})}
-                                            >
-                                                Limpiar filtros
-                                            </Button>
-                                        </div>
-                                    ) : (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            {visibleProperties.map((property, index) => {
-                                                const currentImageIndex = activeImageIndex[property.id] || 0;
-                                                const currentImage = property.images[currentImageIndex]?.image || "/placeholder.svg";
-
-                                                // Referencias para el último elemento (para scroll infinito)
-                                                const isLastElement = index === visibleProperties.length - 1;
-
-                                                return (
-                                                    <Card
-                                                        key={property.id}
-                                                        ref={isLastElement ? lastPropertyElementRef : undefined}
-                                                        className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                                                        onClick={() => window.location.href = `/propiedades/${property.id}`}>
-                                                        <div className="relative h-[250px] w-full">
-                                                            <Image
-                                                                src={currentImage}
-                                                                alt={property.title}
-                                                                fill
-                                                                className="object-cover"
-                                                            />
-
-                                                            {/* Navegación de imágenes */}
-
-                                                            {property.images.length > 1 && (
-                                                                <div className="absolute inset-0 flex justify-between items-center px-2">
-                                                                    <Button
-                                                                        variant="ghost"
-                                                                        size="icon"
-                                                                        className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
-                                                                        onClick={(e) => {
-                                                                            e.preventDefault();
-                                                                            e.stopPropagation();
-                                                                            changePropertyImage(property.id, 'prev');
-                                                                        }}
-                                                                    >
-                                                                        <ChevronLeft className="h-6 w-6" />
-                                                                    </Button>
-                                                                    <Button
-                                                                        variant="ghost"
-                                                                        size="icon"
-                                                                        className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
-                                                                        onClick={(e) => {
-                                                                            e.preventDefault();
-                                                                            e.stopPropagation();
-                                                                            changePropertyImage(property.id, 'next');
-                                                                        }}
-                                                                    >
-                                                                        <ChevronRight className="h-6 w-6" />
-                                                                    </Button>
-                                                                </div>
-                                                            )}
-
-                                                            {/* Indicadores */}
-
-                                                            {property.images.length > 1 && (
-                                                                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
-                                                                    {property.images.map((_, imgIndex) => (
-                                                                        <div
-                                                                            key={imgIndex}
-                                                                            className={`h-1.5 w-1.5 rounded-full ${imgIndex === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                                                                                }`}
-                                                                        ></div>
-                                                                    ))}
-                                                                </div>
-                                                            )}
-
-                                                            {/* Precio */}
-
-                                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
-                                                            <div className="absolute bottom-4 left-4 text-white">
-                                                                <div className="text-2xl font-bold">{property.price}</div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {filteredProperties.map((property) => {
+                                            const currentImageIndex = activeImageIndex[property.id] || 0;
+                                            const currentImage = property.images[currentImageIndex]?.image || "/placeholder.svg";
+                                            
+                                            return (
+                                                <Card
+                                                    key={property.id}
+                                                    className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                                                    onClick={() => window.location.href = `/propiedades/${property.id}`}
+                                                >
+                                                    <div className="relative h-[250px] w-full">
+                                                        <Image
+                                                            src={currentImage}
+                                                            alt={property.title}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                        
+                                                        {/* Navegación de imágenes */}
+                                                        {property.images.length > 1 && (
+                                                            <div className="absolute inset-0 flex justify-between items-center px-2">
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="icon"
+                                                                    className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        changePropertyImage(property.id, 'prev');
+                                                                    }}
+                                                                >
+                                                                    <ChevronLeft className="h-6 w-6" />
+                                                                </Button>
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="icon"
+                                                                    className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        changePropertyImage(property.id, 'next');
+                                                                    }}
+                                                                >
+                                                                    <ChevronRight className="h-6 w-6" />
+                                                                </Button>
                                                             </div>
+                                                        )}
 
-                                                            {/* Tags */}
+                                                        {property.images.length > 1 && (
+                                                            <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+                                                                {property.images.map((_, imgIndex) => (
+                                                                    <div
+                                                                        key={imgIndex}
+                                                                        className={`h-1.5 w-1.5 rounded-full ${
+                                                                            imgIndex === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                                                                        }`}
+                                                                    ></div>
+                                                                ))}
+                                                            </div>
+                                                        )}
 
-                                                            <div className="absolute top-4 left-4">
-                                                                <div className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                                    En alquiler
-                                                                </div>
+                                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
+                                                        <div className="absolute bottom-4 left-4 text-white">
+                                                            <div className="text-2xl font-bold">{property.price}</div>
+                                                        </div>
+
+                                                        <div className="absolute top-4 left-4">
+                                                            <div className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                                Alquiler
                                                             </div>
                                                         </div>
-                                                        <div className="p-6">
-                                                            <h3 className="text-xl font-bold mb-2">{property.title}</h3>
-                                                            <div className="flex items-center text-gray-500 mb-4">
-                                                                <MapPin className="h-4 w-4 mr-1" />
-                                                                {property.short_location}
-                                                            </div>
-                                                            <div className="flex justify-between mb-6">
+                                                    </div>
+                                                    <div className="p-6">
+                                                        <h3 className="text-xl font-bold mb-2">{property.title}</h3>
+                                                        <div className="flex items-center text-gray-500 mb-4">
+                                                            <MapPin className="h-4 w-4 mr-1" />
+                                                            {property.full_location || property.short_location}
+                                                        </div>
+                                                        <div className="flex justify-between mb-6">
+                                                            {isValidValue(property.bedrooms) && (
                                                                 <div className="flex items-center">
                                                                     <Bed className="h-5 w-5 mr-1 text-gray-400" />
                                                                     <span>{property.bedrooms} Hab</span>
                                                                 </div>
+                                                            )}
+                                                            {isValidValue(property.bathrooms) && (
                                                                 <div className="flex items-center">
                                                                     <Bath className="h-5 w-5 mr-1 text-gray-400" />
                                                                     <span>{property.bathrooms} Baños</span>
                                                                 </div>
+                                                            )}
+                                                            {isValidValue(property.sqft) && (
                                                                 <div className="flex items-center">
                                                                     <Maximize className="h-5 w-5 mr-1 text-gray-400" />
                                                                     <span>{property.sqft} m²</span>
                                                                 </div>
-                                                            </div>
-                                                            <Link href={`/propiedades/${property.id}`}>
-                                                                <Button className="w-full bg-red-600 hover:bg-red-700">
-                                                                    Ver Detalles
-                                                                </Button>
-                                                            </Link>
+                                                            )}
                                                         </div>
-                                                    </Card>
-                                                );
-                                            })}
-                                        </div>
-                                    )}
-
-                                    {/* Indicador de carga para scroll infinito */}
-
-                                    {loadingMore && (
-                                        <div className="flex justify-center mt-8 mb-8">
-                                            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"></div>
-                                        </div>
-                                    )}
-
-                                    {!loadingMore && visibleProperties.length > 0 && (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                                        <Link href={`/propiedades/${property.id}`}>
+                                                            <Button className="w-full bg-red-600 hover:bg-red-700">
+                                                                Ver Detalles
+                                                            </Button>
+                                                        </Link>
+                                                    </div>
+                                                </Card>
+                                            );
+                                        })}
+                                        
+                                        {/* Card promocional al final del grid */}
+                                        {filteredProperties.length > 0 && (
                                             <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                                                 <PromoBanner 
                                                     title="¿No encontraste lo que buscabas?"
@@ -370,16 +305,20 @@ export default function RentPage() {
                                                     buttonLink="/contacto"
                                                 />
                                             </Card>
-                                        </div>
-                                    )}
+                                        )}
+                                    </div>
 
-                                    {!hasMore && visibleProperties.length > 0 && filteredProperties.length > propertiesPerPage && (
+                                    {filteredProperties.length > 0 && (
                                         <div className="text-center text-gray-500 py-8">
                                             Has llegado al final de la lista
                                         </div>
                                     )}
 
-
+                                    {filteredProperties.length === 0 && !loading && (
+                                        <div className="text-center py-12">
+                                            <p className="text-gray-500 text-lg">No se encontraron propiedades que coincidan con los filtros seleccionados.</p>
+                                        </div>
+                                    )}
                                 </>
                             )}
                         </div>

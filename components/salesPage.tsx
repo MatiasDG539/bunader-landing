@@ -237,147 +237,152 @@ export default function SalesPage() {
                                             </Button>
                                         </div>
                                     ) : (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            {visibleProperties.map((property, index) => {
-                                                const currentImageIndex = activeImageIndex[property.id] || 0;
-                                                const currentImage = property.images[currentImageIndex]?.image || "/placeholder.svg";
+                                        <>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                {visibleProperties.map((property, index) => {
+                                                    const currentImageIndex = activeImageIndex[property.id] || 0;
+                                                    const currentImage = property.images[currentImageIndex]?.image || "/placeholder.svg";
 
-                                                const isLastElement = index === visibleProperties.length - 1;
+                                                    const isLastElement = index === visibleProperties.length - 1;
 
-                                                return (
-                                                    <Card
-                                                        key={property.id}
-                                                        ref={isLastElement ? lastPropertyElementRef : undefined}
-                                                        className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                                                        onClick={() => window.location.href = `/propiedades/${property.id}`}>
-                                                        <div className="relative h-[250px] w-full">
-                                                            <Image
-                                                                src={currentImage}
-                                                                alt={property.title}
-                                                                fill
-                                                                className="object-cover"
-                                                            />
+                                                    return (
+                                                        <Card
+                                                            key={property.id}
+                                                            ref={isLastElement ? lastPropertyElementRef : undefined}
+                                                            className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                                                            onClick={() => window.location.href = `/propiedades/${property.id}`}>
+                                                            <div className="relative h-[250px] w-full">
+                                                                <Image
+                                                                    src={currentImage}
+                                                                    alt={property.title}
+                                                                    fill
+                                                                    className="object-cover"
+                                                                />
 
-                                                            {/* Navegación de imágenes */}
+                                                                {/* Navegación de imágenes */}
 
-                                                            {property.images.length > 1 && (
-                                                                <div className="absolute inset-0 flex justify-between items-center px-2">
-                                                                    <Button
-                                                                        variant="ghost"
-                                                                        size="icon"
-                                                                        className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
-                                                                        onClick={(e) => {
-                                                                            e.preventDefault();
-                                                                            e.stopPropagation();
-                                                                            changePropertyImage(property.id, 'prev');
-                                                                        }}
-                                                                    >
-                                                                        <ChevronLeft className="h-6 w-6" />
+                                                                {property.images.length > 1 && (
+                                                                    <div className="absolute inset-0 flex justify-between items-center px-2">
+                                                                        <Button
+                                                                            variant="ghost"
+                                                                            size="icon"
+                                                                            className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                e.stopPropagation();
+                                                                                changePropertyImage(property.id, 'prev');
+                                                                            }}
+                                                                        >
+                                                                            <ChevronLeft className="h-6 w-6" />
+                                                                        </Button>
+                                                                        <Button
+                                                                            variant="ghost"
+                                                                            size="icon"
+                                                                            className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
+                                                                            onClick={(e) => {
+                                                                                e.preventDefault();
+                                                                                e.stopPropagation();
+                                                                                changePropertyImage(property.id, 'next');
+                                                                            }}
+                                                                        >
+                                                                            <ChevronRight className="h-6 w-6" />
+                                                                        </Button>
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Indicadores */}
+
+                                                                {property.images.length > 1 && (
+                                                                    <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
+                                                                        {property.images.map((_, imgIndex) => (
+                                                                            <div
+                                                                                key={imgIndex}
+                                                                                className={`h-1.5 w-1.5 rounded-full ${imgIndex === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                                                                                    }`}
+                                                                            ></div>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+
+                                                                {/* Precio */}
+
+                                                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
+                                                                <div className="absolute bottom-4 left-4 text-white">
+                                                                    <div className="text-2xl font-bold">{property.price}</div>
+                                                                </div>
+
+                                                                {/* Tags */}
+
+                                                                <div className="absolute top-4 left-4">
+                                                                    <div className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                                                                        En venta
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="p-6">
+                                                                <h3 className="text-xl font-bold mb-2">{property.title}</h3>
+                                                                <div className="flex items-center text-gray-500 mb-4">
+                                                                    <MapPin className="h-4 w-4 mr-1" />
+                                                                    {property.short_location}
+                                                                </div>
+                                                                <div className="flex justify-between mb-6">
+                                                                    {property.bedrooms > 0 && (
+                                                                        <div className="flex items-center">
+                                                                            <Bed className="h-5 w-5 mr-1 text-gray-400" />
+                                                                            <span>{property.bedrooms} Hab</span>
+                                                                        </div>
+                                                                    )}
+                                                                    {property.bathrooms > 0 && (
+                                                                        <div className="flex items-center">
+                                                                            <Bath className="h-5 w-5 mr-1 text-gray-400" />
+                                                                            <span>{property.bathrooms} Baños</span>
+                                                                        </div>
+                                                                    )}
+                                                                    {property.sqft > 0 && (
+                                                                        <div className="flex items-center">
+                                                                            <Maximize className="h-5 w-5 mr-1 text-gray-400" />
+                                                                            <span>{property.sqft} m²</span>
+                                                                        </div>
+                                                                    )}
+                                                                </div>
+                                                                <Link href={`/propiedades/${property.id}`}>
+                                                                    <Button className="w-full bg-red-600 hover:bg-red-700">
+                                                                        Ver Detalles
                                                                     </Button>
-                                                                    <Button
-                                                                        variant="ghost"
-                                                                        size="icon"
-                                                                        className="bg-black/30 text-white rounded-full h-9 w-9 hover:bg-black/50"
-                                                                        onClick={(e) => {
-                                                                            e.preventDefault();
-                                                                            e.stopPropagation();
-                                                                            changePropertyImage(property.id, 'next');
-                                                                        }}
-                                                                    >
-                                                                        <ChevronRight className="h-6 w-6" />
-                                                                    </Button>
-                                                                </div>
-                                                            )}
-
-                                                            {/* Indicadores */}
-
-                                                            {property.images.length > 1 && (
-                                                                <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
-                                                                    {property.images.map((_, imgIndex) => (
-                                                                        <div
-                                                                            key={imgIndex}
-                                                                            className={`h-1.5 w-1.5 rounded-full ${imgIndex === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                                                                                }`}
-                                                                        ></div>
-                                                                    ))}
-                                                                </div>
-                                                            )}
-
-                                                            {/* Precio */}
-
-                                                            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
-                                                            <div className="absolute bottom-4 left-4 text-white">
-                                                                <div className="text-2xl font-bold">{property.price}</div>
+                                                                </Link>
                                                             </div>
-
-                                                            {/* Tags */}
-
-                                                            <div className="absolute top-4 left-4">
-                                                                <div className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                                                                    En venta
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="p-6">
-                                                            <h3 className="text-xl font-bold mb-2">{property.title}</h3>
-                                                            <div className="flex items-center text-gray-500 mb-4">
-                                                                <MapPin className="h-4 w-4 mr-1" />
-                                                                {property.short_location}
-                                                            </div>
-                                                            <div className="flex justify-between mb-6">
-                                                                <div className="flex items-center">
-                                                                    <Bed className="h-5 w-5 mr-1 text-gray-400" />
-                                                                    <span>{property.bedrooms} Hab</span>
-                                                                </div>
-                                                                <div className="flex items-center">
-                                                                    <Bath className="h-5 w-5 mr-1 text-gray-400" />
-                                                                    <span>{property.bathrooms} Baños</span>
-                                                                </div>
-                                                                <div className="flex items-center">
-                                                                    <Maximize className="h-5 w-5 mr-1 text-gray-400" />
-                                                                    <span>{property.sqft} m²</span>
-                                                                </div>
-                                                            </div>
-                                                            <Link href={`/propiedades/${property.id}`}>
-                                                                <Button className="w-full bg-red-600 hover:bg-red-700">
-                                                                    Ver Detalles
-                                                                </Button>
-                                                            </Link>
-                                                        </div>
+                                                        </Card>
+                                                    );
+                                                })}
+                                                
+                                                {/* Card promocional al final del grid */}
+                                                {!loadingMore && visibleProperties.length > 0 && (
+                                                    <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                                        <PromoBanner 
+                                                            title="¿No encontraste lo que buscabas?"
+                                                            description="Contamos con un equipo de agentes especializados para ayudarte a encontrar el lugar perfecto para vos."
+                                                            buttonText="Contáctanos"
+                                                            buttonLink="/contacto"
+                                                        />
                                                     </Card>
-                                                );
-                                            })}
-                                        </div>
+                                                )}
+                                            </div>
+
+                                            {/* Indicador de carga para scroll infinito */}
+
+                                            {loadingMore && (
+                                                <div className="flex justify-center mt-8 mb-8">
+                                                    <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"></div>
+                                                </div>
+                                            )}
+                                            
+                                            {!hasMore && visibleProperties.length > 0 && filteredProperties.length > propertiesPerPage && (
+                                                <div className="text-center text-gray-500 py-8">
+                                                    Has llegado al final de la lista
+                                                </div>
+                                            )}
+                                        </>
                                     )}
-
-                                    {/* Indicador de carga para scroll infinito */}
-
-                                    {loadingMore && (
-                                        <div className="flex justify-center mt-8 mb-8">
-                                            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-600"></div>
-                                        </div>
-                                    )}
-                                    
-                                    {!loadingMore && visibleProperties.length > 0 && (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                                            <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                                                <PromoBanner 
-                                                    title="¿No encontraste lo que buscabas?"
-                                                    description="Contamos con un equipo de agentes especializados para ayudarte a encontrar el lugar perfecto para vos."
-                                                    buttonText="Contáctanos"
-                                                    buttonLink="/contacto"
-                                                />
-                                            </Card>
-                                        </div>
-                                    )}
-
-                                    {!hasMore && visibleProperties.length > 0 && filteredProperties.length > propertiesPerPage && (
-                                        <div className="text-center text-gray-500 py-8">
-                                            Has llegado al final de la lista
-                                        </div>
-                                    )}
-
-
                                 </>
                             )}
                         </div>

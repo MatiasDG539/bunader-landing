@@ -1,15 +1,12 @@
 'use server'
 
 import axios from 'axios';
-import { unstable_cache } from 'next/cache';
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
 const LANG = 'es_ar';
 
-const CACHE_TTL = 60 * 15;
-
-// Interfaces para los tipos de datos
+// Interfaces for data types
 export interface PropertyImage {
     image: string;
     thumb?: string;
@@ -49,6 +46,7 @@ export interface Property {
     operation_type: string;
     featured?: boolean;
     age?: number;
+    age_display?: string; // Nuevo campo para mostrar "En construcción"
     parking_lot_amount?: number;
     operations?: PropertyOperation[];
     rooms?: number;
@@ -95,7 +93,7 @@ export interface Project {
     type: string;
 }
 
-// Funciones auxiliares
+// Aux Functions
 function formatPrice(price: number, currency: string): string {
     if (currency === 'USD') {
         return `USD $${price.toLocaleString('es-AR')}`;
@@ -207,10 +205,21 @@ function getCompletionDate(dateString: string | undefined, lang: string = 'es_ar
     }
 }
 
-// Función para obtener propiedades en venta
-const _getSalesProperties = async (): Promise<Property[]> => {
+function getAgeDisplay(age: number, lang: string = 'es_ar'): string {
+    if (age < 0) {
+        return lang === 'en' ? 'Under Construction' : 'En construcción';
+    } else if (age === 0) {
+        return lang === 'en' ? 'New' : 'A estrenar';
+    } else {
+        const yearText = lang === 'en' ? (age === 1 ? 'year' : 'years') : (age === 1 ? 'año' : 'años');
+        return `${age} ${yearText}`;
+    }
+}
+
+export const getSalesProperties = async (): Promise<Property[]> => {
     try {
-        const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&operation_type=1&limit=20`;
+
+        const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&operation_type=1&limit=50`;
         const response = await axios.get(url);
 
         const salesProperties = response.data.objects.filter((property: any) => {
@@ -248,6 +257,7 @@ const _getSalesProperties = async (): Promise<Property[]> => {
                 operation_type: 'venta',
                 featured: property.starred || false,
                 age: property.age || 0,
+                age_display: getAgeDisplay(property.age || 0, LANG),
                 parking_lot_amount: property.parking_lot_amount || 0,
                 disposition: property.disposition,
                 operations: operations.map((op: any) => ({
@@ -260,6 +270,11 @@ const _getSalesProperties = async (): Promise<Property[]> => {
             };
 
             if (formattedProperty.images && formattedProperty.images.length > 0) {
+                const hasFrontCover = formattedProperty.images.some(img => img.is_front_cover);
+                if (!hasFrontCover) {
+                    formattedProperty.images[0].is_front_cover = true;
+                }
+                
                 formattedProperty.images.sort((a, b) => {
                     if (a.order !== undefined && b.order !== undefined) {
                         return a.order - b.order;
@@ -280,19 +295,9 @@ const _getSalesProperties = async (): Promise<Property[]> => {
     }
 };
 
-export const getSalesProperties = unstable_cache(
-    _getSalesProperties,
-    ['sales-properties'],
-    {
-        revalidate: CACHE_TTL,
-        tags: ['properties', 'sales']
-    }
-);
-
-// Función para obtener propiedades en alquiler (con caché)
-const _getRentProperties = async (): Promise<Property[]> => {
+export const getRentProperties = async (): Promise<Property[]> => {
     try {
-        const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&operation_type=2&limit=20`;
+        const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&operation_type=2&limit=50`;
         const response = await axios.get(url);
 
         const rentProperties = response.data.objects.filter((property: any) => {
@@ -330,6 +335,7 @@ const _getRentProperties = async (): Promise<Property[]> => {
                 operation_type: 'rent',
                 featured: property.starred || false,
                 age: property.age || 0,
+                age_display: getAgeDisplay(property.age || 0, LANG),
                 parking_lot_amount: property.parking_lot_amount || 0,
                 disposition: property.disposition,
                 operations: operations.map((op: any) => ({
@@ -342,6 +348,11 @@ const _getRentProperties = async (): Promise<Property[]> => {
             };
 
             if (formattedProperty.images && formattedProperty.images.length > 0) {
+                const hasFrontCover = formattedProperty.images.some(img => img.is_front_cover);
+                if (!hasFrontCover) {
+                    formattedProperty.images[0].is_front_cover = true;
+                }
+                
                 formattedProperty.images.sort((a, b) => {
                     if (a.order !== undefined && b.order !== undefined) {
                         return a.order - b.order;
@@ -362,73 +373,7 @@ const _getRentProperties = async (): Promise<Property[]> => {
     }
 };
 
-export const getRentProperties = unstable_cache(
-    _getRentProperties,
-    ['rent-properties'],
-    {
-        revalidate: CACHE_TTL,
-        tags: ['properties', 'rent']
-    }
-);
-
-// Función para obtener proyectos inmobiliarios
-const _getProjects = async (): Promise<Project[]> => {
-    try {
-        const url = `${BASE_URL}development/?lang=${LANG}&key=${API_KEY}&limit=10`;
-        const response = await axios.get(url);
-
-        const formattedProjects = response.data.objects.map((project: any) => {
-            const formattedProject: Project = {
-                id: project.id || 0,
-                title: project.name || project.address || 'Proyecto Inmobiliario',
-                location: project.address || '',
-                full_location: project.location?.full_location || '',
-                status: getProjectStatus(project.status || 0, LANG),
-                completion: getCompletionDate(project.completion_date, LANG),
-                units: project.units || 0,
-                images: project.photos?.map((photo: any) => ({
-                    image: formatImageUrl(photo?.image),
-                    thumb: photo?.thumb ? formatImageUrl(photo.thumb) : undefined,
-                    original: photo?.original ? formatImageUrl(photo.original) : undefined,
-                    description: photo?.description,
-                    is_front_cover: photo?.is_front_cover,
-                    order: photo?.order,
-                    is_blueprint: photo?.is_blueprint
-                })) || [{ image: '/placeholder.svg' }],
-                type: project.type?.name || getProjectType(typeof project.type === 'number' ? project.type : 0, LANG)
-            };
-
-            if (formattedProject.images && formattedProject.images.length > 0) {
-                formattedProject.images.sort((a, b) => {
-                    if (a.order !== undefined && b.order !== undefined) {
-                        return a.order - b.order;
-                    }
-                    if (a.order !== undefined) return -1;
-                    if (b.order !== undefined) return 1;
-                    return 0;
-                });
-            }
-
-            return formattedProject;
-        });
-
-        return formattedProjects;
-    } catch (error) {
-        console.error('Error al obtener proyectos:', error);
-        return [];
-    }
-};
-
-export const getProjects = unstable_cache(
-    _getProjects,
-    ['projects'],
-    {
-        revalidate: CACHE_TTL,
-        tags: ['projects']
-    }
-);
-
-// Función para obtener una propiedad individual por su ID (con caché dinámico)
+// Function to get an individual property by its ID
 const _getPropertyById = async (id: number): Promise<Property | null> => {
     try {
         const url = `${BASE_URL}property/${id}/?lang=${LANG}&key=${API_KEY}`;
@@ -439,7 +384,6 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
             return null;
         }
 
-        // Determinar el tipo de operación
         const operations = property.operations || [];
         const saleOperation = operations.find((op: any) => op.operation_id === 1);
         const rentOperation = operations.find((op: any) => op.operation_id === 2);
@@ -479,6 +423,7 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
             operation_type: operationType,
             featured: property.starred || false,
             age: property.age || 0,
+            age_display: getAgeDisplay(property.age || 0, LANG),
             parking_lot_amount: property.parking_lot_amount || 0,
             disposition: property.disposition,
             property_condition: property.property_condition,
@@ -497,6 +442,11 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
         };
 
         if (formattedProperty.images && formattedProperty.images.length > 0) {
+            const hasFrontCover = formattedProperty.images.some(img => img.is_front_cover);
+            if (!hasFrontCover) {
+                formattedProperty.images[0].is_front_cover = true;
+            }
+            
             formattedProperty.images.sort((a, b) => {
                 if (a.order !== undefined && b.order !== undefined) {
                     return a.order - b.order;
@@ -515,21 +465,13 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
 };
 
 export const getPropertyById = async (id: number): Promise<Property | null> => {
-    const cachedFunction = unstable_cache(
-        () => _getPropertyById(id),
-        [`property-${id}`],
-        {
-            revalidate: CACHE_TTL,
-            tags: ['properties', `property-${id}`]
-        }
-    );
-
-    return cachedFunction();
+    return _getPropertyById(id);
 };
 
-// Función para obtener propiedades destacadas
-const _getFeaturedProperties = async (): Promise<Property[]> => {
+// Function to get starred properties.
+export const getFeaturedProperties = async (): Promise<Property[]> => {
     try {
+        
         const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&limit=200`;
         const response = await axios.get(url);
 
@@ -538,100 +480,76 @@ const _getFeaturedProperties = async (): Promise<Property[]> => {
         );
 
         if (featuredProperties.length === 0) {
+            console.log('No hay propiedades con is_starred_on_web: true');
             return [];
         }
 
-        const allFormattedProperties: Property[] = [];
-
-        featuredProperties.forEach((property: any) => {
+        const formattedProperties = featuredProperties.map((property: any) => {
             const operations = property.operations || [];
+            const primaryOperation = operations[0] || {};
+            const priceInfo = primaryOperation.prices?.[0] || {};
 
-            operations.forEach((operation: any) => {
-                const priceInfo = operation.prices?.[0];
+            const formattedProperty: Property = {
+                id: property.id || 0,
+                title: property.title || property.address || 'Propiedad',
+                description_only: property.description || '',
+                address: property.address || '',
+                full_location: property.location?.full_location || '',
+                short_location: property.location?.short_location || '',
+                price: primaryOperation.operation_id === 2 
+                    ? `${formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'ARS')}/mes`
+                    : formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'ARS'),
+                currency: priceInfo.currency || property.currency || 'ARS',
+                bedrooms: property.room_amount || 0,
+                bathrooms: property.bathroom_amount || 0,
+                sqft: property.total_surface || 0,
+                images: property.photos?.map((photo: any) => ({
+                    image: formatImageUrl(photo?.image),
+                    thumb: photo?.thumb ? formatImageUrl(photo.thumb) : undefined,
+                    original: photo?.original ? formatImageUrl(photo.original) : undefined,
+                    description: photo?.description,
+                    is_front_cover: photo?.is_front_cover,
+                    order: photo?.order,
+                    is_blueprint: photo?.is_blueprint
+                })) || [{ image: '/placeholder.svg' }],
+                type: property.type?.name || getPropertyType(property.type_id || 0, LANG),
+                operation_type: primaryOperation.operation_id === 2 ? 'rent' : 'sale',
+                featured: true,
+                age: property.age || 0,
+                age_display: getAgeDisplay(property.age || 0, LANG),
+                parking_lot_amount: property.parking_lot_amount || 0,
+                disposition: property.disposition,
+                operations: operations.map((op: any) => ({
+                    operation_id: op.operation_id,
+                    operation_type: op.operation_type,
+                    price: op.prices?.[0]?.price || 0,
+                    currency: op.prices?.[0]?.currency || 'ARS',
+                    period: op.prices?.[0]?.period
+                }))
+            };
 
-                if (!priceInfo?.price || priceInfo.price <= 0) {
-                    return;
+            if (formattedProperty.images && formattedProperty.images.length > 0) {
+                const hasFrontCover = formattedProperty.images.some(img => img.is_front_cover);
+                if (!hasFrontCover) {
+                    formattedProperty.images[0].is_front_cover = true;
                 }
+                
+                formattedProperty.images.sort((a, b) => {
+                    if (a.order !== undefined && b.order !== undefined) {
+                        return a.order - b.order;
+                    }
+                    if (a.order !== undefined) return -1;
+                    if (b.order !== undefined) return 1;
+                    return 0;
+                });
+            }
 
-                let operationType = '';
-                let formattedPrice = '';
-                let defaultCurrency = 'USD';
-
-                if (operation.operation_id === 1) {
-                    operationType = 'sale';
-                    defaultCurrency = 'USD';
-                    formattedPrice = formatPrice(priceInfo.price, priceInfo.currency || defaultCurrency);
-                } else if (operation.operation_id === 2) {
-                    operationType = 'rent';
-                    defaultCurrency = 'ARS';
-                    formattedPrice = `${formatPrice(priceInfo.price, priceInfo.currency || defaultCurrency)}/mes`;
-                } else {
-                    return;
-                }
-
-                const formattedProperty: Property = {
-                    id: property.id || 0,
-                    title: property.title || property.address || `Propiedad en ${operationType === 'venta' ? 'Venta' : 'Alquiler'}`,
-                    description_only: property.description || '',
-                    address: property.address || '',
-                    full_location: property.location?.full_location || '',
-                    short_location: property.location?.short_location || '',
-                    price: formattedPrice,
-                    currency: priceInfo.currency || defaultCurrency,
-                    bedrooms: property.room_amount || 0,
-                    bathrooms: property.bathroom_amount || 0,
-                    sqft: property.total_surface || 0,
-                    images: property.photos?.map((photo: any) => ({
-                        image: formatImageUrl(photo?.image),
-                        thumb: photo?.thumb ? formatImageUrl(photo.thumb) : undefined,
-                        original: photo?.original ? formatImageUrl(photo.original) : undefined,
-                        description: photo?.description,
-                        is_front_cover: photo?.is_front_cover,
-                        order: photo?.order,
-                        is_blueprint: photo?.is_blueprint
-                    })) || [{ image: '/placeholder.svg' }],
-                    type: property.type?.name || getPropertyType(property.type_id || 0, LANG),
-                    operation_type: operationType,
-                    featured: true,
-                    age: property.age || 0,
-                    parking_lot_amount: property.parking_lot_amount || 0,
-                    disposition: property.disposition,
-                    operations: [{
-                        operation_id: operation.operation_id,
-                        operation_type: operationType,
-                        price: priceInfo.price,
-                        currency: priceInfo.currency || defaultCurrency,
-                        period: priceInfo.period
-                    }]
-                };
-
-                if (formattedProperty.images && formattedProperty.images.length > 0) {
-                    formattedProperty.images.sort((a, b) => {
-                        if (a.order !== undefined && b.order !== undefined) {
-                            return a.order - b.order;
-                        }
-                        if (a.order !== undefined) return -1;
-                        if (b.order !== undefined) return 1;
-                        return 0;
-                    });
-                }
-
-                allFormattedProperties.push(formattedProperty);
-            });
+            return formattedProperty;
         });
 
-        return allFormattedProperties;
+        return formattedProperties;
     } catch (error) {
         console.error('Error al obtener propiedades destacadas:', error);
         return [];
     }
 };
-
-export const getFeaturedProperties = unstable_cache(
-    _getFeaturedProperties,
-    ['featured-properties'],
-    {
-        revalidate: CACHE_TTL,
-        tags: ['properties', 'featured']
-    }
-);
