@@ -3,7 +3,7 @@ import { SiteHeaderDark } from "@/components/ui/header-dark";
 import { SiteFooter } from "@/components/ui/footer";
 import { SalesSection } from "@/components/properties/salesSection";
 import { RentSection } from "@/components/properties/rentSection";
-import { ProjectsSection } from "@/components/properties/projectsSection";
+import { DevelopmentsSection } from "@/components/home/developments-section";
 
 export default function PropertiesHome() {
     return (
@@ -35,8 +35,8 @@ export default function PropertiesHome() {
                 {/* Rent Section */}
                 <RentSection />
 
-                {/* Projects Section */}
-                <ProjectsSection />
+                {/* Developments Section */}
+                <DevelopmentsSection />
             </main>
 
             {/* Footer */}
