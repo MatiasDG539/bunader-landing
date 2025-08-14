@@ -3,6 +3,7 @@ import { SiteFooter } from "@/components/ui/footer";
 import { HeroSection } from "@/components/home/hero-section";
 import { AboutSection } from "@/components/home/about-section";
 import { FeaturedProperties } from "@/components/home/featured-properties";
+import { DevelopmentsSection } from "@/components/home/developments-section";
 // import { BrowseWebsiteSection } from "@/components/home/browse-website-section"; For now, this is commented out.
 import { TestimonialsSection } from "@/components/home/reviews-section";
 import { ContactSection } from "@/components/home/contact-section";
@@ -18,6 +19,7 @@ export default function Home() {
         <ValuesSection />
         {/* <BrowseWebsiteSection /> */}
         <FeaturedProperties />
+        <DevelopmentsSection />
         <TestimonialsSection />
         <ContactSection />
       </main>
