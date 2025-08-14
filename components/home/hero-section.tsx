@@ -30,27 +30,27 @@ export function HeroSection() {
                 <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-4">
                     <div className="grid grid-cols-2 sm:contents gap-4">
                         <Link href="/#" className="col-span-1">
-                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6 cursor-pointer">
                                 Quiero Comprar
                             </Button>
                         </Link>
 
                         <Link href="/vender-propiedad" className="col-span-1">
-                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6 cursor-pointer">
                                 Quiero Vender
                             </Button>
                         </Link>
                     </div>
                     
                     <div className="grid grid-cols-2 sm:contents gap-4">
-                        <Link href="/#" className="col-span-1">
-                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
-                                Quiero Alquilar
+                        <Link href="#desarrollos" className="col-span-1">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6 cursor-pointer">
+                                Conocer proyectos
                             </Button>
                         </Link>
 
                         <Link href="/#" className="col-span-1">
-                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6">
+                            <Button variant="default" size="lg" className="w-full text-white text-lg bg-red-600 hover:bg-red-600/90 py-6 cursor-pointer">
                                 <span className="sm:hidden whitespace-normal text-center leading-tight">
                                     Invertir en<br />el exterior
                                 </span>
