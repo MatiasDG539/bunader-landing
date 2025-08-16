@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ChevronLeft, ChevronRight, MapPin, Building, Calendar, Users } from "lucide-react"
+import { ChevronLeft, ChevronRight, MapPin, Building, Calendar } from "lucide-react"
 
 const developments = [
     // Data structure example
