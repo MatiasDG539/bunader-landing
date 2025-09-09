@@ -1,87 +1,878 @@
+"use client";
+
 import { SiteHeaderDark } from "@/components/ui/header-dark";
 import { SiteFooter } from "@/components/ui/footer";
 import {
-    Home,
-    Building,
-    LineChart,
+    Search,
+    DollarSign,
     Key,
-    Map,
-    ClipboardCheck,
-    Briefcase,
-    HelpCircle
+    Calendar,
+    TrendingUp,
+    Settings,
+    Globe,
+    FileText,
+    CheckCircle,
+    ArrowRight,
+    ArrowUp
 } from "lucide-react";
 
 export default function ServicesPage() {
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
         <div>
             <SiteHeaderDark />
-            <main className="container mx-auto px-4">
+            <main className="container mx-auto px-8 md:px-12 lg:px-16">
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 mt-8">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('compra-propiedades')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <Home className="w-8 h-8 text-red-600" />
+                            <Search className="w-8 h-8 text-red-600" />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Compra de Propiedades</h3>
-                        <p className="text-gray-600">Te ayudamos a encontrar la propiedad perfecta que se ajuste a tus necesidades y presupuesto.</p>
+                        <p className="text-gray-600">Búsqueda estratégica y asesoría integral para adquirir casas, departamentos y terrenos en Tucumán y Yerba Buena. </p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('venta-propiedades')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <Building className="w-8 h-8 text-red-600" />
+                            <DollarSign className="w-8 h-8 text-red-600" />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Venta de Propiedades</h3>
-                        <p className="text-gray-600">Gestionamos la venta de tu propiedad con valoración de mercado y estrategias de marketing efectivas.</p>
+                        <p className="text-gray-600">Plan integral de comercialización y negociación especializado para maximizar el valor de su activo con respaldo legal.
+                            Profesionales con certificación CRS: estándares internacionales en ventas, negociación y ética para operar con confianza.</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('alquiler-inmuebles')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
                             <Key className="w-8 h-8 text-red-600" />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Alquiler de Inmuebles</h3>
-                        <p className="text-gray-600">Facilitamos el proceso de alquiler, tanto para propietarios como para inquilinos, con contratos seguros.</p>
+                        <p className="text-gray-600">Gestión profesional de alquileres (residenciales y comerciales): selección de inquilinos, contratos y cobranza segura.</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('alquileres-temporales')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <LineChart className="w-8 h-8 text-red-600" />
+                            <Calendar className="w-8 h-8 text-red-600" />
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">Inversiones Inmobiliarias</h3>
-                        <p className="text-gray-600">Asesoramiento profesional para maximizar tus inversiones en el mercado inmobiliario.</p>
+                        <h3 className="text-xl font-semibold mb-2">Alquileres Temporales</h3>
+                        <p className="text-gray-600">Operación completa para short-stay: anuncios optimizados, check-in/out, limpieza y pricing dinámico para lograr altas tasas de ocupación.</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('inversiones-inmobiliarias')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <Map className="w-8 h-8 text-red-600" />
+                            <TrendingUp className="w-8 h-8 text-red-600" />
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">Gestión de Terrenos</h3>
-                        <p className="text-gray-600">Compra, venta y desarrollo de terrenos urbanos y rurales con todos los trámites legales.</p>
+                        <h3 className="text-xl font-semibold mb-2">Inversiones Inmobiliarias (Desarrollos)</h3>
+                        <p className="text-gray-600">Consultoría para proyectos: viabilidad, modelización financiera y gestión de ejecución respaldada por 20 años de experiencia.</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('administracion-propiedades')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <ClipboardCheck className="w-8 h-8 text-red-600" />
-                        </div>
-                        <h3 className="text-xl font-semibold mb-2">Trámites Legales</h3>
-                        <p className="text-gray-600">Asistencia completa en documentación, permisos y trámites relacionados con propiedades.</p>
-                    </div>
-
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
-                        <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <Briefcase className="w-8 h-8 text-red-600" />
+                            <Settings className="w-8 h-8 text-red-600" />
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Administración de Propiedades</h3>
-                        <p className="text-gray-600">Gestionamos tu propiedad incluyendo mantenimiento, cobros y atención a inquilinos.</p>
+                        <p className="text-gray-600">Administración integral: cobranza, mantenimiento, reportes financieros y optimización de la rentabilidad del activo.</p>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center">
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('inversiones-extranjero')}
+                    >
                         <div className="bg-red-100 p-4 rounded-full mb-4">
-                            <HelpCircle className="w-8 h-8 text-red-600" />
+                            <Globe className="w-8 h-8 text-red-600" />
                         </div>
-                        <h3 className="text-xl font-semibold mb-2">Asesoría Personalizada</h3>
-                        <p className="text-gray-600">Consultoría a medida para resolver dudas específicas sobre el mercado inmobiliario.</p>
+                        <h3 className="text-xl font-semibold mb-2">Inversiones en el Extranjero</h3>
+                        <p className="text-gray-600">Asesoría focal en EEUU, Paraguay y España: selección de activos, due-diligence y estructura legal/fiscal para inversores argentinos.</p>
                     </div>
+
+                    <div
+                        className="bg-white rounded-lg shadow-md p-8 hover:shadow-lg transition-shadow duration-300 flex flex-col items-center text-center cursor-pointer hover:scale-105 transition-transform"
+                        onClick={() => scrollToSection('tasaciones-profesionales')}
+                    >
+                        <div className="bg-red-100 p-4 rounded-full mb-4">
+                            <FileText className="w-8 h-8 text-red-600" />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2">Tasaciones Profesionales</h3>
+                        <p className="text-gray-600">Informes técnicos y valuaciones comparativas para fijar precio de venta o inversión con fundamentos técnicos.</p>
+                    </div>
+
                 </div>
+
+                <section id="compra-propiedades" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <Search className="w-10 h-10 text-red-600" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Compra de Propiedades</h2>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Asesoramos la compra de casas, departamentos y terrenos en San Miguel de Tucumán, Yerba Buena y zonas aledañas. Realizamos búsqueda personalizada, análisis comparativo de mercado y verificación documental para que la compra sea segura y alineada a su perfil financiero. Nuestro equipo está integrado por agentes certificados CRS.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Búsqueda y preselección según criterios (zona, presupuesto, amenities).</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Tours presenciales y virtuales.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Análisis comparativo de mercado (precios y plusvalía).</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Revisión de títulos y coordinación con escribanos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Negociación de condiciones y seguimiento hasta escrituración.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Sin riesgo legal y financiero.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Ahorro de tiempo y esfuerzos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Decisión basada en datos locales y experiencia.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Listo para encontrar tu próxima propiedad?</h4>
+                                            <p className="text-gray-700">Explora nuestras opciones disponibles para compra</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Ver opciones para comprar
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="venta-propiedades" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <DollarSign className="w-10 h-10 text-red-600" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Venta de Propiedades</h2>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Ofrecemos un plan integral de comercialización y gestión de operaciones que busca maximizar el valor de su inmueble. Desde tasación técnica hasta la coordinación de la escrituración, cada etapa se ejecuta con procesos documentados y transparencia. Nuestro equipo de agentes certificados CRS trabaja para dar los mejores resultados y acordar los tiempos en los procesos de venta.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Tasación técnica y estrategia de posicionamiento de precio.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Producción fotográfica y videos profesionales (tour virtual).</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Marketing multicanal y segmentación de potenciales compradores.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Gestión de propuestas y negociaciones documentadas.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Acompañamiento hasta la firma y entrega.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Mayor exposición a compradores calificados.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Optimización del precio neto de venta.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Proceso legalmente respaldado y transparente.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Listo para vender tu propiedad?</h4>
+                                            <p className="text-gray-700">Consulta nuestro plan de venta personalizado</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Consultar plan de venta
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="alquiler-inmuebles" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <Key className="w-10 h-10 text-red-600" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Alquiler de Inmuebles</h2>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Gestionamos alquileres residenciales y comerciales de forma eficiente. Cubrimos desde la promoción del inmueble hasta el seguimiento contractual y la cobranza, con controles periódicos y reportes al propietario.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Publicación optimizada y filtros de selección.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Verificación de antecedentes y garantías.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Preparación y firma de contrato conforme a normativa.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Gestión de cobranzas y reporte mensual.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Atención de mantenimiento y reclamos.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Menor exposición a incumplimientos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Control financiero y operativo permanente.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Necesitas gestionar tus alquileres?</h4>
+                                            <p className="text-gray-700">Administración profesional con respaldo CRS</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Consultar gestión de alquileres
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="alquileres-temporales" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <Calendar className="w-10 h-10 text-red-600" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Alquileres Temporales</h2>
+                                <span className="ml-4 bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
+                                    Short-stay / Vacacional
+                                </span>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Operamos alquileres temporales optimizando precio y ocupación mediante anuncios profesionales, tarifas inteligentes y atención completa al huésped (check-in, limpieza, soporte). Ideal para propietarios que buscan ingresos recurrentes sin dedicación operativa.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Optimización de anuncios y fotografía.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Gestión de reservas y calendario.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Pricing dinámico y estrategia de temporada.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Check-in/out, limpieza profesional y atención 24/7.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Informes de ocupación y remesas al propietario.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Operación llave en mano.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Mejora de reputación y reviews.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Quieres maximizar tus ingresos con alquileres temporales?</h4>
+                                            <p className="text-gray-700">Gestión profesional sin dedicación operativa</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Consultar gestión temporales
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="inversiones-inmobiliarias" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <TrendingUp className="w-10 h-10 text-red-600" />
+                                </div>
+                                <div>
+                                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Inversiones Inmobiliarias</h2>
+                                    <span className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
+                                        Consultoría para Desarrollos
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Asesoramos proyectos inmobiliarios desde la prefactibilidad hasta la comercialización. Realizamos estudios de demanda, modelización financiera (TIR, ROI), estructuración de financiamiento y coordinación de equipos técnicos y comerciales.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Estudio de factibilidad y demanda.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Modelos financieros y escenarios de sensibilidad.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Búsqueda y negociación de terrenos/activos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Estructuración financiera y asesoría legal.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Plan comercial y acompañamiento en la ejecución.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Menor incertidumbre en la toma de decisiones.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Mayor eficiencia en tiempos y costos de desarrollo.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Acceso a red de inversores y proveedores.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Tienes un proyecto inmobiliario en mente?</h4>
+                                            <p className="text-gray-700">Solicita nuestra consultoría especializada</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Solicitar consultoría de proyecto
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="administracion-propiedades" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <Settings className="w-10 h-10 text-red-600" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Administración de Propiedades</h2>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Servicio integral para la administración de propiedades: cobranzas, mantenimiento, seguros, control presupuestario y reportes periódicos. Diseñado para propietarios que buscan profesionalizar la gestión y optimizar la rentabilidad de su portfolio.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Gestión de cobranzas y cuentas.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Coordinación de proveedores y mantenimiento preventivo.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Control presupuestario y pagos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Sugerencias de revalorización y reformas rentables.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Reportes financieros mensuales.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Transparencia contable y operativa.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Reducción de costos y riesgos operativos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Mejora sostenida del rendimiento del activo.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Quieres profesionalizar la gestión de tu propiedad?</h4>
+                                            <p className="text-gray-700">Optimiza la rentabilidad de tu portfolio</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Administrar mi propiedad
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="inversiones-extranjero" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <Globe className="w-10 h-10 text-red-600" />
+                                </div>
+                                <div>
+                                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Inversiones en el Extranjero</h2>
+                                    <span className="bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">
+                                        EE. UU., Paraguay, España
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Asesoramos inversiones internacionales focalizadas en Estados Unidos, Paraguay y España. Brindamos análisis de mercado, due-diligence, estructura legal y fiscal, y coordinación con asesores locales para operaciones seguras y eficientes.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Análisis de mercado y selección de oportunidades.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Due-diligence legal y verificación de títulos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Estructuración fiscal y societaria (coordinación con asesores locales).</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Gestión de la compra y seguimiento post-adquisición.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Informes de riesgos y retorno estimado.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Diversificación geográfica del portafolio.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Reducción de riesgos transfronterizos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Acompañamiento local y remoto en todo el proceso.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Quieres diversificar tu portafolio internacionalmente?</h4>
+                                            <p className="text-gray-700">Asesoría especializada para inversiones en el exterior</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Asesoría para invertir en el exterior
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="tasaciones-profesionales" className="py-16">
+                    <div className="max-w-4xl mx-auto">
+                        <div className="bg-white rounded-lg shadow-lg p-8 md:p-12">
+                            <div className="flex items-center mb-8">
+                                <div className="bg-red-100 p-4 rounded-full mr-6">
+                                    <FileText className="w-10 h-10 text-red-600" />
+                                </div>
+                                <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Tasaciones Profesionales</h2>
+                            </div>
+
+                            <div className="prose prose-lg max-w-none">
+                                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                                    Informes técnicos y valuaciones comparativas para determinar un precio objetivo de venta o inversión. Ideal para vendedores, compradores e inversores que requieren una valuación con metodología y comparables. Solución eficiente para particulares y empresas que buscan determinar el valor exacto de su inmueble.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Qué incluye:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Informe técnico con comparables y fotos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Recomendación de precio y estrategia de salida.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Entrega en formato PDF con anexos justificatorios.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CheckCircle className="w-5 h-5 text-red-600 mr-2" />
+                                            Beneficios:
+                                        </h3>
+                                        <ul className="space-y-3">
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Precio fijado con fundamentos sólidos.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Mayor credibilidad ante compradores e inversores.</span>
+                                            </li>
+                                            <li className="flex items-start">
+                                                <CheckCircle className="w-4 h-4 text-red-600 mr-3 mt-1 flex-shrink-0" />
+                                                <span className="text-gray-700">Base para decisiones comerciales y fiscales.</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div className="bg-red-50 border-l-4 border-red-600 p-6 rounded-r-lg">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Necesitas una valuación profesional de tu propiedad?</h4>
+                                            <p className="text-gray-700">Informe técnico con fundamentos sólidos</p>
+                                        </div>
+                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center">
+                                            Solicitar tasación profesional
+                                            <ArrowRight className="w-4 h-4 ml-2" />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="mt-8 text-center">
+                                    <button
+                                        onClick={scrollToTop}
+                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                    >
+                                        <ArrowUp className="w-4 h-4 mr-2" />
+                                        Volver arriba
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
             </main>
             <SiteFooter />
