@@ -8,6 +8,8 @@ import { DevelopmentsSection } from "@/components/home/developments-section";
 import { TestimonialsSection } from "@/components/home/reviews-section";
 import { ContactSection } from "@/components/home/contact-section";
 import { ValuesSection } from "@/components/home/values-section";
+import CompaniesSection from "@/components/home/companies-section";
+import PartnersSection from "@/components/home/partners-section";
 
 export default function Home() {
   return (
@@ -17,6 +19,8 @@ export default function Home() {
         <HeroSection />
         <AboutSection />
         <ValuesSection />
+        <CompaniesSection />
+        <PartnersSection />
         {/* <BrowseWebsiteSection /> */}
         <FeaturedProperties />
         <DevelopmentsSection />

@@ -59,7 +59,7 @@ export function FeaturedProperties() {
     }
 
     return (
-        <section className="py-20 bg-gray-50">
+        <section className="py-20">
             <div className="px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
                 <div className="flex justify-between items-end mb-12">
                     <div>
