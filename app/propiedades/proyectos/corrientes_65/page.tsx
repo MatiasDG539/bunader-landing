@@ -255,50 +255,38 @@ export default function Corrientes65Page() {
                                 <p className="text-gray-600 mb-4">Planta baja | Frente a calle</p>
                                 <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
                             </Card>
-                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <div className="relative h-[200px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500">
+
+                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-white border-0 group">
+                                <div className="relative h-[200px] bg-white rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500">
                                     <Image
-                                        src="/img/corrientes_65/depto-2amb.jpg"
+                                        src="/img/corrientes_65/c65_depto_b.png"
                                         alt="Planta departamento 2 ambientes"
                                         fill
                                         className="object-cover"
                                     />
-                                    
-                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-white">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                        <div className="text-center z-10">
-                                            <Building className="h-8 w-8 mx-auto mb-2 animate-pulse" />
-                                            <p className="text-sm font-medium">Depto 2 Ambientes</p>
-                                            <p className="text-xs mt-1 opacity-75">Planta/render</p>
-                                        </div>
-                                    </div>
                                 </div>
                                 <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">2 Ambientes</h3>
                                 <p className="text-gray-600 mb-4">63.69 m² totales | 1 dormitorio | 1 baño | Balcón</p>
                                 <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Unidades B y C</p>
                             </Card>
+
                             <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <div className="relative h-[200px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                                    <Image
-                                        src="/img/corrientes_65/depto-3amb.jpg"
-                                        alt="Planta departamento 3 ambientes"
-                                        fill
-                                        className="object-cover"
-                                    />
-                                    
-                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-white">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-pink-600/20 group-hover:opacity-80 transition-opacity duration-500"></div>
-                                        <div className="text-center z-10">
-                                            <Building className="h-8 w-8 mx-auto mb-2 animate-pulse" />
-                                            <p className="text-sm font-medium">Depto 3 Ambientes</p>
-                                            <p className="text-xs mt-1 opacity-75">Planta/render</p>
-                                        </div>
+                                <div className="relative h-[200px] bg-white rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                                    <div className="relative w-full h-full">
+                                        <Image
+                                            src="/img/corrientes_65/c65_depto_a.png"
+                                            alt="Planta departamento 3 ambientes"
+                                            fill
+                                            className="object-contain"
+                                            style={{ objectPosition: "center" }}
+                                        />
                                     </div>
                                 </div>
                                 <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">3 Ambientes</h3>
                                 <p className="text-gray-600 mb-4">104.62 m² totales | 2 dormitorios | 2 baños | Balcón corrido</p>
                                 <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Unidad A</p>
                             </Card>
+
                         </div>
                     </div>
                 </section>
