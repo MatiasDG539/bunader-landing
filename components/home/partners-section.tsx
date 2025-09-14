@@ -79,7 +79,7 @@ export default function PartnersSection() {
             ref={carouselRef}
             className="flex items-center space-x-12 will-change-transform"
             style={{
-              width: '200%',
+              width: '300%',
             }}
           >
             {partners.map((partner, index) => (
@@ -120,6 +120,41 @@ export default function PartnersSection() {
             {partners.map((partner, index) => (
               <div
                 key={`second-${index}`}
+                className="flex-shrink-0 flex items-center justify-center bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
+                style={{ width: '200px', height: '120px' }}
+              >
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <Image
+                    src={partner.logo}
+                    alt={partner.alt}
+                    width={180}
+                    height={100}
+                    className="object-contain transition-all duration-300 hover:scale-105"
+                    style={{
+                      maxWidth: '180px',
+                      maxHeight: '100px',
+                      minWidth: '120px',
+                      minHeight: '60px'
+                    }}
+                    onLoad={() => {
+                      console.log(`✅ Partner logo loaded successfully: ${partner.name}`);
+                    }}
+                    onError={(e) => {
+                      console.log(`❌ Error loading partner logo for ${partner.name}:`, partner.logo);
+                      e.currentTarget.style.display = 'none';
+                      const parent = e.currentTarget.parentElement;
+                      if (parent) {
+                        parent.innerHTML = `<span class="text-red-600 font-bold text-sm text-center">${partner.name}</span>`;
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+
+            {partners.map((partner, index) => (
+              <div
+                key={`third-${index}`}
                 className="flex-shrink-0 flex items-center justify-center bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
                 style={{ width: '200px', height: '120px' }}
               >

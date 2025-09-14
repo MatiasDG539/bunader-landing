@@ -19,14 +19,28 @@ const developments = [
         availableUnits: 8,
         priceFrom: "USD 180.000"
     },
+
+    {
+        id: "mate_de_luna_2197",
+        title: "Mate de Luna 2197",
+        description: "Edificio exclusivo sobre la Av. Mate de Luna, la avenida más importante de Tucumán",
+        location: "Av. Mate de Luna 2197, Tucumán",
+        image: "/img/mate_de_luna_2197/m2197_thumbnail.png",
+        status: "En Venta", // "En construcción", "Próximamente", "Entregado"
+        deliveryDate: "2025",
+        totalUnits: 48,
+        availableUnits: 32,
+        priceFrom: "Consultar"
+    },
 ]
 
 export default function ProjectsPage() {
     const getStatusTag = (status: string) => {
         const statusColors = {
             "En construcción": "bg-red-600",
-            "Próximamente": "bg-blue-600", 
-            "Entregado": "bg-green-600"
+            "En Venta": "bg-red-600",
+            "Próximamente": "bg-red-600", 
+            "Entregado": "bg-red-600"
         }
         
         return (
@@ -38,6 +52,7 @@ export default function ProjectsPage() {
 
     return (
         <div className="min-h-screen bg-gray-50">
+
             {/* Hero Section */}
             <section className="relative h-[400px] md:h-[500px] bg-red-600">
                 <div className="absolute inset-0 bg-black opacity-20"></div>

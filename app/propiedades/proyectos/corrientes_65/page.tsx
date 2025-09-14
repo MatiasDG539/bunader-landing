@@ -13,6 +13,8 @@ import {
     Shield, 
     Sun, 
     ArrowLeft,
+    ChevronLeft,
+    ChevronRight,
     Phone,
     Mail
 } from "lucide-react"
@@ -37,13 +39,28 @@ export default function Corrientes65Page() {
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
                     
-                    <div className="absolute top-6 left-6 z-20 animate-slide-in-left">
+                    <div className="absolute top-6 left-6 right-6 z-20 flex justify-between items-center animate-slide-in-left">
                         <Link href="/propiedades/proyectos">
                             <Button variant="outline" className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-lg">
                                 <ArrowLeft className="h-4 w-4 mr-2" />
                                 Volver a Proyectos
                             </Button>
                         </Link>
+                        
+                        <div className="flex gap-2">
+                            <Link href="/propiedades/proyectos/mate_de_luna_2197">
+                                <Button variant="outline" size="sm" className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-lg">
+                                    <ChevronLeft className="h-4 w-4 mr-1" />
+                                    Anterior
+                                </Button>
+                            </Link>
+                            <Link href="/propiedades/proyectos/mate_de_luna_2197">
+                                <Button variant="outline" size="sm" className="bg-white/10 backdrop-blur-md border-white/20 text-white hover:bg-white/20 hover:scale-105 transition-all duration-300 shadow-lg">
+                                    Siguiente
+                                    <ChevronRight className="h-4 w-4 ml-1" />
+                                </Button>
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="container mx-auto max-w-6xl relative z-10 h-full">
