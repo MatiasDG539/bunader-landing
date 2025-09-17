@@ -5,95 +5,103 @@ import { Phone, Mail, MapPin } from "lucide-react"
 
 export function ContactSection() {
     return (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-start">
-                <div>
-                    <h2 className="text-5xl font-bold mb-8">Contáctanos</h2>
-                    <p className="text-xl text-gray-600 mb-12 leading-relaxed">
+        <section className="py-12 sm:py-20">
+            <div className="container mx-auto px-2 sm:px-4">
+                <div className="text-center mb-8 sm:mb-12">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                        Contáctanos
+                    </h2>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
                         Ya sea que estés buscando comprar, vender o simplemente tengas preguntas sobre el mercado inmobiliario,
                         nuestro equipo está aquí para ayudarte. Ponte en contacto con nosotros hoy.
                     </p>
+                </div>
+            </div>
+            
+            <div className="container mx-auto px-2 sm:px-4">
+                <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-start">
+                    <div>
+                        <div className="space-y-6 sm:space-y-8">
+                            <div className="flex items-start">
+                                <div className="bg-red-600/10 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                                    <Phone className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg sm:text-xl font-bold mb-1">Llámanos</h3>
+                                    <p className="text-gray-600 text-sm sm:text-base">(0381) 4243087</p>
+                                </div>
+                            </div>
 
-                    <div className="space-y-8">
-                        <div className="flex items-start">
-                            <div className="bg-red-600/10 p-3 rounded-full mr-4">
-                                <Phone className="h-6 w-6 text-red-600" />
+                            <div className="flex items-start">
+                                <div className="bg-red-600/10 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                                    <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg sm:text-xl font-bold mb-1">Envíanos un Email</h3>
+                                    <p className="text-gray-600 text-sm sm:text-base">info@bunader.com.ar</p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="text-xl font-bold mb-1">Llámanos</h3>
-                                <p className="text-gray-600">(0381) 4243087</p>
-                            </div>
-                        </div>
 
-                        <div className="flex items-start">
-                            <div className="bg-red-600/10 p-3 rounded-full mr-4">
-                                <Mail className="h-6 w-6 text-red-600" />
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold mb-1">Envíanos un Email</h3>
-                                <p className="text-gray-600">info@bunader.com.ar</p>
-                            </div>
-                        </div>
-
-                        <div className="flex items-start">
-                            <div className="bg-red-600/10 p-3 rounded-full mr-4">
-                                <MapPin className="h-6 w-6 text-red-600" />
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold mb-1">Visítanos</h3>
-                                <p className="text-gray-600">
-                                    Buenos Aires 491
-                                    <br />
-                                    Piso 6
-                                    <br />
-                                    San Miguel de Tucumán, Tucumán, Argentina.
-                                </p>
+                            <div className="flex items-start">
+                                <div className="bg-red-600/10 p-2 sm:p-3 rounded-full mr-3 sm:mr-4">
+                                    <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg sm:text-xl font-bold mb-1">Visítanos</h3>
+                                    <p className="text-gray-600 text-sm sm:text-base">
+                                        Buenos Aires 491
+                                        <br />
+                                        Piso 6
+                                        <br />
+                                        San Miguel de Tucumán, Tucumán, Argentina.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="bg-white p-8 rounded-xl shadow-xl border border-gray-100">
-                    <h3 className="text-2xl font-bold mb-6">Envíanos un Mensaje</h3>
-                    <form className="space-y-6">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Nombre
-                                </label>
-                                <Input id="name" placeholder="Tu nombre" className="border-gray-300" />
+                    <div className="bg-white p-4 sm:p-6 lg:p-8 rounded-xl shadow-xl border border-gray-100">
+                        <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Envíanos un Mensaje</h3>
+                        <form className="space-y-4 sm:space-y-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Nombre
+                                    </label>
+                                    <Input id="name" placeholder="Tu nombre" className="border-gray-300" />
+                                </div>
+                                <div>
+                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Email
+                                    </label>
+                                    <Input id="email" type="email" placeholder="Tu email" className="border-gray-300" />
+                                </div>
                             </div>
                             <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                                    Email
+                                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Teléfono
                                 </label>
-                                <Input id="email" type="email" placeholder="Tu email" className="border-gray-300" />
+                                <Input id="phone" placeholder="Tu número de teléfono" className="border-gray-300" />
                             </div>
-                        </div>
-                        <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                                Teléfono
-                            </label>
-                            <Input id="phone" placeholder="Tu número de teléfono" className="border-gray-300" />
-                        </div>
-                        <div>
-                            <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-                                Asunto
-                            </label>
-                            <Input id="subject" placeholder="¿Cómo podemos ayudarte?" className="border-gray-300" />
-                        </div>
-                        <div>
-                            <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                                Mensaje
-                            </label>
-                            <Textarea
-                                id="message"
-                                placeholder="Cuéntanos más sobre tus necesidades..."
-                                className="border-gray-300 min-h-[120px]"
-                            />
-                        </div>
-                        <Button className="w-full bg-red-600 hover:bg-red-700 text-lg py-6">Enviar Mensaje</Button>
-                    </form>
+                            <div>
+                                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Asunto
+                                </label>
+                                <Input id="subject" placeholder="¿Cómo podemos ayudarte?" className="border-gray-300" />
+                            </div>
+                            <div>
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                                    Mensaje
+                                </label>
+                                <Textarea
+                                    id="message"
+                                    placeholder="Cuéntanos más sobre tus necesidades..."
+                                    className="border-gray-300 min-h-[100px] sm:min-h-[120px]"
+                                />
+                            </div>
+                            <Button className="w-full bg-red-600 hover:bg-red-700 text-base sm:text-lg py-4 sm:py-6">Enviar Mensaje</Button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
