@@ -4,9 +4,11 @@ export function ValuesSection() {
     return (
         <section className="py-20 bg-white">
             <div className="container mx-auto px-4">
-                <div className="text-center max-w-3xl mx-auto mb-16">
-                    <h2 className="text-4xl font-bold mb-6">Nuestros Valores</h2>
-                    <p className="text-lg text-gray-600">
+                <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                        Nuestros Valores
+                    </h2>
+                    <p className="text-gray-600">
                         En Bunader Negocios Inmobiliarios, creemos que encontrar el lugar adecuado es una de las decisiones más importantes en la vida. Por eso, nos
                         guiamos por valores que ponen a las personas en el centro de todo lo que hacemos.
                     </p>
