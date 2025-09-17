@@ -14,8 +14,8 @@ export function TestimonialsSection() {
     }, [])
 
     return (
-        <section className="py-12 sm:py-20">
-            <div className="container mx-auto px-2 sm:px-4">
+        <section className="py-12 sm:py-16 lg:py-20">
+            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
                 <div className="text-center mb-8 sm:mb-16">
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
                         Lo Que Dicen Nuestros Clientes
@@ -26,7 +26,7 @@ export function TestimonialsSection() {
                 </div>
             </div>
 
-            <div className="container mx-auto px-2 sm:px-4 max-w-4xl">
+            <div className="max-w-4xl mx-auto px-2 sm:px-4 lg:px-8">
                 <div 
                     className="embedsocial-widget" 
                     data-ref="52a781d896bd34c7b612990db025ddc3"
