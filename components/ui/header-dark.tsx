@@ -9,6 +9,7 @@ import Image from "next/image"
 export function SiteHeaderDark() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
+    const [isPropertiesSubmenuOpen, setIsPropertiesSubmenuOpen] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -132,13 +133,73 @@ export function SiteHeaderDark() {
                         >
                             Inicio
                         </Link>
-                        <Link
-                            href="/propiedades"
-                            className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
-                            onClick={() => setIsMenuOpen(false)}
-                        >
-                            Propiedades
-                        </Link>
+                        <div className="flex flex-col">
+                            <div className="flex items-center justify-between">
+                                <Link
+                                    href="/propiedades"
+                                    className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
+                                    onClick={() => {
+                                        setIsMenuOpen(false)
+                                        setIsPropertiesSubmenuOpen(false)
+                                    }}
+                                >
+                                    Propiedades
+                                </Link>
+                                <button
+                                    className="p-2 hover:text-red-600 transition-colors"
+                                    onClick={() => setIsPropertiesSubmenuOpen(!isPropertiesSubmenuOpen)}
+                                >
+                                    <svg 
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        width="16" 
+                                        height="16" 
+                                        viewBox="0 0 24 24" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        strokeWidth="2" 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        className={`h-4 w-4 transition-transform ${isPropertiesSubmenuOpen ? 'rotate-180' : ''}`}
+                                    >
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            {isPropertiesSubmenuOpen && (
+                                <div className="ml-4 flex flex-col gap-2 mt-2">
+                                    <Link
+                                        href="/propiedades/venta"
+                                        className="text-base font-medium py-1 hover:text-red-600 transition-colors"
+                                        onClick={() => {
+                                            setIsMenuOpen(false)
+                                            setIsPropertiesSubmenuOpen(false)
+                                        }}
+                                    >
+                                        En Venta
+                                    </Link>
+                                    <Link
+                                        href="/propiedades/alquiler"
+                                        className="text-base font-medium py-1 hover:text-red-600 transition-colors"
+                                        onClick={() => {
+                                            setIsMenuOpen(false)
+                                            setIsPropertiesSubmenuOpen(false)
+                                        }}
+                                    >
+                                        En Alquiler
+                                    </Link>
+                                    <Link
+                                        href="/propiedades/proyectos"
+                                        className="text-base font-medium py-1 hover:text-red-600 transition-colors"
+                                        onClick={() => {
+                                            setIsMenuOpen(false)
+                                            setIsPropertiesSubmenuOpen(false)
+                                        }}
+                                    >
+                                        Proyectos Nuevos
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
                         <Link
                             href="/sobre-nosotros"
                             className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
