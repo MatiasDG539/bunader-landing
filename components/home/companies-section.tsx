@@ -71,7 +71,7 @@ const companies = [
   },
   {
     name: 'Blue Bell',
-    logo: '/img/logos/blue-bell-logo.jpg',
+    logo: '/img/logos/blue-bell-logo.png',
     alt: 'Blue Bell'
   },
   {
@@ -127,35 +127,87 @@ const companies = [
 ];
 
 export default function CompaniesSection() {
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselRef1 = useRef<HTMLDivElement>(null);
+  const carouselRef2 = useRef<HTMLDivElement>(null);
+
+  const firstRowCompanies = companies.slice(0, 12);
+  const secondRowCompanies = companies.slice(12, 24);
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
+    const animateCarousel = (carousel: HTMLDivElement, duration: number) => {
+      let animationId: number;
+      let startTime: number;
+      const itemWidth = 200 + 48; // width + gap
+      const totalItems = carousel.children.length / 2; // dividido por 2 porque duplicamos
+      const totalWidth = totalItems * itemWidth;
 
-    let animationId: number;
-    let startTime: number;
-    const duration = 120000;
-    const totalWidth = carousel.scrollWidth / 2;
+      const animate = (currentTime: number) => {
+        if (!startTime) startTime = currentTime;
+        const elapsed = currentTime - startTime;
+        const progress = (elapsed % duration) / duration;
+        const translateX = -progress * totalWidth;
+        
+        carousel.style.transform = `translateX(${translateX}px)`;
+        animationId = requestAnimationFrame(animate);
+      };
 
-    const animate = (currentTime: number) => {
-      if (!startTime) startTime = currentTime;
-      const elapsed = currentTime - startTime;
-      const progress = (elapsed % duration) / duration;
-      const translateX = -progress * totalWidth;
-      
-      carousel.style.transform = `translateX(${translateX}px)`;
       animationId = requestAnimationFrame(animate);
+      return animationId;
     };
 
-    animationId = requestAnimationFrame(animate);
+    const animationId1 = carouselRef1.current ? animateCarousel(carouselRef1.current, 120000) : null;
+    const animationId2 = carouselRef2.current ? animateCarousel(carouselRef2.current, 120000) : null;
 
     return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
+      if (animationId1) cancelAnimationFrame(animationId1);
+      if (animationId2) cancelAnimationFrame(animationId2);
     };
   }, []);
+
+  const renderCompanyLogo = (company: typeof companies[0], key: string) => (
+    <div
+      key={key}
+      className="flex-shrink-0 flex items-center justify-center p-4 transition-all duration-300 hover:scale-105"
+      style={{ width: '200px', height: '120px' }}
+    >
+      <Image
+        src={company.logo}
+        alt={company.alt}
+        width={180}
+        height={100}
+        className="object-contain"
+        style={{
+          maxWidth: '180px',
+          maxHeight: '100px',
+          minWidth: '120px',
+          minHeight: '60px'
+        }}
+        onError={(e) => {
+          e.currentTarget.style.display = 'none';
+          const parent = e.currentTarget.parentElement;
+          if (parent) {
+            parent.innerHTML = `<span class="text-red-600 font-bold text-sm text-center">${company.name}</span>`;
+          }
+        }}
+      />
+    </div>
+  );
+
+  const renderCompanyRow = (companyList: typeof companies, carouselRef: React.RefObject<HTMLDivElement>, keyPrefix: string) => (
+    <div className="relative mb-8 overflow-hidden">
+      <div 
+        ref={carouselRef}
+        className="flex items-center will-change-transform"
+        style={{ 
+          width: `${companyList.length * 2 * (200 + 48)}px`,
+          gap: '48px'
+        }}
+      >
+        {companyList.map((company, index) => renderCompanyLogo(company, `${keyPrefix}-first-${index}`))}
+        {companyList.map((company, index) => renderCompanyLogo(company, `${keyPrefix}-second-${index}`))}
+      </div>
+    </div>
+  );
 
   return (
     <section className="py-16 overflow-hidden">
@@ -169,84 +221,9 @@ export default function CompaniesSection() {
           </p>
         </div>
         
-        <div className="relative">
-          <div 
-            ref={carouselRef}
-            className="flex items-center space-x-12 will-change-transform"
-            style={{
-              width: '200%',
-            }}
-          >
-            {companies.map((company, index) => (
-              <div
-                key={`first-${index}`}
-                className="flex-shrink-0 flex items-center justify-center bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
-                style={{ width: '200px', height: '120px' }}
-              >
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <Image
-                    src={company.logo}
-                    alt={company.alt}
-                    width={180}
-                    height={100}
-                    className="object-contain transition-all duration-300 hover:scale-105"
-                    style={{
-                      maxWidth: '180px',
-                      maxHeight: '100px',
-                      minWidth: '120px',
-                      minHeight: '60px'
-                    }}
-                    onLoad={() => {
-                      console.log(`✅ Logo loaded successfully: ${company.name}`);
-                    }}
-                    onError={(e) => {
-                      console.log(`❌ Error loading logo for ${company.name}:`, company.logo);
-                      e.currentTarget.style.display = 'none';
-                      const parent = e.currentTarget.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-red-600 font-bold text-sm text-center">${company.name}</span>`;
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-            
-            {companies.map((company, index) => (
-              <div
-                key={`second-${index}`}
-                className="flex-shrink-0 flex items-center justify-center bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
-                style={{ width: '200px', height: '120px' }}
-              >
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <Image
-                    src={company.logo}
-                    alt={company.alt}
-                    width={180}
-                    height={100}
-                    className="object-contain transition-all duration-300 hover:scale-105"
-                    style={{
-                      maxWidth: '180px',
-                      maxHeight: '100px',
-                      minWidth: '120px',
-                      minHeight: '60px'
-                    }}
-                    onLoad={() => {
-                      console.log(`✅ Logo loaded successfully: ${company.name}`);
-                    }}
-                    onError={(e) => {
-                      console.log(`❌ Error loading logo for ${company.name}:`, company.logo);
-                      e.currentTarget.style.display = 'none';
-                      const parent = e.currentTarget.parentElement;
-                      if (parent) {
-                        parent.innerHTML = `<span class="text-red-600 font-bold text-sm text-center">${company.name}</span>`;
-                      }
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="space-y-8">
+          {renderCompanyRow(firstRowCompanies, carouselRef1 as React.RefObject<HTMLDivElement>, 'row1')}
+          {renderCompanyRow(secondRowCompanies, carouselRef2 as React.RefObject<HTMLDivElement>, 'row2')}
         </div>
       </div>
     </section>
