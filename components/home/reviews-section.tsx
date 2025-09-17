@@ -14,15 +14,19 @@ export function TestimonialsSection() {
     }, [])
 
     return (
-        <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
-            <div className="text-center mb-16">
-                <h2 className="text-5xl font-bold mb-4">Lo Que Dicen Nuestros Clientes</h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                    No solo tomes nuestra palabra. Escucha a nuestros clientes satisfechos.
-                </p>
+        <section className="py-12 sm:py-20">
+            <div className="container mx-auto px-2 sm:px-4">
+                <div className="text-center mb-8 sm:mb-16">
+                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                        Lo Que Dicen Nuestros Clientes
+                    </h2>
+                    <p className="text-gray-600 max-w-2xl mx-auto">
+                        No solo tomes nuestra palabra. Escucha a nuestros clientes satisfechos.
+                    </p>
+                </div>
             </div>
 
-            <div className="max-w-4xl mx-auto">
+            <div className="container mx-auto px-2 sm:px-4 max-w-4xl">
                 <div 
                     className="embedsocial-widget" 
                     data-ref="52a781d896bd34c7b612990db025ddc3"
