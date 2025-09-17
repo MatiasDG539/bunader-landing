@@ -5,7 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { MapPin, Building, Calendar } from "lucide-react"
+import { ChevronLeft, ChevronRight, MapPin, Building, Calendar } from "lucide-react"
 
 const developments = [
     {
@@ -37,6 +37,17 @@ const developments = [
 export function DevelopmentsSection() {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
 
+    const scrollLeft = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: -400, behavior: "smooth" })
+        }
+    }
+
+    const scrollRight = () => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollBy({ left: 400, behavior: "smooth" })
+        }
+    }
 
     const getStatusTag = (status: string) => {
         const statusColors = {
@@ -55,20 +66,44 @@ export function DevelopmentsSection() {
 
     return (
         <section id="desarrollos" className="py-12 sm:py-20 bg-white">
-            <div className="container mx-auto px-2 sm:px-4">
-                <div className="text-center mb-12">
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 whitespace-nowrap">
-                        Nuestros Desarrollos
-                    </h2>
-                    <p className="text-gray-600 max-w-2xl mx-auto">
-                        Descubre nuestros proyectos inmobiliarios únicos, diseñados para el futuro.
-                    </p>
+            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
+                <div className="text-center lg:text-left mb-8 sm:mb-12">
+                    <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between">
+                        <div>
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 whitespace-nowrap">
+                                Nuestros Desarrollos
+                            </h2>
+                            <p className="text-gray-600 max-w-2xl mx-auto lg:mx-0">
+                                Descubre nuestros proyectos inmobiliarios únicos, diseñados para el futuro.
+                            </p>
+                        </div>
+                        <div className="hidden lg:flex gap-2 mt-4 lg:mt-0">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-12 w-12 rounded-full border-gray-300"
+                                onClick={scrollLeft}
+                            >
+                                <ChevronLeft className="h-6 w-6" />
+                                <span className="sr-only">Desplazar a la izquierda</span>
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="h-12 w-12 rounded-full border-gray-300"
+                                onClick={scrollRight}
+                            >
+                                <ChevronRight className="h-6 w-6" />
+                                <span className="sr-only">Desplazar a la derecha</span>
+                            </Button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div
                 ref={scrollContainerRef}
-                className="flex gap-4 sm:gap-6 overflow-x-auto pb-8 px-6 sm:px-6 lg:px-8 max-w-screen-2xl mx-auto scrollbar-hide"
+                className="flex gap-4 sm:gap-6 overflow-x-auto pb-8 px-6 sm:px-6 lg:px-8 max-w-7xl mx-auto scrollbar-hide"
                 style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
             >
                 {developments.length > 0 ? (
