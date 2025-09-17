@@ -40,7 +40,7 @@ export default function PartnersSection() {
 
     let animationId: number;
     let startTime: number;
-    const duration = 120000;
+    const duration = 90000;
     const itemWidth = 200 + 48;
     const totalItems = carousel.children.length / 2;
     const totalWidth = totalItems * itemWidth;
