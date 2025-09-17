@@ -3,27 +3,27 @@ import { Button } from "@/components/ui/button"
 
 export function AboutSection() {
     return (
-        <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-                <div className="order-2 lg:order-1 flex flex-col justify-start -mt-38">
+        <section id="about" className="py-12 sm:py-20 px-6 sm:px-6 lg:px-8 max-w-screen-xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-center">
+                <div className="order-2 lg:order-1 flex flex-col justify-start lg:-mt-38">
                     {/* <h2 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
                         Sobre <span className="text-red-600 block mt-1">Bunader Negocios Inmobiliarios</span>
                     </h2> */} {/*Not sure*/}
-                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+                    <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed">
                         Durante más de 20 años, hemos sido más que simples agentes inmobiliarios - hemos sido asesores de confianza,
                         vecinos y amigos para innumerables familias. Nuestro enfoque es simple: primero
                         escuchamos a nuestros clientes, entendemos sus necesidades y luego los guiamos en cada paso de su viaje inmobiliario.
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Sobre Nosotros</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Nuestro blog</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Trabaja con nosotros</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-lg px-8 py-6 cursor-pointer">Prensa</Button>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Sobre Nosotros</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Nuestro blog</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Trabaja con nosotros</Button>
+                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Prensa</Button>
                     </div>
                 </div>
                 <div className="order-1 lg:order-2 relative">
-                    <div className="relative h-[500px] w-full rounded-lg overflow-hidden shadow-2xl">
+                    <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] w-full rounded-lg overflow-hidden shadow-2xl">
                         <Image
                             src="/img/about_us.jpg"
                             alt="Nuestro Equipo"
@@ -31,8 +31,8 @@ export function AboutSection() {
                             className="object-cover"
                         />
                     </div>
-                    <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-red-600 rounded-lg -z-10"></div>
-                    <div className="absolute -top-8 -right-8 w-32 h-32 bg-black rounded-lg -z-10"></div>
+                    <div className="absolute -bottom-4 sm:-bottom-8 -left-4 sm:-left-8 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-red-600 rounded-lg -z-10"></div>
+                    <div className="absolute -top-4 sm:-top-8 -right-4 sm:-right-8 w-16 sm:w-24 lg:w-32 h-16 sm:h-24 lg:h-32 bg-black rounded-lg -z-10"></div>
                 </div>
             </div>
         </section>
