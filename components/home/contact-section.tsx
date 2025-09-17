@@ -5,8 +5,8 @@ import { Phone, Mail, MapPin } from "lucide-react"
 
 export function ContactSection() {
     return (
-        <section className="py-12 sm:py-20">
-            <div className="container mx-auto px-2 sm:px-4">
+        <section className="pt-6 pb-12 sm:pt-8 sm:pb-16 lg:pt-12 lg:pb-20">
+            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
                 <div className="text-center mb-8 sm:mb-12">
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
                         Contáctanos
@@ -18,7 +18,7 @@ export function ContactSection() {
                 </div>
             </div>
             
-            <div className="container mx-auto px-2 sm:px-4">
+            <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8">
                 <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-start">
                     <div>
                         <div className="space-y-6 sm:space-y-8">
