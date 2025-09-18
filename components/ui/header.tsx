@@ -59,14 +59,14 @@ export function SiteHeader() {
                         <Link
                             href="/propiedades"
                             className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
-                                } flex items-center gap-1`}
+                                } flex items-center gap-1 py-2`}
                         >
                             Propiedades
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform group-hover:rotate-180">
                                 <path d="m6 9 6 6 6-6"/>
                             </svg>
                         </Link>
-                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
+                        <div className="absolute left-0 top-full w-48 rounded-md bg-white shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
                             <div className="py-1">
                                 <Link href="/propiedades/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
                                     En Venta
@@ -80,31 +80,13 @@ export function SiteHeader() {
                             </div>
                         </div>
                     </div>
-                    <div className="relative group">
-                        <Link
-                            href="/servicios"
-                            className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
-                                } flex items-center gap-1`}
-                        >
-                            Servicios
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform group-hover:rotate-180">
-                                <path d="m6 9 6 6 6-6"/>
-                            </svg>
-                        </Link>
-                        <div className="absolute left-0 top-full mt-1 w-48 rounded-md bg-white shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999] pointer-events-none group-hover:pointer-events-auto">
-                            <div className="py-1">
-                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
-                                    Asesoramiento
-                                </Link>
-                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
-                                    Tasaciones
-                                </Link>
-                                <Link href="/#" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
-                                    Cobranzas
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
+                    <Link
+                        href="/servicios"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                            }`}
+                    >
+                        Servicios
+                    </Link>
                     <Link
                         href="/contacto"
                         className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
