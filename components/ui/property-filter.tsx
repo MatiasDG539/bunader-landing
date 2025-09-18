@@ -2,20 +2,25 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-// import { Input } from '@/components/ui/input'
-import { Home, Building2, MapPin, Building } from 'lucide-react' //add this later here: Maximize2, ParkingCircle, Filter
+import { Home, Building2, MapPin, Building, Briefcase, Store, TreePine, Warehouse, FileText, Building2 as BuildingIcon } from 'lucide-react' //add this later here: Maximize2, ParkingCircle, Filter
 
-const PROPERTY_TYPES = [
-    { value: "casa", label: "Casas", icon: Home },
-    { value: "apartamento", label: "Apartamentos", icon: Building2 },
-    { value: "condominio", label: "Condominios", icon: Building },
-    { value: "casaAdosada", label: "Casas Adosadas", icon: Home },
-    { value: "terreno", label: "Terrenos", icon: MapPin },
-]
+const PROPERTY_TYPE_ICONS: Record<string, any> = {
+    'Casa': Home,
+    'Departamento': Building2,
+    'Terreno': MapPin,
+    'Oficina': Briefcase,
+    'Local Comercial': Store,
+    'Condominio': Building,
+    'Campo': TreePine,
+    'Galpón': Warehouse,
+    'Estudio': FileText,
+    'Edificio': BuildingIcon,
+}
 
 export interface PropertyFilterProps {
     onFilter: (filters: PropertyFilters) => void;
     isRental?: boolean;
+    propertyTypes?: string[];
 }
 
 export interface PropertyFilters {
@@ -29,7 +34,7 @@ export interface PropertyFilters {
     minParkingSpots?: number;
 }
 
-export function PropertyFilter({ onFilter, isRental = false }: PropertyFilterProps) {
+export function PropertyFilter({ onFilter, isRental = false, propertyTypes = [] }: PropertyFilterProps) {
     const [filters, setFilters] = useState<PropertyFilters>({
         location: '',
         minPrice: undefined,
@@ -41,46 +46,21 @@ export function PropertyFilter({ onFilter, isRental = false }: PropertyFilterPro
         minParkingSpots: undefined,
     })
 
-
-    // const handleFilterChange = (key: keyof PropertyFilters, value: string | number | string[] | undefined) => {
-    //     setFilters(prev => ({
-    //         ...prev,
-    //         [key]: value
-    //     }))
-    // }
-
     const handlePropertyTypeToggle = (type: string) => {
-        setFilters(prev => {
-            const currentTypes = prev.propertyTypes || []
-            const updatedTypes = currentTypes.includes(type)
-                ? currentTypes.filter(t => t !== type)
-                : [...currentTypes, type]
+        const currentTypes = filters.propertyTypes || []
+        const updatedTypes = currentTypes.includes(type)
+            ? []
+            : [type]
 
-            return {
-                ...prev,
-                propertyTypes: updatedTypes
-            }
-        })
-    }
-
-    const applyFilters = () => {
-        onFilter(filters)
-    }
-
-    const clearFilters = () => {
-        const clearedFilters = {
-            location: '',
-            minPrice: undefined,
-            maxPrice: undefined,
-            minBedrooms: undefined,
-            minBathrooms: undefined,
-            minArea: undefined,
-            propertyTypes: [],
-            minParkingSpots: undefined,
+        const newFilters = {
+            ...filters,
+            propertyTypes: updatedTypes
         }
-        setFilters(clearedFilters)
-        onFilter(clearedFilters)
+
+        setFilters(newFilters)
+        onFilter(newFilters)
     }
+
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-md">
@@ -129,23 +109,27 @@ export function PropertyFilter({ onFilter, isRental = false }: PropertyFilterPro
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Propiedad</label>
                     <div className="flex flex-wrap gap-2">
-                        {PROPERTY_TYPES.map((type) => {
-                            const Icon = type.icon
-                            const isActive = filters.propertyTypes?.includes(type.value)
+                        {propertyTypes.length > 0 ? (
+                            propertyTypes.map((type) => {
+                                const Icon = PROPERTY_TYPE_ICONS[type] || Building2
+                                const isActive = filters.propertyTypes?.includes(type.toLowerCase())
 
-                            return (
-                                <Button
-                                    key={type.value}
-                                    type="button"
-                                    variant={isActive ? "default" : "outline"}
-                                    className={`flex items-center ${isActive ? 'bg-red-600 hover:bg-red-700' : 'hover:bg-red-50 hover:text-red-600'}`}
-                                    onClick={() => handlePropertyTypeToggle(type.value)}
-                                >
-                                    <Icon className="h-4 w-4 mr-1" />
-                                    {type.label}
-                                </Button>
-                            )
-                        })}
+                                return (
+                                    <Button
+                                        key={type}
+                                        type="button"
+                                        variant={isActive ? "default" : "outline"}
+                                        className={`flex items-center ${isActive ? 'bg-red-600 hover:bg-red-700' : 'hover:bg-red-50 hover:text-red-600'}`}
+                                        onClick={() => handlePropertyTypeToggle(type.toLowerCase())}
+                                    >
+                                        <Icon className="h-4 w-4 mr-1" />
+                                        {type}
+                                    </Button>
+                                )
+                            })
+                        ) : (
+                            <p className="text-gray-500 text-sm">Cargando tipos de propiedades...</p>
+                        )}
                     </div>
                 </div>
 
@@ -220,22 +204,6 @@ export function PropertyFilter({ onFilter, isRental = false }: PropertyFilterPro
                     </div>
                 )} */}
 
-                {/* Botones de acción */}
-                <div className="flex flex-col space-y-2 pt-4">
-                    <Button
-                        className="w-full bg-red-600 hover:bg-red-700"
-                        onClick={applyFilters}
-                    >
-                        Aplicar Filtros
-                    </Button>
-                    <Button
-                        variant="outline"
-                        className="w-full hover:bg-red-50 hover:text-red-600"
-                        onClick={clearFilters}
-                    >
-                        Limpiar
-                    </Button>
-                </div>
             </div>
         </div>
     )

@@ -373,7 +373,6 @@ export const getRentProperties = async (): Promise<Property[]> => {
     }
 };
 
-// Function to get an individual property by its ID
 const _getPropertyById = async (id: number): Promise<Property | null> => {
     try {
         const url = `${BASE_URL}property/${id}/?lang=${LANG}&key=${API_KEY}`;
@@ -468,7 +467,6 @@ export const getPropertyById = async (id: number): Promise<Property | null> => {
     return _getPropertyById(id);
 };
 
-// Function to get starred properties.
 export const getFeaturedProperties = async (): Promise<Property[]> => {
     try {
         
@@ -550,6 +548,32 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
         return formattedProperties;
     } catch (error) {
         console.error('Error al obtener propiedades destacadas:', error);
+        return [];
+    }
+};
+
+export const getPropertyTypesForOperation = async (operationType: 'sale' | 'rent'): Promise<string[]> => {
+    try {
+        const operationId = operationType === 'sale' ? 1 : 2;
+        const url = `${BASE_URL}property/?lang=${LANG}&key=${API_KEY}&operation_type=${operationId}&limit=200`;
+        const response = await axios.get(url);
+
+        const properties = response.data.objects.filter((property: any) => {
+            const operations = property.operations || [];
+            return operations.some((op: any) => op.operation_id === operationId);
+        });
+
+        const uniqueTypes = new Set<string>();
+        properties.forEach((property: any) => {
+            const typeName = property.type?.name || getPropertyType(property.type_id || 0, LANG);
+            if (typeName) {
+                uniqueTypes.add(typeName);
+            }
+        });
+
+        return Array.from(uniqueTypes).sort();
+    } catch (error) {
+        console.error(`Error al obtener tipos de propiedades para ${operationType}:`, error);
         return [];
     }
 };

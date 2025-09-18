@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { SiteHeaderDark } from '@/components/ui/header-dark';
 import { SiteFooter } from '@/components/ui/footer';
 import { PropertyFilter, PropertyFilters } from '@/components/ui/property-filter';
-import { getRentProperties, Property } from '@/actions/tokkoApi';
+import { getRentProperties, getPropertyTypesForOperation, Property } from '@/actions/tokkoApi';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -18,20 +18,23 @@ export default function RentPage() {
     const [error, setError] = useState<string | null>(null);
     const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
     const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
+    const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
 
-    // Helper function to check if a value is valid (greater than 0)
     const isValidValue = (value: string | number | null | undefined): boolean => {
         const numValue = Number(value);
         return numValue > 0;
     };
 
-    // Cargar propiedades
     const loadProperties = async () => {
         try {
             setLoading(true);
             setError(null);
-            const data = await getRentProperties();
-            setProperties(data);
+            const [propertiesData, typesData] = await Promise.all([
+                getRentProperties(),
+                getPropertyTypesForOperation('rent')
+            ]);
+            setProperties(propertiesData);
+            setPropertyTypes(typesData);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Error al cargar propiedades');
         } finally {
@@ -39,17 +42,14 @@ export default function RentPage() {
         }
     };
 
-    // Cargar propiedades al montar el componente
     useEffect(() => {
         loadProperties();
     }, []);
 
-    // Actualizar propiedades filtradas cuando cambian las propiedades
     useEffect(() => {
         setFilteredProperties(properties);
     }, [properties]);
 
-    // Auto-scroll de imágenes
     useEffect(() => {
         if (!filteredProperties.length) return;
 
@@ -95,7 +95,7 @@ export default function RentPage() {
         if (filters.propertyTypes && filters.propertyTypes.length > 0) {
             filtered = filtered.filter(property =>
                 filters.propertyTypes!.some(type => 
-                    property.type.toLowerCase().includes(type.toLowerCase())
+                    property.type.toLowerCase() === type.toLowerCase()
                 )
             );
         }
@@ -163,7 +163,11 @@ export default function RentPage() {
                         {/* Filtros - columna izquierda */}
                         <div className="lg:col-span-1">
                             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
-                                <PropertyFilter onFilter={applyFilters} />
+                                <PropertyFilter 
+                                    onFilter={applyFilters} 
+                                    isRental={true}
+                                    propertyTypes={propertyTypes}
+                                />
                             </div>
                         </div>
 
@@ -188,6 +192,12 @@ export default function RentPage() {
                                 </div>
                             ) : (
                                 <>
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h2 className="text-xl font-semibold">
+                                            {filteredProperties.length} propiedades encontradas
+                                        </h2>
+                                    </div>
+
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         {filteredProperties.map((property) => {
                                             const currentImageIndex = activeImageIndex[property.id] || 0;
@@ -207,7 +217,6 @@ export default function RentPage() {
                                                             className="object-cover"
                                                         />
                                                         
-                                                        {/* Navegación de imágenes */}
                                                         {property.images.length > 1 && (
                                                             <div className="absolute inset-0 flex justify-between items-center px-2">
                                                                 <Button
@@ -295,7 +304,6 @@ export default function RentPage() {
                                             );
                                         })}
                                         
-                                        {/* Card promocional al final del grid */}
                                         {filteredProperties.length > 0 && (
                                             <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                                                 <PromoBanner 
@@ -308,16 +316,25 @@ export default function RentPage() {
                                         )}
                                     </div>
 
-                                    {filteredProperties.length > 0 && (
-                                        <div className="text-center text-gray-500 py-8">
-                                            Has llegado al final de la lista
+                                    {filteredProperties.length === 0 ? (
+                                        <div className="bg-white p-8 rounded-lg text-center shadow-md">
+                                            <p className="text-lg text-gray-600 mb-4">No se encontraron propiedades que coincidan con los filtros seleccionados.</p>
+                                            <Button
+                                                variant="outline"
+                                                className="hover:bg-red-50 hover:text-red-600"
+                                                onClick={() => applyFilters({})}
+                                            >
+                                                Limpiar filtros
+                                            </Button>
                                         </div>
-                                    )}
-
-                                    {filteredProperties.length === 0 && !loading && (
-                                        <div className="text-center py-12">
-                                            <p className="text-gray-500 text-lg">No se encontraron propiedades que coincidan con los filtros seleccionados.</p>
-                                        </div>
+                                    ) : (
+                                        <>
+                                            {filteredProperties.length > 0 && (
+                                                <div className="text-center text-gray-500 py-8">
+                                                    Has llegado al final de la lista
+                                                </div>
+                                            )}
+                                        </>
                                     )}
                                 </>
                             )}

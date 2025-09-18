@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { SiteHeaderDark } from '@/components/ui/header-dark';
 import { SiteFooter } from '@/components/ui/footer';
 import { PropertyFilter, PropertyFilters } from '@/components/ui/property-filter';
-import { getSalesProperties, Property } from '@/actions/tokkoApi';
+import { getSalesProperties, getPropertyTypesForOperation, Property } from '@/actions/tokkoApi';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -21,6 +21,7 @@ export default function SalesPage() {
     const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
+    const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
     const observer = useRef<IntersectionObserver | null>(null);
     const propertiesPerPage = 6;
 
@@ -28,9 +29,13 @@ export default function SalesPage() {
         const fetchProperties = async () => {
             try {
                 setLoading(true);
-                const data = await getSalesProperties();
-                setProperties(data);
-                setFilteredProperties(data);
+                const [propertiesData, typesData] = await Promise.all([
+                    getSalesProperties(),
+                    getPropertyTypesForOperation('sale')
+                ]);
+                setProperties(propertiesData);
+                setFilteredProperties(propertiesData);
+                setPropertyTypes(typesData);
             } catch (error) {
                 console.error("Error fetching sales properties:", error);
             } finally {
@@ -89,7 +94,9 @@ export default function SalesPage() {
 
         if (filters.propertyTypes && filters.propertyTypes.length > 0) {
             filtered = filtered.filter(property =>
-                filters.propertyTypes!.includes(property.type.toLowerCase())
+                filters.propertyTypes!.some(type => 
+                    property.type.toLowerCase() === type.toLowerCase()
+                )
             );
         }
 
@@ -206,7 +213,11 @@ export default function SalesPage() {
 
                         <aside className="lg:col-span-1">
                             <div className="sticky top-24">
-                                <PropertyFilter onFilter={handleFilterProperties} />
+                                <PropertyFilter 
+                                    onFilter={handleFilterProperties} 
+                                    isRental={false}
+                                    propertyTypes={propertyTypes}
+                                />
                             </div>
                         </aside>
 

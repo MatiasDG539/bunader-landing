@@ -14,7 +14,6 @@ export function RentSection() {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({})
 
-    // Helper function to check if a value is valid (not 0, "0", "00", null, undefined)
     const isValidValue = (value: string | number | null | undefined): boolean => {
         if (!value) return false;
         const numValue = Number(value);
