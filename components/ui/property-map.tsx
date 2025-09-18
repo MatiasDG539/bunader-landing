@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 
-// Importación dinámica para evitar errores de SSR
 const MapContainer = dynamic(
   () => import('react-leaflet').then((mod) => mod.MapContainer),
   { ssr: false }
@@ -30,23 +29,39 @@ interface PropertyMapProps {
   className?: string
   geoLat?: string | number
   geoLong?: string | number
+  zoom?: number
 }
 
-export default function PropertyMap({ address, title, className = "", geoLat, geoLong }: PropertyMapProps) {
+export default function PropertyMap({ address, title, className = "", geoLat, geoLong, zoom = 15 }: PropertyMapProps) {
   const [isClient, setIsClient] = useState(false)
   const [coordinates, setCoordinates] = useState<[number, number] | null>(null)
   const [loading, setLoading] = useState(true)
+  const [responsiveZoom, setResponsiveZoom] = useState(zoom)
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
   useEffect(() => {
+    const updateZoom = () => {
+      if (window.innerWidth < 640) {
+        setResponsiveZoom(Math.max(zoom - 2, 10)) // Más lejos en móvil, mínimo zoom 10
+      } else {
+        setResponsiveZoom(zoom) // Zoom original en desktop
+      }
+    }
+
+    updateZoom()
+    window.addEventListener('resize', updateZoom)
+    
+    return () => window.removeEventListener('resize', updateZoom)
+  }, [zoom])
+
+  useEffect(() => {
     const initializeCoordinates = async () => {
       try {
         setLoading(true)
         
-        // Si tenemos coordenadas de la API, las usamos directamente
         if (geoLat && geoLong) {
           const lat = typeof geoLat === 'string' ? parseFloat(geoLat) : geoLat
           const lon = typeof geoLong === 'string' ? parseFloat(geoLong) : geoLong
@@ -57,7 +72,6 @@ export default function PropertyMap({ address, title, className = "", geoLat, ge
           }
         }
         
-        // Si no tenemos coordenadas válidas de la API, geocodificamos la dirección
         if (address) {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1`
@@ -69,16 +83,13 @@ export default function PropertyMap({ address, title, className = "", geoLat, ge
             const lon = parseFloat(data[0].lon)
             setCoordinates([lat, lon])
           } else {
-            // Coordenadas por defecto de Buenos Aires
             setCoordinates([-34.6037, -58.3816])
           }
         } else {
-          // Coordenadas por defecto de Buenos Aires
           setCoordinates([-34.6037, -58.3816])
         }
       } catch (error) {
         console.error('Error obteniendo coordenadas:', error)
-        // Coordenadas por defecto de Buenos Aires
         setCoordinates([-34.6037, -58.3816])
       } finally {
         setLoading(false)
@@ -129,7 +140,7 @@ export default function PropertyMap({ address, title, className = "", geoLat, ge
       />
       <MapContainer
         center={coordinates}
-        zoom={15}
+        zoom={responsiveZoom}
         style={{ height: '100%', width: '100%', minHeight: '300px' }}
         className="z-0"
       >
