@@ -148,16 +148,23 @@ export default function RentPage() {
         <div className="flex min-h-screen flex-col bg-gray-50">
             <SiteHeaderDark />
 
-            <main className="flex-1 py-8">
-                <div className="container mx-auto px-4 lg:px-8">
-                    {/* Hero */}
-                    <section className="relative h-[300px] mb-12 overflow-hidden rounded-lg shadow-lg bg-red-600">
-                        <div className="absolute inset-0 bg-black/20"></div>
-                        <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center">
-                            <h1 className="text-4xl md:text-5xl font-bold mb-4 mt-12">Propiedades en Alquiler</h1>
-                            <p className="text-xl max-w-2xl">Descubre el hogar perfecto para rentar entre nuestra selección de propiedades disponibles</p>
+            <main className="flex-1">
+                {/* Hero Section */}
+                <section className="relative h-[400px] md:h-[500px] bg-red-600 mb-10">
+                    <div className="absolute inset-0 bg-black opacity-20"></div>
+                    <div className="container mx-auto max-w-5xl">
+                        <div className="relative z-10 h-[400px] md:h-[500px] flex flex-col justify-center items-center text-center text-white px-4">
+                            <div className="mt-6 md:mt-0">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 mt-18">Propiedades en Alquiler</h1>
+                                <p className="text-xl md:text-2xl max-w-2xl mx-auto">
+                                    Descubre el hogar perfecto para rentar entre nuestra selección de propiedades disponibles
+                                </p>
+                            </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
+
+                <div className="container mx-auto px-4 lg:px-8 py-8">
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
                         {/* Filtros - columna izquierda */}

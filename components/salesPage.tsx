@@ -194,23 +194,25 @@ export default function SalesPage() {
         <div className="flex min-h-screen flex-col bg-gray-50">
             <SiteHeaderDark />
 
-            <main className="flex-1 py-8">
-                <div className="container mx-auto px-4 lg:px-8">
-
-                    {/* Hero */}
-
-                    <section className="relative h-[300px] mb-12 overflow-hidden rounded-lg shadow-lg bg-red-600">
-                        <div className="absolute inset-0 bg-black/20"></div>
-                        <div className="absolute inset-0 flex flex-col justify-center items-center text-white p-4 text-center">
-                            <h1 className="text-4xl md:text-5xl font-bold mb-4 mt-12">Propiedades en Venta</h1>
-                            <p className="text-xl max-w-2xl">Encuentra el lugar de tus sueños entre nuestra selección de propiedades disponibles</p>
+            <main className="flex-1">
+                {/* Hero Section */}
+                <section className="relative h-[400px] md:h-[500px] bg-red-600 mb-10">
+                    <div className="absolute inset-0 bg-black opacity-20"></div>
+                    <div className="container mx-auto max-w-5xl">
+                        <div className="relative z-10 h-[400px] md:h-[500px] flex flex-col justify-center items-center text-center text-white px-4">
+                            <div className="mt-6 md:mt-0">
+                                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 mt-18">Propiedades en Venta</h1>
+                                <p className="text-xl md:text-2xl max-w-2xl mx-auto">
+                                    Encuentra el lugar de tus sueños entre nuestra selección de propiedades disponibles
+                                </p>
+                            </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
+
+                <div className="container mx-auto px-4 lg:px-8 py-8">
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-
-                        {/* Filtros - columna izquierda */}
-
                         <aside className="lg:col-span-1">
                             <div className="sticky top-24">
                                 <PropertyFilter 
@@ -220,8 +222,6 @@ export default function SalesPage() {
                                 />
                             </div>
                         </aside>
-
-                        {/* Listado de propiedades - columna derecha */}
 
                         <div className="lg:col-span-3">
                             {loading ? (
@@ -253,7 +253,6 @@ export default function SalesPage() {
                                                 {visibleProperties.map((property, index) => {
                                                     const currentImageIndex = activeImageIndex[property.id] || 0;
                                                     const currentImage = property.images[currentImageIndex]?.image || "/placeholder.svg";
-
                                                     const isLastElement = index === visibleProperties.length - 1;
 
                                                     return (
@@ -261,7 +260,8 @@ export default function SalesPage() {
                                                             key={property.id}
                                                             ref={isLastElement ? lastPropertyElementRef : undefined}
                                                             className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                                                            onClick={() => window.location.href = `/propiedades/${property.id}`}>
+                                                            onClick={() => window.location.href = `/propiedades/${property.id}`}
+                                                        >
                                                             <div className="relative h-[250px] w-full">
                                                                 <Image
                                                                     src={currentImage}
@@ -269,8 +269,6 @@ export default function SalesPage() {
                                                                     fill
                                                                     className="object-cover"
                                                                 />
-
-                                                                {/* Navegación de imágenes */}
 
                                                                 {property.images.length > 1 && (
                                                                     <div className="absolute inset-0 flex justify-between items-center px-2">
@@ -301,28 +299,23 @@ export default function SalesPage() {
                                                                     </div>
                                                                 )}
 
-                                                                {/* Indicadores */}
-
                                                                 {property.images.length > 1 && (
                                                                     <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-1">
                                                                         {property.images.map((_, imgIndex) => (
                                                                             <div
                                                                                 key={imgIndex}
-                                                                                className={`h-1.5 w-1.5 rounded-full ${imgIndex === currentImageIndex ? 'bg-white' : 'bg-white/50'
-                                                                                    }`}
+                                                                                className={`h-1.5 w-1.5 rounded-full ${
+                                                                                    imgIndex === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                                                                                }`}
                                                                             ></div>
                                                                         ))}
                                                                     </div>
                                                                 )}
 
-                                                                {/* Precio */}
-
                                                                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
                                                                 <div className="absolute bottom-4 left-4 text-white">
                                                                     <div className="text-2xl font-bold">{property.price}</div>
                                                                 </div>
-
-                                                                {/* Tags */}
 
                                                                 <div className="absolute top-4 left-4">
                                                                     <div className="bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -366,7 +359,6 @@ export default function SalesPage() {
                                                     );
                                                 })}
                                                 
-                                                {/* Card promocional al final del grid */}
                                                 {!loadingMore && visibleProperties.length > 0 && (
                                                     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
                                                         <PromoBanner 
@@ -378,8 +370,6 @@ export default function SalesPage() {
                                                     </Card>
                                                 )}
                                             </div>
-
-                                            {/* Indicador de carga para scroll infinito */}
 
                                             {loadingMore && (
                                                 <div className="flex justify-center mt-8 mb-8">
