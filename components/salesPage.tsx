@@ -389,7 +389,7 @@ export default function SalesPage() {
                                             
                                             {!hasMore && visibleProperties.length > 0 && filteredProperties.length > propertiesPerPage && (
                                                 <div className="text-center text-gray-500 py-8">
-                                                    Has llegado al final de la lista
+                                                    Llegaste al final de la lista.
                                                 </div>
                                             )}
                                         </>

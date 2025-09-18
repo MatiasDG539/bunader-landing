@@ -331,7 +331,7 @@ export default function RentPage() {
                                         <>
                                             {filteredProperties.length > 0 && (
                                                 <div className="text-center text-gray-500 py-8">
-                                                    Has llegado al final de la lista
+                                                    Llegaste al final de la lista.
                                                 </div>
                                             )}
                                         </>
