@@ -3,11 +3,8 @@ import AboutUsPage from "@/components/aboutUsPage";
 export default function AboutUs() {
     return (
         <div className="flex min-h-screen flex-col bg-white">
-
             <main className="min-h-screen">
-
                 {/* Hero Section */}
-
                 <section className="relative h-[400px] md:h-[500px] bg-red-600 mb-10">
                     <div className="absolute inset-0 bg-black opacity-20"></div>
                     <div className="container mx-auto max-w-5xl">
@@ -22,8 +19,8 @@ export default function AboutUs() {
                     </div>
                 </section>
 
-                <AboutUsPage />;
+                <AboutUsPage />
             </main>
-        </div >
+        </div>
     )
 }
