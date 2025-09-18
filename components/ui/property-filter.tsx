@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Home, Building2, MapPin, Building, Briefcase, Store, TreePine, Warehouse, FileText, Building2 as BuildingIcon } from 'lucide-react' //add this later here: Maximize2, ParkingCircle, Filter
 
-const PROPERTY_TYPE_ICONS: Record<string, any> = {
+const PROPERTY_TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
     'Casa': Home,
     'Departamento': Building2,
     'Terreno': MapPin,
