@@ -10,8 +10,8 @@ export function ContactInfo() {
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-1">Llámanos</h3>
-                        <p className="text-gray-600">(381) 456-7890</p>
-                        <p className="text-gray-600">(381) 123-4567</p>
+                        <p className="text-gray-600">0381 4243087</p>
+                        <p className="text-gray-600">+54 9 381 350-1893</p>
                     </div>
                 </div>
 
@@ -21,8 +21,9 @@ export function ContactInfo() {
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-1">Envíanos un Email</h3>
-                        <p className="text-gray-600">contacto@bunader.com</p>
-                        <p className="text-gray-600">ventas@bunader.com</p>
+                        <a href="mailto:info@bunader.com.ar" className="text-gray-600 hover:text-red-600 transition-colors break-all">
+                            info@bunader.com.ar
+                        </a>
                     </div>
                 </div>
 
@@ -32,13 +33,13 @@ export function ContactInfo() {
                     </div>
                     <div>
                         <h3 className="text-xl font-bold mb-1">Visítanos</h3>
-                        <p className="text-gray-600">
-                            Av. Principal 123
+                        <a href="https://maps.app.goo.gl/As9gkEPS7FNeE8scA" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-red-600 transition-colors">
+                            Buenos Aires 491 Piso 6
                             <br />
-                            Oficina 456, Torre Inmobiliaria
+                            San Miguel de Tucumán
                             <br />
-                            San Miguel de Tucumán, Tucumán
-                        </p>
+                            Tucumán, Argentina
+                        </a>
                     </div>
                 </div>
 
@@ -49,9 +50,7 @@ export function ContactInfo() {
                     <div>
                         <h3 className="text-xl font-bold mb-1">Horario de Atención</h3>
                         <p className="text-gray-600">
-                            Lunes a Viernes: 8:30 - 18:00
-                            <br />
-                            Sábados: 9:00 - 13:00
+                            Lunes a Viernes: 9:00 - 17:00
                         </p>
                     </div>
                 </div>
