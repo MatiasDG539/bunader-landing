@@ -33,13 +33,13 @@ export default function Natania89Page() {
 
                     <div className="absolute inset-0 group-hover:scale-105 transition-transform duration-700">
                         <Image
-                            src="/img/mate_de_luna_2197/"
-                            alt="Edificio Natania 89 - Imagen principal"
+                            src="/img/mate_de_luna_2197/m2197_thumbnail.png"
+                            alt="Edificio Mate de Luna 2197 - Imagen principal"
                             fill
                             className="object-cover"
                             priority
                         />
-
+                        
                     </div>
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
 
@@ -74,12 +74,9 @@ export default function Natania89Page() {
                                     En Venta
                                 </div>
                                 <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent animate-fade-in-scale">
-                                    Natania 89
+                                    Edificio Mate de Luna 2197
                                 </h1>
-                                <p className="text-xl md:text-2xl mb-2 max-w-2xl text-gray-100 animate-slide-in-right font-semibold">
-                                    Redefine tu estilo de vida
-                                </p>
-                                <p className="text-lg md:text-xl mb-6 max-w-2xl text-gray-200 animate-slide-in-right">
+                                <p className="text-xl md:text-2xl mb-6 max-w-2xl text-gray-100 animate-slide-in-right">
                                     Edificio exclusivo sobre la Av. Mate de Luna, la avenida más importante de Tucumán.
                                 </p>
                                 <div className="flex items-center text-lg mb-6 animate-slide-in-left">
@@ -103,7 +100,7 @@ export default function Natania89Page() {
                     <div className="container mx-auto max-w-6xl px-6 md:px-8">
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                             <Card className="p-8 text-center hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <Home className="h-8 w-8 mx-auto mb-3 text-red-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
+                                <Building className="h-8 w-8 mx-auto mb-3 text-red-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
                                 <h3 className="font-bold text-lg mb-1 group-hover:text-red-600 transition-colors duration-300">Monoambiente a 2 Dorm.</h3>
                                 <p className="text-gray-600 text-sm">30m² a 60m²</p>
                             </Card>
@@ -113,7 +110,7 @@ export default function Natania89Page() {
                                 <p className="text-gray-600 text-sm">Disponible ahora</p>
                             </Card>
                             <Card className="p-8 text-center hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <Sun className="h-8 w-8 mx-auto mb-3 text-red-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
+                                <Users className="h-8 w-8 mx-auto mb-3 text-red-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
                                 <h3 className="font-bold text-lg mb-1 group-hover:text-red-600 transition-colors duration-300">Unidades Luminosas</h3>
                                 <p className="text-gray-600 text-sm">Con balcón</p>
                             </Card>
@@ -134,8 +131,9 @@ export default function Natania89Page() {
                                     Exclusividad en la Avenida Principal
                                 </h2>
                                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
-                                    Natania 89 es un edificio exclusivo sobre la Av. Mate de Luna, la avenida más importante de Tucumán.
-                                    Un emprendimiento que combina seguridad, exclusividad, comodidad y refugio en medio de la ciudad.
+                                    El Edificio Mate de Luna 2197 es un desarrollo exclusivo sobre la Av. Mate de Luna, 
+                                    la avenida más importante de Tucumán. Un emprendimiento que combina seguridad, 
+                                    exclusividad, comodidad y refugio en medio de la ciudad.
                                 </p>
                                 <p className="text-lg text-gray-600 mb-8 leading-relaxed">
                                     Propuesta con estilo, alto potencial de revalorización y unidades amplias y funcionales.
@@ -148,7 +146,7 @@ export default function Natania89Page() {
                             <div className="relative h-[400px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl overflow-hidden shadow-2xl animate-slide-in-right group">
                                 <Image
                                     src="/img/mate_de_luna_2197/m2197_render.png"
-                                    alt="Render del Edificio Natania 89"
+                                    alt="Render del Edificio Mate de Luna 2197"
                                     fill
                                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
@@ -160,7 +158,7 @@ export default function Natania89Page() {
                 <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-2xl md:rounded-3xl mb-8 md:mb-12 shadow-xl">
                     <div className="container mx-auto max-w-6xl px-6 md:px-8">
                         <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                            Amenities y Servicios
+                            Servicios y Amenities
                         </h2>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
                             <div className="text-center group cursor-pointer">
@@ -206,69 +204,6 @@ export default function Natania89Page() {
                 <section className="py-12 md:py-20 mb-8 md:mb-12">
                     <div className="container mx-auto max-w-6xl px-6 md:px-8">
                         <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                            Tipologías Disponibles
-                        </h2>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <div className="relative h-[200px] rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
-
-                                    <div className="absolute inset-0">
-                                        <Image
-                                            src="/img/mate_de_luna_2197/m2197_monoambiente.png"
-                                            alt="Monoambiente"
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-
-                                </div>
-                                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">Monoambiente</h3>
-                                <p className="text-gray-600 mb-4">30 m² | Con balcón | Espacio Flex</p>
-                                <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
-                            </Card>
-
-                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <div className="relative h-[200px] rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
-
-                                    <div className="absolute inset-0">
-                                        <Image
-                                            src="/img/mate_de_luna_2197/m2197_1_dorm.png"
-                                            alt="1 Dormitorio"
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-
-                                </div>
-                                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">1 Dormitorio</h3>
-                                <p className="text-gray-600 mb-4">40 m² | Funcional | Terminaciones de primera</p>
-                                <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
-                            </Card>
-                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
-                                <div className="relative h-[200px] rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
-
-                                    <div className="absolute inset-0">
-                                        <Image
-                                            src="/img/mate_de_luna_2197/m2197_2_dorm.png"
-                                            alt="2 Dormitorios"
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-
-                                </div>
-                                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">2 Dormitorios</h3>
-                                <p className="text-gray-600 mb-4">60 m² | Amplio | Luminoso</p>
-                                <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
-                            </Card>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="py-12 md:py-20 mb-8 md:mb-12">
-                    <div className="container mx-auto max-w-6xl px-6 md:px-8">
-                        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                             Galería del Proyecto
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -295,40 +230,67 @@ export default function Natania89Page() {
                     </div>
                 </section>
 
-                <section className="py-12 md:py-20 bg-gradient-to-br from-white via-gray-50 to-white rounded-2xl md:rounded-3xl mb-8 md:mb-12 shadow-xl border border-gray-100/50">
+                <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-2xl md:rounded-3xl mb-8 md:mb-12 shadow-xl">
                     <div className="container mx-auto max-w-6xl px-6 md:px-8">
                         <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                            Opciones de Financiación
+                            Tipologías Disponibles
                         </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 hover:rotate-1 transition-all duration-500 border border-gray-100/50 group text-center">
-                                <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-full p-4 w-16 h-16 mx-auto mb-4 shadow-lg group-hover:shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                                    <Clock className="h-8 w-8 text-white" />
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
+                                <div className="relative h-[200px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                                    <Image
+                                        src="/img/mate_de_luna_2197/m2197_monoambiente.png"
+                                        alt="Monoambiente"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                    
+                                    <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-white">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-blue-600/20 group-hover:opacity-80 transition-opacity duration-500"></div>
+                                        <div className="text-center z-10">
+                                            <Building className="h-8 w-8 mx-auto mb-2 animate-pulse" />
+                                            <p className="text-sm font-medium">Monoambiente</p>
+                                            <p className="text-xs mt-1 opacity-75">30 m²</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h3 className="font-bold text-lg mb-2 text-red-600 group-hover:text-red-700 transition-colors duration-300">De Contado</h3>
-                                <p className="text-gray-600 text-sm">Pago al contado con descuentos especiales</p>
-                            </div>
-                            <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 hover:rotate-1 transition-all duration-500 border border-gray-100/50 group text-center">
-                                <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-full p-4 w-16 h-16 mx-auto mb-4 shadow-lg group-hover:shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                                    <Calendar className="h-8 w-8 text-white" />
+                                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">Monoambiente</h3>
+                                <p className="text-gray-600 mb-4">30 m² | Con balcón | Espacio Flex</p>
+                                <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
+                            </Card>
+
+                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-white border-0 group">
+                                <div className="relative h-[200px] bg-white rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                                    <Image
+                                        src="/img/mate_de_luna_2197/m2197_1_dorm.png"
+                                        alt="1 Dormitorio"
+                                        fill
+                                        className="object-cover"
+                                    />
                                 </div>
-                                <h3 className="font-bold text-lg mb-2 text-red-600 group-hover:text-red-700 transition-colors duration-300">Anticipo + Cuotas</h3>
-                                <p className="text-gray-600 text-sm">Financiación flexible con anticipo</p>
-                            </div>
-                            <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 hover:rotate-1 transition-all duration-500 border border-gray-100/50 group text-center">
-                                <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-full p-4 w-16 h-16 mx-auto mb-4 shadow-lg group-hover:shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                                    <Building className="h-8 w-8 text-white" />
+                                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">1 Dormitorio</h3>
+                                <p className="text-gray-600 mb-4">40 m² | Funcional | Terminaciones de primera</p>
+                                <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
+                            </Card>
+
+                            <Card className="p-8 hover:shadow-2xl transform hover:-translate-y-4 hover:rotate-1 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
+                                <div className="relative h-[200px] bg-white rounded-2xl mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500 flex items-center justify-center">
+                                    <div className="relative w-full h-full">
+                                        <Image
+                                            src="/img/mate_de_luna_2197/m2197_2_dorm.png"
+                                            alt="2 Dormitorios"
+                                            fill
+                                            className="object-contain"
+                                            style={{ objectPosition: "center" }}
+                                        />
+                                    </div>
                                 </div>
-                                <h3 className="font-bold text-lg mb-2 text-red-600 group-hover:text-red-700 transition-colors duration-300">Post Entrega</h3>
-                                <p className="text-gray-600 text-sm">Financiación después de la entrega</p>
-                            </div>
-                            <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 hover:rotate-1 transition-all duration-500 border border-gray-100/50 group text-center">
-                                <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-full p-4 w-16 h-16 mx-auto mb-4 shadow-lg group-hover:shadow-2xl transform group-hover:scale-110 transition-all duration-500">
-                                    <Users className="h-8 w-8 text-white" />
-                                </div>
-                                <h3 className="font-bold text-lg mb-2 text-red-600 group-hover:text-red-700 transition-colors duration-300">100% en Cuotas</h3>
-                                <p className="text-gray-600 text-sm">Financiación completa en cuotas</p>
-                            </div>
+                                <h3 className="font-bold text-xl mb-3 group-hover:text-red-600 transition-colors duration-300">2 Dormitorios</h3>
+                                <p className="text-gray-600 mb-4">60 m² | Amplio | Luminoso</p>
+                                <p className="text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Consultar precio</p>
+                            </Card>
+
                         </div>
                     </div>
                 </section>
@@ -376,15 +338,6 @@ export default function Natania89Page() {
                                 <ul className="space-y-3 text-gray-600">
                                     <li className="flex items-center group-hover:translate-x-1 transition-transform duration-300">• Griferías: FV línea premium</li>
                                     <li className="flex items-center group-hover:translate-x-1 transition-transform duration-300">• Artefactos sanitarios: FERRUM</li>
-                                    <li className="flex items-center group-hover:translate-x-1 transition-transform duration-300">• Revestimientos cerámicos</li>
-                                </ul>
-                            </div>
-                            <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-2 hover:rotate-1 transition-all duration-500 border border-gray-100/50 group">
-                                <h3 className="font-bold text-lg mb-4 text-red-600 group-hover:text-red-700 transition-colors duration-300">Seguridad</h3>
-                                <ul className="space-y-3 text-gray-600">
-                                    <li className="flex items-center group-hover:translate-x-1 transition-transform duration-300">• Portero eléctrico con video</li>
-                                    <li className="flex items-center group-hover:translate-x-1 transition-transform duration-300">• Sistema de alarma</li>
-                                    <li className="flex items-center group-hover:translate-x-1 transition-transform duration-300">• Cámaras de seguridad</li>
                                 </ul>
                             </div>
                         </div>
@@ -411,15 +364,15 @@ export default function Natania89Page() {
                                         <span>A 15 cuadras del centro y plaza principal</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <Mountain className="h-5 w-5 text-red-600 mr-3" />
+                                        <MapPin className="h-5 w-5 text-red-600 mr-3" />
                                         <span>Acceso directo hacia el Cerro San Javier</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <Clock className="h-5 w-5 text-red-600 mr-3" />
+                                        <MapPin className="h-5 w-5 text-red-600 mr-3" />
                                         <span>Afluencia vehicular las 24hs</span>
                                     </div>
                                     <div className="flex items-center">
-                                        <Users className="h-5 w-5 text-red-600 mr-3" />
+                                        <MapPin className="h-5 w-5 text-red-600 mr-3" />
                                         <span>Cercano a propuestas sociales, culturales y educativas</span>
                                     </div>
                                 </div>
@@ -427,95 +380,17 @@ export default function Natania89Page() {
                             <div className="relative h-[400px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl overflow-hidden shadow-2xl">
                                 <Image
                                     src="/img/mate_de_luna_2197/m2197_mapa.png"
-                                    alt="Mapa de ubicación - Natania 89"
+                                    alt="Mapa de ubicación - Mate de Luna 2197"
                                     fill
                                     className="object-cover"
                                 />
-
+                                
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-gray-500">
                                     <div className="text-center">
                                         <MapPin className="h-16 w-16 mx-auto mb-4" />
                                         <p className="text-lg font-medium">Mapa de ubicación</p>
                                         <p className="text-sm mt-2 opacity-75">Ruta: /img/mate_de_luna_2197/mapa-ubicacion.jpg</p>
                                         <p className="text-xs mt-1 opacity-50">O integrar Google Maps</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="py-12 md:py-20 bg-gradient-to-br from-gray-50 via-white to-gray-100 rounded-2xl md:rounded-3xl mb-8 md:mb-12 shadow-xl">
-                    <div className="container mx-auto max-w-6xl px-6 md:px-8">
-                        <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-                            Empresa Desarrolladora
-                        </h2>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                            <div className="relative h-[400px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-2xl overflow-hidden shadow-2xl">
-                                <Image
-                                    src="/img/mate_de_luna_2197/m2197_natania_logo.png"
-                                    alt="Logo Natania - Grupo ECIPSA"
-                                    fill
-                                    className="object-cover"
-                                />
-
-                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-gray-500">
-                                    <div className="text-center">
-                                        <Building className="h-16 w-16 mx-auto mb-4" />
-                                        <p className="text-lg font-medium">Logo Natania</p>
-                                        <p className="text-sm mt-2 opacity-75">Ruta: /img/mate_de_luna_2197/natania-logo.jpg</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 className="text-3xl font-bold mb-6 text-red-600">Natania (Grupo ECIPSA)</h3>
-                                <div className="space-y-6">
-                                    <div className="bg-white p-6 rounded-2xl shadow-lg">
-                                        <h4 className="font-bold text-lg mb-3 text-gray-800">Experiencia Comprobada</h4>
-                                        <ul className="space-y-2 text-gray-600">
-                                            <li className="flex items-center">
-                                                <Star className="h-4 w-4 text-red-600 mr-2" />
-                                                +37 años de experiencia en el sector inmobiliario
-                                            </li>
-                                            <li className="flex items-center">
-                                                <Star className="h-4 w-4 text-red-600 mr-2" />
-                                                Grupo ECIPSA: +45 años en Real Estate
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="bg-white p-6 rounded-2xl shadow-lg">
-                                        <h4 className="font-bold text-lg mb-3 text-gray-800">Presencia Internacional</h4>
-                                        <ul className="space-y-2 text-gray-600">
-                                            <li className="flex items-center">
-                                                <MapPin className="h-4 w-4 text-red-600 mr-2" />
-                                                Presencia en 8 provincias argentinas
-                                            </li>
-                                            <li className="flex items-center">
-                                                <MapPin className="h-4 w-4 text-red-600 mr-2" />
-                                                Paraguay, Israel, Panamá y Estados Unidos
-                                            </li>
-                                            <li className="flex items-center">
-                                                <MapPin className="h-4 w-4 text-red-600 mr-2" />
-                                                Expansión hacia Brasil y otros países
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div className="bg-white p-6 rounded-2xl shadow-lg">
-                                        <h4 className="font-bold text-lg mb-3 text-gray-800">Números que Hablan</h4>
-                                        <ul className="space-y-2 text-gray-600">
-                                            <li className="flex items-center">
-                                                <Building className="h-4 w-4 text-red-600 mr-2" />
-                                                +88 desarrollos realizados
-                                            </li>
-                                            <li className="flex items-center">
-                                                <Users className="h-4 w-4 text-red-600 mr-2" />
-                                                +9.200 entregas exitosas
-                                            </li>
-                                            <li className="flex items-center">
-                                                <Users className="h-4 w-4 text-red-600 mr-2" />
-                                                +19.000 clientes activos
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
