@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import { siFacebook, siInstagram, siX } from "simple-icons"
+import { siFacebook, siInstagram } from "simple-icons"
 
 export function SiteFooter() {
     return (
@@ -18,7 +18,7 @@ export function SiteFooter() {
                             </p>
                         </div>
                         <div className="flex space-x-3 sm:space-x-4 mt-3 sm:mt-4">
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                            <Link href="https://www.facebook.com/bunadernegociosinmobiliarios/" className="text-gray-400 hover:text-white transition-colors">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
@@ -28,7 +28,7 @@ export function SiteFooter() {
                                 />
                                 <span className="sr-only">Facebook</span>
                             </Link>
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
+                            <Link href="https://www.instagram.com/inmobiliariabunader/" className="text-gray-400 hover:text-white transition-colors">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
@@ -37,16 +37,6 @@ export function SiteFooter() {
                                     dangerouslySetInnerHTML={{ __html: siInstagram.svg }}
                                 />
                                 <span className="sr-only">Instagram</span>
-                            </Link>
-                            <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="currentColor"
-                                    className="w-5 h-5 sm:w-6 sm:h-6"
-                                    dangerouslySetInnerHTML={{ __html: siX.svg }}
-                                />
-                                <span className="sr-only">Twitter</span>
                             </Link>
                         </div>
                     </div>
