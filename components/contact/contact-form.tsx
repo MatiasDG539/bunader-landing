@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import ReCAPTCHA from "react-google-recaptcha"
 
 export function ContactForm() {
     const [formData, setFormData] = useState({
@@ -17,6 +18,8 @@ export function ContactForm() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitSuccess, setSubmitSuccess] = useState(false)
     const [submitError, setSubmitError] = useState(false)
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null)
+    const recaptchaRef = useRef<ReCAPTCHA>(null)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { id, value } = e.target
@@ -26,17 +29,40 @@ export function ContactForm() {
         }))
     }
 
+    const handleRecaptchaChange = (token: string | null) => {
+        setRecaptchaToken(token)
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsSubmitting(true)
         setSubmitSuccess(false)
         setSubmitError(false)
 
-        // Simulamos el envío del formulario
+        const tokenToSend = process.env.NODE_ENV === 'development' ? 'test-token' : recaptchaToken
+
+        if (!tokenToSend) {
+            setSubmitError(true)
+            setIsSubmitting(false)
+            return
+        }
+
         try {
-            // Aquí iría la lógica para enviar el formulario a un backend
-            // Por ahora, solo simulamos un retraso
-            await new Promise(resolve => setTimeout(resolve, 1500))
+            const response = await fetch('/api/mailing/common_form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    recaptchaToken: tokenToSend
+                }),
+            })
+
+            if (!response.ok) {
+                throw new Error('Error al enviar el mensaje')
+            }
+
             setSubmitSuccess(true)
             setFormData({
                 name: "",
@@ -45,7 +71,11 @@ export function ContactForm() {
                 subject: "",
                 message: ""
             })
-        } catch {
+            
+            recaptchaRef.current?.reset()
+            setRecaptchaToken(null)
+        } catch (error) {
+            console.error('Error submitting form:', error)
             setSubmitError(true)
         } finally {
             setIsSubmitting(false)
@@ -136,10 +166,27 @@ export function ContactForm() {
                         required
                     />
                 </div>
+                {process.env.NODE_ENV !== 'development' ? (
+                    <div className="flex justify-center">
+                        <ReCAPTCHA
+                            ref={recaptchaRef}
+                            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}
+                            onChange={handleRecaptchaChange}
+                            size="normal"
+                        />
+                    </div>
+                ) : (
+                    <div className="text-center p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <p className="text-sm text-yellow-700">
+                            🔧 Modo desarrollo: reCAPTCHA deshabilitado
+                        </p>
+                    </div>
+                )}
+                
                 <Button
                     type="submit"
                     className="w-full bg-red-600 hover:bg-red-700 text-lg py-6"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || (!recaptchaToken && process.env.NODE_ENV !== 'development')}
                 >
                     {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
                 </Button>

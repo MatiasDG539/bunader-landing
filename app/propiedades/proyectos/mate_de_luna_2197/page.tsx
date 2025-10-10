@@ -16,11 +16,7 @@ import {
     ChevronRight,
     Phone,
     Mail,
-    Home,
-    TreePine,
-    Mountain,
-    Clock,
-    Star
+    TreePine
 } from "lucide-react"
 
 export default function Natania89Page() {
