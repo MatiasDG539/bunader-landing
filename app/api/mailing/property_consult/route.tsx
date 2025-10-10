@@ -41,8 +41,7 @@ export async function POST(request: NextRequest) {
 
       const recaptchaData = await recaptchaResponse.json();
 
-      const isValidRecaptcha = recaptchaData.success && 
-        (recaptchaData.score === undefined || recaptchaData.score >= 0.5);
+      const isValidRecaptcha = recaptchaData.success;
 
       if (!isValidRecaptcha) {
         return NextResponse.json(
