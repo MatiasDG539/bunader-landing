@@ -1,0 +1,210 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Menu, X } from "lucide-react"
+import Image from "next/image"
+
+export function SiteHeader() {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
+    const [isPropertiesSubmenuOpen, setIsPropertiesSubmenuOpen] = useState(false)
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 10)
+        }
+
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
+
+    const shouldShowScrolledStyle = isScrolled || isMenuOpen
+
+    return (
+        <header
+            className={`fixed top-0 left-0 right-0 z-50 ${shouldShowScrolledStyle ? "bg-white shadow-md py-6" : "bg-transparent py-6"
+                }`}
+        >
+            <div className="relative container mx-auto flex items-center justify-between px-2">
+                <div className="absolute md:left-0 left-1/2 md:transform-none transform -translate-x-1/2 top-1/2 -translate-y-1/2 md:ml-40 md:w-[250px] w-[200px] md:h-[100px] h-[80px] overflow-hidden">
+                    <Link href="/" className="flex items-center w-full h-full">
+                        <Image 
+                            src="/bunader-logo.png" 
+                            alt="Bunader Logo" 
+                            width={250} 
+                            height={100} 
+                            className="w-full h-full object-cover"
+                        />
+                    </Link>
+                </div>
+
+                <nav className="hidden md:flex items-center gap-6 ml-auto mr-10 relative z-[100]">
+                    <Link
+                        href="/"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                            }`}
+                    >
+                        Inicio
+                    </Link>
+                    <Link
+                        href="/sobre-nosotros"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                            }`}
+                    >
+                        Nosotros
+                    </Link>
+                    <div className="relative group">
+                        <Link
+                            href="/propiedades"
+                            className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                                } flex items-center gap-1 py-2`}
+                        >
+                            Propiedades
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform group-hover:rotate-180">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </Link>
+                        <div className="absolute left-0 top-full w-48 rounded-md bg-white shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[9999]">
+                            <div className="py-1">
+                                <Link href="/propiedades/venta" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
+                                    En Venta
+                                </Link>
+                                <Link href="/propiedades/alquiler" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
+                                    En Alquiler
+                                </Link>
+                                <Link href="/propiedades/proyectos" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-red-600 transition-colors">
+                                    Proyectos Nuevos
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    <Link
+                        href="/servicios"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                            }`}
+                    >
+                        Servicios
+                    </Link>
+                    <Link
+                        href="/contacto"
+                        className={`text-base font-medium hover:text-red-600 transition-colors ${shouldShowScrolledStyle ? "text-gray-800" : "text-white"
+                            }`}
+                    >
+                        Contacto
+                    </Link>
+                    <Link href="/vender-propiedad" className="hidden md:inline-block">
+                        <Button className="bg-red-600 hover:bg-red-700 ml-4 text-base cursor-pointer">Publica Tu Propiedad</Button>
+                    </Link>
+                </nav>
+
+                <Button
+                    variant={shouldShowScrolledStyle ? "outline" : "ghost"}
+                    size="icon"
+                    className={`md:hidden ml-auto ${!shouldShowScrolledStyle ? "text-white hover:bg-white/10" : "text-black"}`}
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6 text-black" />}
+                    <span className="sr-only">Alternar menú</span>
+                </Button>
+            </div>
+
+            {isMenuOpen && (
+                <div className="md:hidden bg-white absolute top-full left-0 right-0 shadow-md">
+                    <div className="container mx-auto px-4 py-4 flex flex-col gap-4">
+                        <Link
+                            href="/"
+                            className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Inicio
+                        </Link>
+                        <div className="flex flex-col">
+                            <div className="flex items-center justify-between">
+                                <Link
+                                    href="/propiedades"
+                                    className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
+                                    onClick={() => {
+                                        setIsMenuOpen(false)
+                                        setIsPropertiesSubmenuOpen(false)
+                                    }}
+                                >
+                                    Propiedades
+                                </Link>
+                                <button
+                                    className="p-2 hover:text-red-600 transition-colors"
+                                    onClick={() => setIsPropertiesSubmenuOpen(!isPropertiesSubmenuOpen)}
+                                >
+                                    <svg 
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        width="16" 
+                                        height="16" 
+                                        viewBox="0 0 24 24" 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        strokeWidth="2" 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        className={`h-4 w-4 transition-transform ${isPropertiesSubmenuOpen ? 'rotate-180' : ''}`}
+                                    >
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            {isPropertiesSubmenuOpen && (
+                                <div className="ml-4 flex flex-col gap-2 mt-2">
+                                    <Link
+                                        href="/propiedades/venta"
+                                        className="text-base font-medium py-1 hover:text-red-600 transition-colors"
+                                        onClick={() => {
+                                            setIsMenuOpen(false)
+                                            setIsPropertiesSubmenuOpen(false)
+                                        }}
+                                    >
+                                        En Venta
+                                    </Link>
+                                    <Link
+                                        href="/propiedades/alquiler"
+                                        className="text-base font-medium py-1 hover:text-red-600 transition-colors"
+                                        onClick={() => {
+                                            setIsMenuOpen(false)
+                                            setIsPropertiesSubmenuOpen(false)
+                                        }}
+                                    >
+                                        En Alquiler
+                                    </Link>
+                                    <Link
+                                        href="/propiedades/proyectos"
+                                        className="text-base font-medium py-1 hover:text-red-600 transition-colors"
+                                        onClick={() => {
+                                            setIsMenuOpen(false)
+                                            setIsPropertiesSubmenuOpen(false)
+                                        }}
+                                    >
+                                        Proyectos Nuevos
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
+                        <Link
+                            href="/sobre-nosotros"
+                            className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Nosotros
+                        </Link>
+                        <Link
+                            href="/contacto"
+                            className="text-lg font-medium py-2 hover:text-red-600 transition-colors"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            Contacto
+                        </Link>
+                        <Button className="bg-red-600 hover:bg-red-700 w-full mt-2">Publica Tu Propiedad</Button>
+                    </div>
+                </div>
+            )}
+        </header>
+    )
+}
