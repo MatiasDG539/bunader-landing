@@ -9,10 +9,11 @@ import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
 import PropertyMap from "@/components/ui/property-map"
+import { PropertyConsultForm } from "@/components/forms/property-consult-form"
+import { ContactMethodModal } from "@/components/forms/contact-method-modal"
 
 import { getPropertyById, Property } from "@/actions/tokkoApi"
 
-// Interface extendida para propiedades adicionales
 interface ExtendedProperty extends Property {
     tags?: Array<{
         id: number;
@@ -42,6 +43,8 @@ export default function PropertyPage() {
     const [loading, setLoading] = useState(true)
     const [activeImageIndex, setActiveImageIndex] = useState(0)
     const [isImageModalOpen, setIsImageModalOpen] = useState(false)
+    const [isContactMethodModalOpen, setIsContactMethodModalOpen] = useState(false)
+    const [isConsultModalOpen, setIsConsultModalOpen] = useState(false)
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -465,7 +468,6 @@ export default function PropertyPage() {
                             </div>
 
                             {/* Sección del Mapa */}
-                            {/* Debug: Mostramos siempre el mapa para ver si funciona */}
                             <div className="bg-white rounded-xl shadow-md p-6 mb-6">
                                 <h2 className="text-2xl font-bold mb-4">Ubicación</h2>
                                 <PropertyMap
@@ -479,7 +481,7 @@ export default function PropertyPage() {
                         </div>
 
                         <div className="lg:col-span-1">
-                            <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
+                            <div className="bg-white rounded-xl shadow-md p-6 sticky top-24 mb-6">
                                 <h2 className="text-2xl font-bold mb-4">
                                     {formattedPrice}
                                 </h2>
@@ -488,11 +490,12 @@ export default function PropertyPage() {
                                 </p>
                                 <div className="space-y-4">
                                     <div className="mb-4">
-                                        <Link href="/contacto" className="block">
-                                            <Button className="w-full bg-red-600 hover:bg-red-700">
-                                                Contactar al agente
-                                            </Button>
-                                        </Link>
+                                        <Button 
+                                            className="w-full bg-red-600 hover:bg-red-700"
+                                            onClick={() => setIsContactMethodModalOpen(true)}
+                                        >
+                                            Realizar consulta
+                                        </Button>
                                     </div>
                                     <Link href="/contacto">
                                         <Button variant="outline" className="w-full">
@@ -508,7 +511,31 @@ export default function PropertyPage() {
 
             <SiteFooter />
 
-            {/* Modal para imagen en grande */}
+            {/* Modal de selección de método de contacto */}
+            {property && (
+                <ContactMethodModal
+                    propertyId={property.id}
+                    propertyTitle={property.title}
+                    propertyPrice={formattedPrice}
+                    propertyOperation={property.operation_type}
+                    isOpen={isContactMethodModalOpen}
+                    onClose={() => setIsContactMethodModalOpen(false)}
+                    onSelectEmail={() => setIsConsultModalOpen(true)}
+                />
+            )}
+
+            {/* Modal de consulta de propiedad */}
+            {property && (
+                <PropertyConsultForm
+                    propertyId={property.id}
+                    propertyTitle={property.title}
+                    propertyPrice={formattedPrice}
+                    propertyOperation={property.operation_type}
+                    isOpen={isConsultModalOpen}
+                    onClose={() => setIsConsultModalOpen(false)}
+                />
+            )}
+
             {isImageModalOpen && property?.images && (
                 <div 
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
