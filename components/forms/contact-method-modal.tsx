@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { X, Mail, MessageCircle } from "lucide-react"
+import { X, Mail } from "lucide-react"
 
 interface ContactMethodModalProps {
     propertyId: number
