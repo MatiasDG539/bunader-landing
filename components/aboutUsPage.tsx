@@ -254,9 +254,14 @@ export default function AboutUsPage() {
                             Estamos siempre en busca de nuevos talentos. Si estás interesado en unirte a nuestra familia,
                             envíanos tu CV y nos pondremos en contacto contigo.
                         </p>
-                        <button className="bg-white text-red-600 hover:bg-gray-100 font-medium py-3 px-6 md:px-8 rounded-lg text-base md:text-lg transition-colors w-full sm:w-auto">
+                        <a 
+                            href="https://www.linkedin.com/company/bunader/" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="bg-white text-red-600 hover:bg-gray-100 font-medium py-3 px-6 md:px-8 rounded-lg text-base md:text-lg transition-colors w-full sm:w-auto inline-block text-center"
+                        >
                             Trabaja con Nosotros
-                        </button>
+                        </a>
                     </div>
                 </div>
             </main>
