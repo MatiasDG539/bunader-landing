@@ -577,3 +577,98 @@ export const getPropertyTypesForOperation = async (operationType: 'sale' | 'rent
         return [];
     }
 };
+
+export interface Development {
+    id: number;
+    name: string;
+    address?: string;
+    full_location?: string;
+    status?: number;
+    completion_date?: string;
+    units?: number;
+    images?: PropertyImage[];
+    type?: string;
+}
+
+/**
+ * Obtiene un desarrollo/proyecto por ID desde Tokko
+ */
+export const getDevelopmentById = async (id: number): Promise<Development | null> => {
+    try {
+        const url = `${BASE_URL}development/${id}/?lang=${LANG}&key=${API_KEY}`;
+        const response = await axios.get(url);
+        const development = response.data;
+
+        if (!development) {
+            return null;
+        }
+
+        const formattedDevelopment: Development = {
+            id: development.id || 0,
+            name: development.name || development.address || 'Proyecto Inmobiliario',
+            address: development.address || '',
+            full_location: development.location?.full_location || '',
+            status: development.status || 0,
+            completion_date: development.completion_date,
+            units: development.units || 0,
+            images: development.photos?.map((photo: any) => ({
+                image: formatImageUrl(photo?.image),
+                thumb: photo?.thumb ? formatImageUrl(photo.thumb) : undefined,
+                original: photo?.original ? formatImageUrl(photo.original) : undefined,
+                description: photo?.description,
+                is_front_cover: photo?.is_front_cover,
+                order: photo?.order,
+                is_blueprint: photo?.is_blueprint
+            })) || [],
+            type: development.type?.name || getProjectType(typeof development.type === 'number' ? development.type : 0, LANG)
+        };
+
+        return formattedDevelopment;
+    } catch (error) {
+        console.error(`Error al obtener el desarrollo con ID ${id}:`, error);
+        return null;
+    }
+};
+
+/**
+ * Genera un slug desde el nombre del desarrollo
+ * Convierte el nombre a formato slug (lowercase, reemplaza espacios y caracteres especiales)
+ */
+function generateSlugFromName(name: string): string {
+    return name
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // Elimina acentos
+        .replace(/[^a-z0-9\s-]/g, '') // Elimina caracteres especiales
+        .trim()
+        .replace(/\s+/g, '_') // Reemplaza espacios con guiones bajos
+        .replace(/_+/g, '_'); // Reemplaza múltiples guiones bajos con uno solo
+}
+
+/**
+ * Mapeo de IDs de Tokko a slugs de proyectos conocidos
+ * Esto permite mapear desarrollos de Tokko a las páginas existentes
+ */
+const DEVELOPMENT_ID_TO_SLUG_MAP: Record<number, string> = {
+    // Agregar aquí los mapeos conocidos
+    // Ejemplo: 123: 'corrientes_65'
+};
+
+/**
+ * Obtiene el slug del proyecto basándose en el ID de Tokko
+ * Primero intenta usar el mapeo, luego genera un slug desde el nombre
+ */
+export const getDevelopmentSlug = async (tokkoId: number): Promise<string | null> => {
+    // Si hay un mapeo directo, usarlo
+    if (DEVELOPMENT_ID_TO_SLUG_MAP[tokkoId]) {
+        return DEVELOPMENT_ID_TO_SLUG_MAP[tokkoId];
+    }
+
+    // Si no, obtener el desarrollo y generar el slug desde el nombre
+    const development = await getDevelopmentById(tokkoId);
+    if (!development) {
+        return null;
+    }
+
+    return generateSlugFromName(development.name);
+};
