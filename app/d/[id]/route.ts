@@ -59,7 +59,7 @@ export async function GET(
                 new URL('/propiedades/proyectos', request.url),
                 302
             );
-        } catch (redirectError) {
+        } catch {
             return NextResponse.json(
                 { error: 'Error al procesar la solicitud' },
                 { status: 500 }
