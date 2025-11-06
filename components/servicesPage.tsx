@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { SiteHeaderDark } from "@/components/ui/header-dark";
 import { SiteFooter } from "@/components/ui/footer";
+import { Button } from "@/components/ui/button";
 import {
     Search,
     DollarSign,
@@ -54,7 +56,7 @@ export default function ServicesPage() {
                         </div>
                         <h3 className="text-xl font-semibold mb-2">Venta de Propiedades</h3>
                         <p className="text-gray-600">Plan integral de comercialización y negociación especializado para maximizar el valor de su activo con respaldo legal.
-                            Profesionales con certificación CRS: estándares internacionales en ventas, negociación y ética para operar con confianza.</p>
+                            Profesionales con certificación CRS</p>
                     </div>
 
                     <div
@@ -200,21 +202,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Listo para encontrar tu próxima propiedad?</h4>
                                             <p className="text-gray-700">Explora nuestras opciones disponibles para compra</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Ver opciones para comprar
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/propiedades/venta">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Ver opciones para comprar
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -296,21 +301,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Listo para vender tu propiedad?</h4>
                                             <p className="text-gray-700">Consulta nuestro plan de venta personalizado</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Consultar plan de venta
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/vender-propiedad">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Consultar plan de venta
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -388,21 +396,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Necesitas gestionar tus alquileres?</h4>
                                             <p className="text-gray-700">Administración profesional con respaldo CRS</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Consultar gestión de alquileres
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/propiedades/alquiler">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Consultar gestión de alquileres
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -485,21 +496,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Quieres maximizar tus ingresos con alquileres temporales?</h4>
                                             <p className="text-gray-700">Gestión profesional sin dedicación operativa</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Consultar gestión temporales
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/contacto">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Consultar gestión temporales
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -586,21 +600,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Tienes un proyecto inmobiliario en mente?</h4>
                                             <p className="text-gray-700">Solicita nuestra consultoría especializada</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Solicitar consultoría de proyecto
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/propiedades/proyectos">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Solicitar consultoría de proyecto
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -682,21 +699,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Quieres profesionalizar la gestión de tu propiedad?</h4>
                                             <p className="text-gray-700">Optimiza la rentabilidad de tu portfolio</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Administrar mi propiedad
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/contacto">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Administrar mi propiedad
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -783,21 +803,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Quieres diversificar tu portafolio internacionalmente?</h4>
                                             <p className="text-gray-700">Asesoría especializada para inversiones en el exterior</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Asesoría para invertir en el exterior
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/invertir-exterior">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Asesoría para invertir en el exterior
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -871,21 +894,24 @@ export default function ServicesPage() {
                                             <h4 className="text-lg font-semibold text-gray-900 mb-2">¿Necesitas una valuación profesional de tu propiedad?</h4>
                                             <p className="text-gray-700">Informe técnico con fundamentos sólidos</p>
                                         </div>
-                                        <button className="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center sm:justify-start w-full sm:w-auto">
-                                            Solicitar tasación profesional
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </button>
+                                        <Link href="/contacto">
+                                            <Button className="bg-red-600 text-white hover:bg-red-700 w-full sm:w-auto">
+                                                Solicitar tasación profesional
+                                                <ArrowRight className="w-4 h-4 ml-2" />
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
 
                                 <div className="mt-8 text-center">
-                                    <button
+                                    <Button
                                         onClick={scrollToTop}
-                                        className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+                                        variant="outline"
+                                        className="text-gray-600 bg-gray-100 hover:bg-gray-200"
                                     >
                                         <ArrowUp className="w-4 h-4 mr-2" />
                                         Volver arriba
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>
