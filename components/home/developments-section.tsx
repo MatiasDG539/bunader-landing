@@ -18,7 +18,7 @@ const developments = [
         deliveryDate: "2025",
         totalUnits: 24,
         availableUnits: 8,
-        priceFrom: "USD 180.000"
+        priceFrom: "USD 80.000"
     },
     {
         id: "mate_de_luna_2197",
