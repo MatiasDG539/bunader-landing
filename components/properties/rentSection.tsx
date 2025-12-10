@@ -194,7 +194,7 @@ export function RentSection() {
                                     {isValidValue(property.bedrooms) && (
                                         <div className="flex items-center">
                                             <Bed className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-gray-400" />
-                                            <span>{property.bedrooms} Hab</span>
+                                            <span>{property.bedrooms} Dor</span>
                                         </div>
                                     )}
                                     {isValidValue(property.bathrooms) && (

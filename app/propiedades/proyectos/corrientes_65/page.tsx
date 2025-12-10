@@ -110,7 +110,7 @@ export default function Corrientes65Page() {
                             </Card>
                             <Card className="p-4 sm:p-6 md:p-8 text-center hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
                                 <Users className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 sm:mb-3 text-red-600 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300" />
-                                <h3 className="font-bold text-sm sm:text-base md:text-lg mb-1 group-hover:text-red-600 transition-colors duration-300">2 y 3 Habitaciones</h3>
+                                <h3 className="font-bold text-sm sm:text-base md:text-lg mb-1 group-hover:text-red-600 transition-colors duration-300">2 y 3 Dormitorios</h3>
                                 <p className="text-gray-600 text-xs sm:text-sm">Con balcón</p>
                             </Card>
                             <Card className="p-4 sm:p-6 md:p-8 text-center hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500 bg-gradient-to-br from-white to-gray-50 border-0 group">
@@ -263,12 +263,12 @@ export default function Corrientes65Page() {
                                 <div className="relative h-[150px] sm:h-[180px] md:h-[200px] bg-white rounded-xl sm:rounded-2xl mb-4 sm:mb-6 overflow-hidden group-hover:scale-105 transition-transform duration-500">
                                     <Image
                                         src="/img/corrientes_65/c65_depto_b.png"
-                                        alt="Planta departamento 2 habitaciones"
+                                        alt="Planta departamento 2 dormitorios"
                                         fill
                                         className="object-cover"
                                     />
                                 </div>
-                                <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-red-600 transition-colors duration-300">2 Habitaciones</h3>
+                                <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-red-600 transition-colors duration-300">2 Dormitorios</h3>
                                 <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">63.69 m² totales | 1 dormitorio | 1 baño | Balcón</p>
                                 <p className="text-base sm:text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Unidades B y C</p>
                             </Card>
@@ -278,14 +278,14 @@ export default function Corrientes65Page() {
                                     <div className="relative w-full h-full">
                                         <Image
                                             src="/img/corrientes_65/c65_depto_a.png"
-                                            alt="Planta departamento 3 habitaciones"
+                                            alt="Planta departamento 3 dormitorios"
                                             fill
                                             className="object-contain"
                                             style={{ objectPosition: "center" }}
                                         />
                                     </div>
                                 </div>
-                                <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-red-600 transition-colors duration-300">3 Habitaciones</h3>
+                                <h3 className="font-bold text-lg sm:text-xl mb-2 sm:mb-3 group-hover:text-red-600 transition-colors duration-300">3 Dormitorios</h3>
                                 <p className="text-gray-600 mb-3 sm:mb-4 text-sm sm:text-base">104.62 m² totales | 2 dormitorios | 2 baños | Balcón corrido</p>
                                 <p className="text-base sm:text-lg font-semibold text-red-600 group-hover:scale-105 transition-transform duration-300">Unidad A</p>
                             </Card>

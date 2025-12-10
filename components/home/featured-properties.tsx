@@ -132,7 +132,7 @@ export function FeaturedProperties() {
                                 <div className="flex justify-between mb-4 sm:mb-6 text-sm sm:text-base">
                                     <div className="flex items-center">
                                         <Bed className="h-4 w-4 sm:h-5 sm:w-5 mr-1 text-gray-400" />
-                                        <span>{property.bedrooms || '-'} Hab</span>
+                                        <span>{property.bedrooms || '-'} Dor</span>
                                     </div>
                                     <div className="flex items-center">
                                         <Bath className="h-4 w-4 sm:h-5 sm:w-5 mr-1 text-gray-400" />

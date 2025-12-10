@@ -333,7 +333,7 @@ export default function SalesPage() {
                                                                     {property.bedrooms > 0 && (
                                                                         <div className="flex items-center">
                                                                             <Bed className="h-5 w-5 mr-1 text-gray-400" />
-                                                                            <span>{property.bedrooms} Hab</span>
+                                                                            <span>{property.bedrooms} Dor</span>
                                                                         </div>
                                                                     )}
                                                                     {property.bathrooms > 0 && (
