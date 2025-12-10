@@ -235,7 +235,7 @@ export default function PropertyPage() {
                                         <div className="flex flex-col items-center p-4">
                                             <Home className="h-8 w-8 text-gray-600 mb-2" />
                                             <span className="text-lg font-bold text-gray-900">{property.bedrooms}</span>
-                                            <span className="text-sm text-gray-500">ambiente{property.bedrooms > 1 ? 's' : ''}</span>
+                                            <span className="text-sm text-gray-500">habitación{property.bedrooms > 1 ? 'es' : ''}</span>
                                         </div>
                                     )}
                                     {property.bathrooms !== undefined && property.bathrooms > 0 && (
@@ -278,7 +278,7 @@ export default function PropertyPage() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
                                             {property.bedrooms !== undefined && property.bedrooms > 0 && (
                                                 <div className="flex justify-between">
-                                                    <span className="text-gray-600">Ambiente:</span>
+                                                    <span className="text-gray-600">Habitación:</span>
                                                     <span className="font-medium">{property.bedrooms}</span>
                                                 </div>
                                             )}
@@ -336,10 +336,10 @@ export default function PropertyPage() {
                                     </div>
                                 )}
 
-                                {/* Ambientes */}
+                                {/* Habitaciones */}
                                 {property.tags && property.tags.filter((tag) => tag.type === 2).length > 0 && (
                                     <div className="mb-8">
-                                        <h2 className="text-2xl font-bold mb-6">Ambientes</h2>
+                                        <h2 className="text-2xl font-bold mb-6">Habitaciones</h2>
                                         <div className="flex flex-wrap gap-2">
                                             {property.tags
                                                 .filter((tag) => tag.type === 2)
