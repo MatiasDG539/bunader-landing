@@ -14,7 +14,7 @@ const developments = [
         location: "Corrientes 65, Centro",
         image: "/img/corrientes_65/c65_thumbnail.jpg",
         status: "En construcción", // "En construcción", "Próximamente", "Entregado"
-        deliveryDate: "2025",
+        deliveryDate: "2026",
         totalUnits: 24,
         availableUnits: 8,
         priceFrom: "USD 80.000"
