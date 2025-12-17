@@ -228,10 +228,10 @@ export default function AboutUsPage() {
                             </div>
 
                             <div className="flex justify-center md:justify-start pt-4">
-                                <button className="bg-red-600 text-white hover:bg-red-700 font-medium py-3 px-6 md:px-8 rounded-lg text-base md:text-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center">
+                                {/* <button className="bg-red-600 text-white hover:bg-red-700 font-medium py-3 px-6 md:px-8 rounded-lg text-base md:text-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center">
                                     <Briefcase className="w-4 h-4 md:w-5 md:h-5" />
                                     Coordinar una Visita
-                                </button>
+                                </button> */}
                             </div>
                         </div>
 

@@ -138,9 +138,9 @@ export default function Natania89Page() {
                                     Propuesta con estilo, alto potencial de revalorización y unidades amplias y funcionales.
                                     Ubicado estratégicamente con acceso directo hacia el Cerro San Javier y afluencia vehicular las 24hs.
                                 </p>
-                                <Button size="sm" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl text-sm">
+                                {/* <Button size="sm" className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-2xl text-sm">
                                     Agendar Visita
-                                </Button>
+                                </Button> */}
                             </div>
                             <div className="relative h-[250px] sm:h-[300px] md:h-[400px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl animate-slide-in-right group order-1 lg:order-2">
                                 <Image

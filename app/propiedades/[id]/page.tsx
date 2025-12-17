@@ -497,11 +497,11 @@ export default function PropertyPage() {
                                             Realizar consulta
                                         </Button>
                                     </div>
-                                    <Link href="/contacto">
+                                    {/* <Link href="/contacto">
                                         <Button variant="outline" className="w-full">
                                             Solicitar visita
                                         </Button>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
