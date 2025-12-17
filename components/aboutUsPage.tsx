@@ -1,6 +1,6 @@
 import { SiteHeaderDark } from "@/components/ui/header-dark";
 import { SiteFooter } from "@/components/ui/footer";
-import { Users, MapPin, Briefcase, Heart, Shield, Home } from "lucide-react";
+import { Users, MapPin, Heart, Shield, Home } from "lucide-react";
 import Image from "next/image";
 import PropertyMap from "@/components/ui/property-map";
 
