@@ -17,6 +17,18 @@ export interface PropertyImage {
     is_blueprint?: boolean;
 }
 
+export interface PropertyVideo {
+    description?: string;
+    id: number;
+    order: number;
+    player_url: string;
+    provider: string;
+    provider_id: number;
+    title: string;
+    url: string;
+    video_id: string;
+}
+
 export interface PropertyOperation {
     operation_id: number;
     operation_type: string;
@@ -79,6 +91,7 @@ export interface Property {
     security?: boolean;
     geo_lat?: string;
     geo_long?: string;
+    videos?: PropertyVideo[];
 }
 
 export interface Project {
@@ -431,6 +444,17 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
             total_surface: property.total_surface,
             geo_lat: property.geo_lat || '',
             geo_long: property.geo_long || '',
+            videos: property.videos?.map((video: any) => ({
+                description: video.description || '',
+                id: video.id || 0,
+                order: video.order || 0,
+                player_url: video.player_url || '',
+                provider: video.provider || '',
+                provider_id: video.provider_id || 0,
+                title: video.title || '',
+                url: video.url || '',
+                video_id: video.video_id || ''
+            })) || [],
             operations: operations.map((op: any) => ({
                 operation_id: op.operation_id,
                 operation_type: op.operation_type,

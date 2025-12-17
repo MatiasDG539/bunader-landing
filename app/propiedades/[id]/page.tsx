@@ -4,13 +4,14 @@ import { useEffect, useState, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building } from "lucide-react"
+import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building, Box } from "lucide-react"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
 import PropertyMap from "@/components/ui/property-map"
 import { PropertyConsultForm } from "@/components/forms/property-consult-form"
 import { ContactMethodModal } from "@/components/forms/contact-method-modal"
+import { Video360Modal } from "@/components/ui/video360-modal"
 
 import { getPropertyById, Property } from "@/actions/tokkoApi"
 
@@ -45,6 +46,7 @@ export default function PropertyPage() {
     const [isImageModalOpen, setIsImageModalOpen] = useState(false)
     const [isContactMethodModalOpen, setIsContactMethodModalOpen] = useState(false)
     const [isConsultModalOpen, setIsConsultModalOpen] = useState(false)
+    const [isVideo360ModalOpen, setIsVideo360ModalOpen] = useState(false)
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -64,6 +66,46 @@ export default function PropertyPage() {
             fetchProperty()
         }
     }, [id])
+
+    // Detectar si hay un video 360 y mostrar el modal automáticamente
+    useEffect(() => {
+        if (property && property.videos && property.videos.length > 0) {
+            // Buscar videos de Matterport (provider: "matterport" o provider_id: 3)
+            const video360 = property.videos.find(
+                video => video.provider === "matterport" || video.provider_id === 3
+            )
+            
+            if (video360 && !isVideo360ModalOpen) {
+                // Verificar si el usuario ya cerró este modal antes
+                const storageKey = `video360_closed_${property.id}_${video360.id}`
+                const wasClosed = typeof window !== 'undefined' && localStorage.getItem(storageKey) === 'true'
+                
+                if (!wasClosed) {
+                    // Mostrar el modal después de un pequeño delay para mejor UX
+                    const timer = setTimeout(() => {
+                        setIsVideo360ModalOpen(true)
+                    }, 1000)
+                    
+                    return () => clearTimeout(timer)
+                }
+            }
+        }
+    }, [property, isVideo360ModalOpen])
+
+    // Función para manejar el cierre del modal y guardar en localStorage
+    const handleCloseVideo360Modal = () => {
+        if (property && property.videos) {
+            const video360 = property.videos.find(
+                video => video.provider === "matterport" || video.provider_id === 3
+            )
+            
+            if (video360 && typeof window !== 'undefined') {
+                const storageKey = `video360_closed_${property.id}_${video360.id}`
+                localStorage.setItem(storageKey, 'true')
+            }
+        }
+        setIsVideo360ModalOpen(false)
+    }
 
     const changeImage = (direction: 'next' | 'prev') => {
         if (!property || !property.images || property.images.length <= 1) return
@@ -138,6 +180,16 @@ export default function PropertyPage() {
 
     const propertyType = property.operation_type === "venta" ? "En Venta" : "En Alquiler"
     const formattedPrice = property.price || "Consultar precio"
+    
+    // Obtener video 360 si existe
+    const video360 = property.videos?.find(
+        video => video.provider === "matterport" || video.provider_id === 3
+    )
+    
+    // Función para abrir el modal de video 360
+    const handleOpenVideo360 = () => {
+        setIsVideo360ModalOpen(true)
+    }
 
     return (
 
@@ -205,6 +257,19 @@ export default function PropertyPage() {
                                                 ))}
                                             </div>
                                         </>
+                                    )}
+                                    {/* Badge de Tour 360 */}
+                                    {video360 && (
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                handleOpenVideo360()
+                                            }}
+                                            className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-full z-10"
+                                        >
+                                            <Box className="h-4 w-4" />
+                                            <span className="text-sm font-semibold">Tour 360°</span>
+                                        </Button>
                                     )}
                                 </>
                             ) : (
@@ -497,6 +562,16 @@ export default function PropertyPage() {
                                             Realizar consulta
                                         </Button>
                                     </div>
+                                    {video360 && (
+                                        <Button 
+                                            variant="outline"
+                                            className="w-full border-2 border-red-600 text-red-600 hover:bg-red-50 flex items-center justify-center gap-2"
+                                            onClick={handleOpenVideo360}
+                                        >
+                                            <Box className="h-5 w-5" />
+                                            <span>Ver Tour Virtual 360°</span>
+                                        </Button>
+                                    )}
                                     {/* <Link href="/contacto">
                                         <Button variant="outline" className="w-full">
                                             Solicitar visita
@@ -535,6 +610,22 @@ export default function PropertyPage() {
                     onClose={() => setIsConsultModalOpen(false)}
                 />
             )}
+
+            {/* Modal de video 360 */}
+            {property && property.videos && property.videos.length > 0 && (() => {
+                const video360 = property.videos.find(
+                    video => video.provider === "matterport" || video.provider_id === 3
+                )
+                if (!video360) return null
+                
+                return (
+                    <Video360Modal
+                        video={video360}
+                        isOpen={isVideo360ModalOpen}
+                        onClose={handleCloseVideo360Modal}
+                    />
+                )
+            })()}
 
             {isImageModalOpen && property?.images && (
                 <div 
