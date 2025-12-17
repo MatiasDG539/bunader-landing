@@ -241,7 +241,7 @@ export const getSalesProperties = async (): Promise<Property[]> => {
                 short_location: property.location?.short_location || '',
                 price: formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'USD'),
                 currency: priceInfo.currency || property.currency || 'USD',
-                bedrooms: property.room_amount || 0,
+                bedrooms: property.suite_amount || 0,
                 bathrooms: property.bathroom_amount || 0,
                 sqft: property.total_surface || 0,
                 images: property.photos?.map((photo: any) => ({
@@ -319,7 +319,7 @@ export const getRentProperties = async (): Promise<Property[]> => {
                 short_location: property.location?.short_location || '',
                 price: `${formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'ARS')}/mes`,
                 currency: priceInfo.currency || property.currency || 'ARS',
-                bedrooms: property.room_amount || 0,
+                bedrooms: property.suite_amount || 0,
                 bathrooms: property.bathroom_amount || 0,
                 sqft: property.total_surface || 0,
                 images: property.photos?.map((photo: any) => ({
@@ -406,7 +406,7 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
             full_location: property.location?.full_location || '',
             price: formatPrice((priceInfo as any).price || property.price || 0, (priceInfo as any).currency || property.currency || 'USD'),
             currency: (priceInfo as any).currency || property.currency || 'USD',
-            bedrooms: property.room_amount || 0,
+            bedrooms: property.suite_amount || 0,
             bathrooms: property.bathroom_amount || 0,
             sqft: property.total_surface || 0,
             images: property.photos?.map((photo: any) => ({
@@ -498,7 +498,7 @@ export const getFeaturedProperties = async (): Promise<Property[]> => {
                     ? `${formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'ARS')}/mes`
                     : formatPrice(priceInfo.price || property.price || 0, priceInfo.currency || property.currency || 'ARS'),
                 currency: priceInfo.currency || property.currency || 'ARS',
-                bedrooms: property.room_amount || 0,
+                bedrooms: property.suite_amount || 0,
                 bathrooms: property.bathroom_amount || 0,
                 sqft: property.total_surface || 0,
                 images: property.photos?.map((photo: any) => ({
