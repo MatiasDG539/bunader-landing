@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
+import PropertyMap from "@/components/ui/property-map"
 import { 
     MapPin, 
     Building, 
@@ -374,23 +375,15 @@ export default function Corrientes65Page() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="relative h-[250px] sm:h-[300px] md:h-[400px] bg-gradient-to-br from-gray-300 to-gray-500 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl order-1 lg:order-2">
-                            
-                                <Image
-                                    src="/img/corrientes_65/mapa-ubicacion.jpg"
-                                    alt="Mapa de ubicación - Corrientes 65"
-                                    fill
-                                    className="object-cover"
+                            <div className="relative h-[250px] sm:h-[300px] md:h-[400px] rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl order-1 lg:order-2">
+                                <PropertyMap
+                                    address="Provincia de Corrientes 65, San Miguel de Tucumán, Tucumán"
+                                    title="Edificio Corrientes 65"
+                                    geoLat={-26.8239537}
+                                    geoLong={-65.1962557}
+                                    zoom={16}
+                                    className="h-full"
                                 />
-                                
-                                <div className="absolute inset-0 bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-gray-500">
-                                    <div className="text-center">
-                                        <MapPin className="h-16 w-16 mx-auto mb-4" />
-                                        <p className="text-lg font-medium">Mapa de ubicación</p>
-                                        <p className="text-sm mt-2 opacity-75">Ruta: /img/corrientes_65/mapa-ubicacion.jpg</p>
-                                        <p className="text-xs mt-1 opacity-50">O integrar Google Maps</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
