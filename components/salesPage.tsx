@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PromoBanner } from '@/components/promoBanner';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function SalesPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -22,8 +23,38 @@ export default function SalesPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
+    const [currentFilters, setCurrentFilters] = useState<PropertyFilters>({});
     const observer = useRef<IntersectionObserver | null>(null);
     const propertiesPerPage = 6;
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const searchParamsString = searchParams.toString();
+
+    const parseFiltersFromUrl = useCallback((): PropertyFilters => {
+        const params = new URLSearchParams(searchParamsString);
+        const typesParam = params.get('types');
+        const propertyTypesFromUrl = typesParam
+            ? typesParam.split(',').map((type) => type.trim().toLowerCase()).filter(Boolean)
+            : [];
+
+        return {
+            propertyTypes: propertyTypesFromUrl,
+        };
+    }, [searchParamsString]);
+
+    const updateUrlWithFilters = useCallback((filters: PropertyFilters) => {
+        const params = new URLSearchParams(searchParamsString);
+
+        if (filters.propertyTypes && filters.propertyTypes.length > 0) {
+            params.set('types', filters.propertyTypes.join(','));
+        } else {
+            params.delete('types');
+        }
+
+        const queryString = params.toString();
+        router.replace(queryString ? `${pathname}?${queryString}` : pathname, { scroll: false });
+    }, [pathname, router, searchParamsString]);
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -34,7 +65,6 @@ export default function SalesPage() {
                     getPropertyTypesForOperation('sale')
                 ]);
                 setProperties(propertiesData);
-                setFilteredProperties(propertiesData);
                 setPropertyTypes(typesData);
             } catch (error) {
                 console.error("Error fetching sales properties:", error);
@@ -45,6 +75,10 @@ export default function SalesPage() {
 
         fetchProperties();
     }, []);
+
+    useEffect(() => {
+        setCurrentFilters(parseFiltersFromUrl());
+    }, [parseFiltersFromUrl]);
 
     useEffect(() => {
         if (!filteredProperties.length) return;
@@ -123,6 +157,15 @@ export default function SalesPage() {
         setCurrentPage(1);
         setVisibleProperties(filtered.slice(0, propertiesPerPage));
         setHasMore(filtered.length > propertiesPerPage);
+    };
+
+    useEffect(() => {
+        handleFilterProperties(currentFilters);
+    }, [properties, currentFilters]);
+
+    const handleFiltersChange = (filters: PropertyFilters) => {
+        setCurrentFilters(filters);
+        updateUrlWithFilters(filters);
     };
 
     const changePropertyImage = (propertyId: number, direction: 'next' | 'prev') => {
@@ -216,9 +259,10 @@ export default function SalesPage() {
                         <aside className="lg:col-span-1">
                             <div className="sticky top-24">
                                 <PropertyFilter 
-                                    onFilter={handleFilterProperties} 
+                                    onFilter={handleFiltersChange}
                                     isRental={false}
                                     propertyTypes={propertyTypes}
+                                    initialFilters={currentFilters}
                                 />
                             </div>
                         </aside>

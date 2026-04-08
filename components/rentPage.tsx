@@ -11,6 +11,7 @@ import Image from 'next/image';
 import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { PromoBanner } from '@/components/promoBanner';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export default function RentPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -19,6 +20,36 @@ export default function RentPage() {
     const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
     const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
     const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
+    const [currentFilters, setCurrentFilters] = useState<PropertyFilters>({});
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const searchParamsString = searchParams.toString();
+
+    const parseFiltersFromUrl = (): PropertyFilters => {
+        const params = new URLSearchParams(searchParamsString);
+        const typesParam = params.get('types');
+        const propertyTypesFromUrl = typesParam
+            ? typesParam.split(',').map((type) => type.trim().toLowerCase()).filter(Boolean)
+            : [];
+
+        return {
+            propertyTypes: propertyTypesFromUrl,
+        };
+    };
+
+    const updateUrlWithFilters = (filters: PropertyFilters) => {
+        const params = new URLSearchParams(searchParamsString);
+
+        if (filters.propertyTypes && filters.propertyTypes.length > 0) {
+            params.set('types', filters.propertyTypes.join(','));
+        } else {
+            params.delete('types');
+        }
+
+        const queryString = params.toString();
+        router.replace(queryString ? `${pathname}?${queryString}` : pathname, { scroll: false });
+    };
 
     const isValidValue = (value: string | number | null | undefined): boolean => {
         const numValue = Number(value);
@@ -47,8 +78,8 @@ export default function RentPage() {
     }, []);
 
     useEffect(() => {
-        setFilteredProperties(properties);
-    }, [properties]);
+        setCurrentFilters(parseFiltersFromUrl());
+    }, [searchParamsString]);
 
     useEffect(() => {
         if (!filteredProperties.length) return;
@@ -108,6 +139,15 @@ export default function RentPage() {
         }
 
         setFilteredProperties(filtered);
+    };
+
+    useEffect(() => {
+        applyFilters(currentFilters);
+    }, [properties, currentFilters]);
+
+    const handleFiltersChange = (filters: PropertyFilters) => {
+        setCurrentFilters(filters);
+        updateUrlWithFilters(filters);
     };
 
     const changePropertyImage = (propertyId: number, direction: 'next' | 'prev') => {
@@ -171,9 +211,10 @@ export default function RentPage() {
                         <div className="lg:col-span-1">
                             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-8">
                                 <PropertyFilter 
-                                    onFilter={applyFilters} 
+                                    onFilter={handleFiltersChange}
                                     isRental={true}
                                     propertyTypes={propertyTypes}
+                                    initialFilters={currentFilters}
                                 />
                             </div>
                         </div>

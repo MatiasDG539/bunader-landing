@@ -178,7 +178,11 @@ export default function PropertyPage() {
         )
     }
 
-    const propertyType = property.operation_type === "venta" ? "En Venta" : "En Alquiler"
+    const normalizedOperationType = property.operation_type?.toLowerCase()
+    const isSale = normalizedOperationType === "venta" || normalizedOperationType === "sale"
+    const operationLabel = isSale ? "Venta" : "Alquiler"
+    const operationHref = isSale ? "/propiedades/venta" : "/propiedades/alquiler"
+    const propertyType = isSale ? "En Venta" : "En Alquiler"
     const formattedPrice = property.price || "Consultar precio"
     
     // Obtener video 360 si existe
@@ -204,6 +208,8 @@ export default function PropertyPage() {
                         <Link href="/" className="hover:text-red-600">Inicio</Link>
                         <span className="mx-2">/</span>
                         <Link href="/propiedades" className="hover:text-red-600">Propiedades</Link>
+                        <span className="mx-2">/</span>
+                        <Link href={operationHref} className="hover:text-red-600">{operationLabel}</Link>
                         <span className="mx-2">/</span>
                         <span className="text-gray-900 font-medium">{property.title}</span>
                     </div>
