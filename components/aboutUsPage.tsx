@@ -92,7 +92,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/federico.jpg"
+                                        src="/personas/federico_bunader.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -112,7 +112,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/sra_camisa_blanca.jpg"
+                                        src="/personas/gabriela_coronel.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -131,7 +131,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/sra_rubia.jpg"
+                                        src="/personas/zulma_chemes.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -141,8 +141,8 @@ export default function AboutUsPage() {
                                 </div>
 
                                 <div className="p-3 md:p-6">
-                                    <h3 className="text-base md:text-xl font-semibold mb-1">Veronica Bertolino</h3>
-                                    <p className="text-red-600 mb-3 text-xs md:text-base">Ejecutivo Comercial</p>
+                                    <h3 className="text-base md:text-xl font-semibold mb-1">Zulma Chemes</h3>
+                                    <p className="text-red-600 mb-3 text-xs md:text-base">Asesor Asociado</p>
                                 </div>
 
                             </div>
@@ -150,7 +150,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/sra_saco_negro.jpg"
+                                        src="/personas/valentina_lopez.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
