@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import RentPage from '@/components/rentPage';
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 }
 
 export default function AlquilerPage() {
-    return <RentPage />;
+    return (
+        <Suspense fallback={<div className="min-h-[40vh]" />}>
+            <RentPage />
+        </Suspense>
+    );
 }
