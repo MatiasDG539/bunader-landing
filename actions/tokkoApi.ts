@@ -312,7 +312,7 @@ export const getSalesProperties = async (): Promise<Property[]> => {
             return formattedProperty;
         });
 
-        return formattedProperties;
+        return formattedProperties.sort((a: Property, b: Property) => b.id - a.id);
     } catch (error) {
         console.error('Error al obtener propiedades en venta:', error);
         return [];
@@ -390,7 +390,7 @@ export const getRentProperties = async (): Promise<Property[]> => {
             return formattedProperty;
         });
 
-        return formattedProperties;
+        return formattedProperties.sort((a: Property, b: Property) => b.id - a.id);
     } catch (error) {
         console.error('Error al obtener propiedades en alquiler:', error);
         return [];
