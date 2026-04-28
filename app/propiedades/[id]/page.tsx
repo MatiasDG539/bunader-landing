@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building, Box, Share2 } from "lucide-react"
+import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building, Box, Share2, MessageCircle } from "lucide-react"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
@@ -35,6 +35,7 @@ interface ExtendedProperty extends Property {
         phone?: string;
         cellphone?: string;
         email?: string;
+        picture?: string;
     };
     reference_code?: string;
 }
@@ -185,6 +186,17 @@ export default function PropertyPage() {
     const operationHref = isSale ? "/propiedades/venta" : "/propiedades/alquiler"
     const propertyType = isSale ? "En Venta" : "En Alquiler"
     const formattedPrice = property.price || "Consultar precio"
+    const producer = property.producer
+    const producerName = producer?.name?.trim() || "Asesor inmobiliario"
+    const producerPicture = producer?.picture || "/placeholder.svg"
+    const producerPhone = (producer?.cellphone || producer?.phone || "").replace(/\D/g, "")
+    const propertyPath = `/propiedades/${property.id}`
+    const propertyLink = typeof window !== "undefined"
+        ? `${window.location.origin}${propertyPath}`
+        : propertyPath
+    const producerWhatsappUrl = producerPhone
+        ? `https://wa.me/${producerPhone}?text=${encodeURIComponent(`Hola ${producerName}, me interesa esta propiedad: ${propertyLink}`)}`
+        : null
     
     // Obtener video 360 si existe
     const video360 = property.videos?.find(
@@ -603,6 +615,36 @@ export default function PropertyPage() {
                                         <Share2 className="h-5 w-5" />
                                         <span>Compartir propiedad</span>
                                     </Button>
+                                    {producer && (
+                                        <div className="rounded-xl border border-gray-200 bg-white p-4">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="relative h-14 w-14 overflow-hidden rounded-full border border-gray-200">
+                                                    <Image
+                                                        src={producerPicture}
+                                                        alt={producerName}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="text-base font-semibold text-gray-900 truncate">{producerName}</p>
+                                                </div>
+                                            </div>
+                                            {producerWhatsappUrl ? (
+                                                <a
+                                                    href={producerWhatsappUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
+                                                >
+                                                    <MessageCircle className="h-4 w-4" />
+                                                    Contactar por WhatsApp
+                                                </a>
+                                            ) : (
+                                                <p className="text-sm text-gray-500">Sin número de WhatsApp disponible.</p>
+                                            )}
+                                        </div>
+                                    )}
                                     {video360 && (
                                         <Button 
                                             variant="outline"

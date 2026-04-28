@@ -29,6 +29,16 @@ export interface PropertyVideo {
     video_id: string;
 }
 
+export interface PropertyProducer {
+    id?: number;
+    name?: string;
+    phone?: string;
+    cellphone?: string;
+    email?: string;
+    picture?: string;
+    position?: string;
+}
+
 export interface PropertyOperation {
     operation_id: number;
     operation_type: string;
@@ -61,6 +71,7 @@ export interface Property {
     age_display?: string; // Nuevo campo para mostrar "En construcción"
     parking_lot_amount?: number;
     operations?: PropertyOperation[];
+    producer?: PropertyProducer;
     rooms?: number;
     toilets?: number;
     disposition?: string;
@@ -461,7 +472,16 @@ const _getPropertyById = async (id: number): Promise<Property | null> => {
                 price: op.prices?.[0]?.price || 0,
                 currency: op.prices?.[0]?.currency || 'USD',
                 period: op.prices?.[0]?.period
-            }))
+            })),
+            producer: property.producer ? {
+                id: property.producer.id,
+                name: property.producer.name,
+                phone: property.producer.phone,
+                cellphone: property.producer.cellphone,
+                email: property.producer.email,
+                picture: formatImageUrl(property.producer.picture),
+                position: property.producer.position,
+            } : undefined
         };
 
         if (formattedProperty.images && formattedProperty.images.length > 0) {
