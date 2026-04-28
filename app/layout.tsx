@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { WhatsAppButton } from "@/components/ui/whatsapp-button";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -51,6 +52,7 @@ export default function RootLayout({
       >
         {children}
         <WhatsAppButton />
+        <Toaster position="top-center" richColors />
         <Script
           id="clarity-script"
           strategy="afterInteractive"

@@ -8,10 +8,11 @@ import { getRentProperties, getPropertyTypesForOperation, Property } from '@/act
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight, Share2 } from 'lucide-react';
 import Link from 'next/link';
 import { PromoBanner } from '@/components/promoBanner';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function RentPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -167,6 +168,30 @@ export default function RentPage() {
 
             return { ...prev, [propertyId]: newIndex };
         });
+    };
+
+    const handleShareProperty = async (property: Property) => {
+        const shareUrl = `${window.location.origin}/propiedades/${property.id}`;
+        const shareData = {
+            title: property.title,
+            text: `${property.title} - ${property.price}`,
+            url: shareUrl,
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+                toast.success('Propiedad compartida correctamente');
+                return;
+            }
+
+            await navigator.clipboard.writeText(shareUrl);
+            toast.success('Enlace copiado al portapapeles');
+        } catch (error) {
+            if (error instanceof Error && error.name === 'AbortError') return;
+            toast.error('No se pudo compartir la propiedad');
+            console.error('Error sharing property:', error);
+        }
     };
 
     if (error) {
@@ -342,11 +367,25 @@ export default function RentPage() {
                                                                 </div>
                                                             )}
                                                         </div>
-                                                        <Link href={`/propiedades/${property.id}`}>
-                                                            <Button className="w-full bg-red-600 hover:bg-red-700">
-                                                                Ver Detalles
+                                                        <div className="grid grid-cols-2 gap-2">
+                                                            <Button
+                                                                variant="outline"
+                                                                className="w-full border-gray-200 hover:bg-red-50 hover:text-red-600"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    e.stopPropagation();
+                                                                    handleShareProperty(property);
+                                                                }}
+                                                            >
+                                                                <Share2 className="h-4 w-4 mr-2" />
+                                                                Compartir
                                                             </Button>
-                                                        </Link>
+                                                            <Link href={`/propiedades/${property.id}`}>
+                                                                <Button className="w-full bg-red-600 hover:bg-red-700">
+                                                                    Ver Detalles
+                                                                </Button>
+                                                            </Link>
+                                                        </div>
                                                     </div>
                                                 </Card>
                                             );

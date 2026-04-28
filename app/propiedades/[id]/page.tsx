@@ -4,7 +4,7 @@ import { useEffect, useState, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building, Box } from "lucide-react"
+import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building, Box, Share2 } from "lucide-react"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
@@ -12,6 +12,7 @@ import PropertyMap from "@/components/ui/property-map"
 import { PropertyConsultForm } from "@/components/forms/property-consult-form"
 import { ContactMethodModal } from "@/components/forms/contact-method-modal"
 import { Video360Modal } from "@/components/ui/video360-modal"
+import { toast } from "sonner"
 
 import { getPropertyById, Property } from "@/actions/tokkoApi"
 
@@ -193,6 +194,32 @@ export default function PropertyPage() {
     // Función para abrir el modal de video 360
     const handleOpenVideo360 = () => {
         setIsVideo360ModalOpen(true)
+    }
+
+    const handleShareProperty = async () => {
+        if (!property) return
+
+        const shareUrl = `${window.location.origin}/propiedades/${property.id}`
+        const shareData = {
+            title: property.title,
+            text: `${property.title} - ${formattedPrice}`,
+            url: shareUrl,
+        }
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData)
+                toast.success('Propiedad compartida correctamente')
+                return
+            }
+
+            await navigator.clipboard.writeText(shareUrl)
+            toast.success('Enlace copiado al portapapeles')
+        } catch (error) {
+            if (error instanceof Error && error.name === 'AbortError') return
+            toast.error('No se pudo compartir la propiedad')
+            console.error("Error sharing property:", error)
+        }
     }
 
     return (
@@ -568,6 +595,14 @@ export default function PropertyPage() {
                                             Realizar consulta
                                         </Button>
                                     </div>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full border-2 border-gray-200 hover:bg-red-50 hover:text-red-600 flex items-center justify-center gap-2"
+                                        onClick={handleShareProperty}
+                                    >
+                                        <Share2 className="h-5 w-5" />
+                                        <span>Compartir propiedad</span>
+                                    </Button>
                                     {video360 && (
                                         <Button 
                                             variant="outline"
