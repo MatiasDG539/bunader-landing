@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import SalesPage from '@/components/salesPage';
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 }
 
 export default function VentaPage() {
-    return <SalesPage />;
+    return (
+        <Suspense fallback={<div className="min-h-[40vh]" />}>
+            <SalesPage />
+        </Suspense>
+    );
 }

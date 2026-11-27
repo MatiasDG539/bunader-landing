@@ -1,6 +1,6 @@
 import { SiteHeaderDark } from "@/components/ui/header-dark";
 import { SiteFooter } from "@/components/ui/footer";
-import { Users, MapPin, Briefcase, Heart, Shield, Home } from "lucide-react";
+import { Users, MapPin, Heart, Shield, Home } from "lucide-react";
 import Image from "next/image";
 import PropertyMap from "@/components/ui/property-map";
 
@@ -92,7 +92,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/federico.jpg"
+                                        src="/personas/federico_bunader.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -112,7 +112,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/sra_camisa_blanca.jpg"
+                                        src="/personas/gabriela_coronel.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -131,7 +131,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/sra_rubia.jpg"
+                                        src="/personas/zulma_chemes.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -141,8 +141,8 @@ export default function AboutUsPage() {
                                 </div>
 
                                 <div className="p-3 md:p-6">
-                                    <h3 className="text-base md:text-xl font-semibold mb-1">Veronica Bertolino</h3>
-                                    <p className="text-red-600 mb-3 text-xs md:text-base">Ejecutivo Comercial</p>
+                                    <h3 className="text-base md:text-xl font-semibold mb-1">Zulma Chemes</h3>
+                                    <p className="text-red-600 mb-3 text-xs md:text-base">Asesor Asociado</p>
                                 </div>
 
                             </div>
@@ -150,7 +150,7 @@ export default function AboutUsPage() {
                             <div className="bg-white rounded-lg shadow-md overflow-hidden w-full max-w-80 sm:max-w-none mx-auto sm:mx-0">
                                 <div className="relative w-full h-80 sm:h-56 md:h-56 bg-white flex items-center justify-center p-2">
                                     <Image
-                                        src="/personas/sra_saco_negro.jpg"
+                                        src="/personas/valentina_lopez.webp"
                                         alt="Miembro del equipo"
                                         className="object-contain w-full h-full"
                                         width={300}
@@ -228,10 +228,10 @@ export default function AboutUsPage() {
                             </div>
 
                             <div className="flex justify-center md:justify-start pt-4">
-                                <button className="bg-red-600 text-white hover:bg-red-700 font-medium py-3 px-6 md:px-8 rounded-lg text-base md:text-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center">
+                                {/* <button className="bg-red-600 text-white hover:bg-red-700 font-medium py-3 px-6 md:px-8 rounded-lg text-base md:text-lg transition-colors flex items-center gap-2 w-full sm:w-auto justify-center">
                                     <Briefcase className="w-4 h-4 md:w-5 md:h-5" />
                                     Coordinar una Visita
-                                </button>
+                                </button> */}
                             </div>
                         </div>
 

@@ -4,13 +4,16 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { SiteHeaderDark } from '@/components/ui/header-dark';
 import { SiteFooter } from '@/components/ui/footer';
 import { PropertyFilter, PropertyFilters } from '@/components/ui/property-filter';
-import { getSalesProperties, getPropertyTypesForOperation, Property } from '@/actions/tokkoApi';
+import { getSalesProperties, getPropertyTypesForOperation } from '@/actions/gvamaxApi';
+import type { Property } from '@/lib/properties/types';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Bed, Bath, Maximize, MapPin, ChevronLeft, ChevronRight, Share2 } from 'lucide-react';
 import { PromoBanner } from '@/components/promoBanner';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function SalesPage() {
     const [properties, setProperties] = useState<Property[]>([]);
@@ -22,8 +25,38 @@ export default function SalesPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [propertyTypes, setPropertyTypes] = useState<string[]>([]);
+    const [currentFilters, setCurrentFilters] = useState<PropertyFilters>({});
     const observer = useRef<IntersectionObserver | null>(null);
     const propertiesPerPage = 6;
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const searchParamsString = searchParams.toString();
+
+    const parseFiltersFromUrl = useCallback((): PropertyFilters => {
+        const params = new URLSearchParams(searchParamsString);
+        const typesParam = params.get('types');
+        const propertyTypesFromUrl = typesParam
+            ? typesParam.split(',').map((type) => type.trim().toLowerCase()).filter(Boolean)
+            : [];
+
+        return {
+            propertyTypes: propertyTypesFromUrl,
+        };
+    }, [searchParamsString]);
+
+    const updateUrlWithFilters = useCallback((filters: PropertyFilters) => {
+        const params = new URLSearchParams(searchParamsString);
+
+        if (filters.propertyTypes && filters.propertyTypes.length > 0) {
+            params.set('types', filters.propertyTypes.join(','));
+        } else {
+            params.delete('types');
+        }
+
+        const queryString = params.toString();
+        router.replace(queryString ? `${pathname}?${queryString}` : pathname, { scroll: false });
+    }, [pathname, router, searchParamsString]);
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -34,7 +67,6 @@ export default function SalesPage() {
                     getPropertyTypesForOperation('sale')
                 ]);
                 setProperties(propertiesData);
-                setFilteredProperties(propertiesData);
                 setPropertyTypes(typesData);
             } catch (error) {
                 console.error("Error fetching sales properties:", error);
@@ -45,6 +77,10 @@ export default function SalesPage() {
 
         fetchProperties();
     }, []);
+
+    useEffect(() => {
+        setCurrentFilters(parseFiltersFromUrl());
+    }, [parseFiltersFromUrl]);
 
     useEffect(() => {
         if (!filteredProperties.length) return;
@@ -125,6 +161,15 @@ export default function SalesPage() {
         setHasMore(filtered.length > propertiesPerPage);
     };
 
+    useEffect(() => {
+        handleFilterProperties(currentFilters);
+    }, [properties, currentFilters]);
+
+    const handleFiltersChange = (filters: PropertyFilters) => {
+        setCurrentFilters(filters);
+        updateUrlWithFilters(filters);
+    };
+
     const changePropertyImage = (propertyId: number, direction: 'next' | 'prev') => {
         const property = filteredProperties.find(p => p.id === propertyId);
         if (!property || property.images.length <= 1) return;
@@ -142,6 +187,30 @@ export default function SalesPage() {
 
             return { ...prev, [propertyId]: newIndex };
         });
+    };
+
+    const handleShareProperty = async (property: Property) => {
+        const shareUrl = `${window.location.origin}/propiedades/${property.id}`;
+        const shareData = {
+            title: property.title,
+            text: `${property.title} - ${property.price}`,
+            url: shareUrl,
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+                toast.success('Propiedad compartida correctamente');
+                return;
+            }
+
+            await navigator.clipboard.writeText(shareUrl);
+            toast.success('Enlace copiado al portapapeles');
+        } catch (error) {
+            if (error instanceof Error && error.name === 'AbortError') return;
+            toast.error('No se pudo compartir la propiedad');
+            console.error('Error sharing property:', error);
+        }
     };
 
     const loadMoreProperties = useCallback(() => {
@@ -216,9 +285,10 @@ export default function SalesPage() {
                         <aside className="lg:col-span-1">
                             <div className="sticky top-24">
                                 <PropertyFilter 
-                                    onFilter={handleFilterProperties} 
+                                    onFilter={handleFiltersChange}
                                     isRental={false}
                                     propertyTypes={propertyTypes}
+                                    initialFilters={currentFilters}
                                 />
                             </div>
                         </aside>
@@ -333,7 +403,7 @@ export default function SalesPage() {
                                                                     {property.bedrooms > 0 && (
                                                                         <div className="flex items-center">
                                                                             <Bed className="h-5 w-5 mr-1 text-gray-400" />
-                                                                            <span>{property.bedrooms} Hab</span>
+                                                                            <span>{property.bedrooms} Dor</span>
                                                                         </div>
                                                                     )}
                                                                     {property.bathrooms > 0 && (
@@ -349,11 +419,25 @@ export default function SalesPage() {
                                                                         </div>
                                                                     )}
                                                                 </div>
-                                                                <Link href={`/propiedades/${property.id}`}>
-                                                                    <Button className="w-full bg-red-600 hover:bg-red-700">
-                                                                        Ver Detalles
+                                                                <div className="grid grid-cols-2 gap-2">
+                                                                    <Button
+                                                                        variant="outline"
+                                                                        className="w-full hover:bg-red-50 hover:text-red-600"
+                                                                        onClick={(e) => {
+                                                                            e.preventDefault();
+                                                                            e.stopPropagation();
+                                                                            handleShareProperty(property);
+                                                                        }}
+                                                                    >
+                                                                        <Share2 className="h-4 w-4 mr-2" />
+                                                                        Compartir
                                                                     </Button>
-                                                                </Link>
+                                                                    <Link href={`/propiedades/${property.id}`}>
+                                                                        <Button className="w-full bg-red-600 hover:bg-red-700">
+                                                                        Ver Detalles
+                                                                        </Button>
+                                                                    </Link>
+                                                                </div>
                                                             </div>
                                                         </Card>
                                                     );

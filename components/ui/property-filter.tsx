@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Home, Building2, MapPin, Building, Briefcase, Store, TreePine, Warehouse, FileText, Building2 as BuildingIcon } from 'lucide-react' //add this later here: Maximize2, ParkingCircle, Filter
 
@@ -21,6 +21,7 @@ export interface PropertyFilterProps {
     onFilter: (filters: PropertyFilters) => void;
     isRental?: boolean;
     propertyTypes?: string[];
+    initialFilters?: PropertyFilters;
 }
 
 export interface PropertyFilters {
@@ -34,7 +35,7 @@ export interface PropertyFilters {
     minParkingSpots?: number;
 }
 
-export function PropertyFilter({ onFilter, isRental = false, propertyTypes = [] }: PropertyFilterProps) {
+export function PropertyFilter({ onFilter, isRental = false, propertyTypes = [], initialFilters }: PropertyFilterProps) {
     const [filters, setFilters] = useState<PropertyFilters>({
         location: '',
         minPrice: undefined,
@@ -49,8 +50,8 @@ export function PropertyFilter({ onFilter, isRental = false, propertyTypes = [] 
     const handlePropertyTypeToggle = (type: string) => {
         const currentTypes = filters.propertyTypes || []
         const updatedTypes = currentTypes.includes(type)
-            ? []
-            : [type]
+            ? currentTypes.filter((currentType) => currentType !== type)
+            : [...currentTypes, type]
 
         const newFilters = {
             ...filters,
@@ -60,6 +61,31 @@ export function PropertyFilter({ onFilter, isRental = false, propertyTypes = [] 
         setFilters(newFilters)
         onFilter(newFilters)
     }
+
+    const handleClearPropertyTypes = () => {
+        const newFilters = {
+            ...filters,
+            propertyTypes: []
+        }
+
+        setFilters(newFilters)
+        onFilter(newFilters)
+    }
+
+    useEffect(() => {
+        if (!initialFilters) return
+
+        setFilters({
+            location: initialFilters.location || '',
+            minPrice: initialFilters.minPrice,
+            maxPrice: initialFilters.maxPrice,
+            minBedrooms: initialFilters.minBedrooms,
+            minBathrooms: initialFilters.minBathrooms,
+            minArea: initialFilters.minArea,
+            propertyTypes: initialFilters.propertyTypes || [],
+            minParkingSpots: initialFilters.minParkingSpots,
+        })
+    }, [initialFilters])
 
 
     return (
@@ -107,7 +133,19 @@ export function PropertyFilter({ onFilter, isRental = false, propertyTypes = [] 
 
                 {/* Tipo de propiedad */}
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Propiedad</label>
+                    <div className="mb-1 flex items-center justify-between">
+                        <label className="block text-sm font-medium text-gray-700">Tipo de Propiedad</label>
+                        {(filters.propertyTypes?.length || 0) > 0 && (
+                            <Button
+                                type="button"
+                                variant="ghost"
+                                className="h-auto p-0 text-sm text-red-600 hover:bg-transparent hover:text-red-700"
+                                onClick={handleClearPropertyTypes}
+                            >
+                                Limpiar filtros
+                            </Button>
+                        )}
+                    </div>
                     <div className="flex flex-wrap gap-2">
                         {propertyTypes.length > 0 ? (
                             propertyTypes.map((type) => {

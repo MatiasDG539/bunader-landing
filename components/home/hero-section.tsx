@@ -29,7 +29,7 @@ export function HeroSection() {
 
                 <div className="grid grid-cols-1 sm:flex sm:flex-wrap gap-3 sm:gap-4 w-full">
                     <div className="grid grid-cols-2 sm:contents gap-3 sm:gap-4">
-                        <Link href="/#" className="col-span-1">
+                        <Link href="/propiedades" className="col-span-1">
                             <Button variant="default" size="lg" className="w-full text-white text-base sm:text-lg bg-red-600 hover:bg-red-600/90 py-4 sm:py-6 cursor-pointer">
                                 Quiero Comprar
                             </Button>
@@ -49,14 +49,9 @@ export function HeroSection() {
                             </Button>
                         </Link>
 
-                        <Link href="/#" className="col-span-1">
+                        <Link href="/invertir-exterior" className="col-span-1">
                             <Button variant="default" size="lg" className="w-full text-white text-base sm:text-lg bg-red-600 hover:bg-red-600/90 py-4 sm:py-6 cursor-pointer">
-                                <span className="sm:hidden whitespace-normal text-center leading-tight">
-                                    Invertir en<br />el exterior
-                                </span>
-                                <span className="hidden sm:inline">
-                                    Invertir en el exterior
-                                </span>
+                                Invertir en el exterior
                             </Button>
                         </Link>
                     </div>

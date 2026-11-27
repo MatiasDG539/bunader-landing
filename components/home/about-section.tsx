@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
 export function AboutSection() {
@@ -16,10 +17,18 @@ export function AboutSection() {
                     </p>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Sobre Nosotros</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Nuestro blog</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Trabaja con nosotros</Button>
-                        <Button className="bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Prensa</Button>
+                        <Link href="/sobre-nosotros">
+                            <Button className="w-full bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Sobre Nosotros</Button>
+                        </Link>
+                        <Link href="/blog">
+                            <Button className="w-full bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Nuestro blog</Button>
+                        </Link>
+                        <Link href="https://www.linkedin.com/company/bunader/">
+                            <Button className="w-full bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Trabaja con nosotros</Button>
+                        </Link>
+                        <Link href="/prensa">
+                            <Button className="w-full bg-red-600 hover:bg-red-700 text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 cursor-pointer">Prensa</Button>
+                        </Link>
                     </div>
                 </div>
                 <div className="order-1 lg:order-2 relative">

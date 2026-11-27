@@ -4,15 +4,18 @@ import { useEffect, useState, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building } from "lucide-react"
+import { ChevronLeft, ChevronRight, Bath, Grid3X3, MapPin, Home, Calendar, Building, Box, Share2, MessageCircle } from "lucide-react"
 import { SiteHeaderDark } from "@/components/ui/header-dark"
 import { SiteFooter } from "@/components/ui/footer"
 import { Button } from "@/components/ui/button"
 import PropertyMap from "@/components/ui/property-map"
 import { PropertyConsultForm } from "@/components/forms/property-consult-form"
 import { ContactMethodModal } from "@/components/forms/contact-method-modal"
+import { Video360Modal } from "@/components/ui/video360-modal"
+import { toast } from "sonner"
 
-import { getPropertyById, Property } from "@/actions/tokkoApi"
+import { getPropertyById } from "@/actions/gvamaxApi"
+import type { Property } from "@/lib/properties/types"
 
 interface ExtendedProperty extends Property {
     tags?: Array<{
@@ -33,6 +36,7 @@ interface ExtendedProperty extends Property {
         phone?: string;
         cellphone?: string;
         email?: string;
+        picture?: string;
     };
     reference_code?: string;
 }
@@ -45,6 +49,7 @@ export default function PropertyPage() {
     const [isImageModalOpen, setIsImageModalOpen] = useState(false)
     const [isContactMethodModalOpen, setIsContactMethodModalOpen] = useState(false)
     const [isConsultModalOpen, setIsConsultModalOpen] = useState(false)
+    const [isVideo360ModalOpen, setIsVideo360ModalOpen] = useState(false)
 
     useEffect(() => {
         const fetchProperty = async () => {
@@ -64,6 +69,46 @@ export default function PropertyPage() {
             fetchProperty()
         }
     }, [id])
+
+    // Detectar si hay un video 360 y mostrar el modal automáticamente
+    useEffect(() => {
+        if (property && property.videos && property.videos.length > 0) {
+            // Buscar videos de Matterport (provider: "matterport" o provider_id: 3)
+            const video360 = property.videos.find(
+                video => video.provider === "matterport" || video.provider_id === 3
+            )
+            
+            if (video360 && !isVideo360ModalOpen) {
+                // Verificar si el usuario ya cerró este modal antes
+                const storageKey = `video360_closed_${property.id}_${video360.id}`
+                const wasClosed = typeof window !== 'undefined' && localStorage.getItem(storageKey) === 'true'
+                
+                if (!wasClosed) {
+                    // Mostrar el modal después de un pequeño delay para mejor UX
+                    const timer = setTimeout(() => {
+                        setIsVideo360ModalOpen(true)
+                    }, 1000)
+                    
+                    return () => clearTimeout(timer)
+                }
+            }
+        }
+    }, [property, isVideo360ModalOpen])
+
+    // Función para manejar el cierre del modal y guardar en localStorage
+    const handleCloseVideo360Modal = () => {
+        if (property && property.videos) {
+            const video360 = property.videos.find(
+                video => video.provider === "matterport" || video.provider_id === 3
+            )
+            
+            if (video360 && typeof window !== 'undefined') {
+                const storageKey = `video360_closed_${property.id}_${video360.id}`
+                localStorage.setItem(storageKey, 'true')
+            }
+        }
+        setIsVideo360ModalOpen(false)
+    }
 
     const changeImage = (direction: 'next' | 'prev') => {
         if (!property || !property.images || property.images.length <= 1) return
@@ -136,8 +181,69 @@ export default function PropertyPage() {
         )
     }
 
-    const propertyType = property.operation_type === "venta" ? "En Venta" : "En Alquiler"
+    const normalizedOperationType = property.operation_type?.toLowerCase()
+    const isSale = normalizedOperationType === "venta" || normalizedOperationType === "sale"
+    const operationLabel = isSale ? "Venta" : "Alquiler"
+    const operationHref = isSale ? "/propiedades/venta" : "/propiedades/alquiler"
+    const propertyType = isSale ? "En Venta" : "En Alquiler"
     const formattedPrice = property.price || "Consultar precio"
+    // Valor que esperan los formularios de consulta y el mail ("venta" | "alquiler")
+    const consultOperation = isSale ? "venta" : "alquiler"
+    const producer = property.producer
+    const producerName = producer?.name?.trim() || "Asesor inmobiliario"
+    // GVAmax no provee foto del asesor: si no hay foto se muestran las iniciales
+    const producerPicture = producer?.picture
+    const producerInitials = producerName
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map(word => word[0]?.toUpperCase())
+        .join("")
+    const producerPhone = (producer?.cellphone || producer?.phone || "").replace(/\D/g, "")
+    const propertyPath = `/propiedades/${property.id}`
+    const propertyLink = typeof window !== "undefined"
+        ? `${window.location.origin}${propertyPath}`
+        : propertyPath
+    const producerWhatsappUrl = producerPhone
+        ? `https://wa.me/${producerPhone}?text=${encodeURIComponent(`Hola ${producerName}, me interesa esta propiedad: ${propertyLink}`)}`
+        : null
+    
+    // Obtener video 360 si existe
+    const video360 = property.videos?.find(
+        video => video.provider === "matterport" || video.provider_id === 3
+    )
+    const youtubeVideo = property.videos?.find(video => video.provider === "youtube")
+
+    // Función para abrir el modal de video 360
+    const handleOpenVideo360 = () => {
+        setIsVideo360ModalOpen(true)
+    }
+
+    const handleShareProperty = async () => {
+        if (!property) return
+
+        const shareUrl = `${window.location.origin}/propiedades/${property.id}`
+        const shareData = {
+            title: property.title,
+            text: `${property.title} - ${formattedPrice}`,
+            url: shareUrl,
+        }
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData)
+                toast.success('Propiedad compartida correctamente')
+                return
+            }
+
+            await navigator.clipboard.writeText(shareUrl)
+            toast.success('Enlace copiado al portapapeles')
+        } catch (error) {
+            if (error instanceof Error && error.name === 'AbortError') return
+            toast.error('No se pudo compartir la propiedad')
+            console.error("Error sharing property:", error)
+        }
+    }
 
     return (
 
@@ -152,6 +258,8 @@ export default function PropertyPage() {
                         <Link href="/" className="hover:text-red-600">Inicio</Link>
                         <span className="mx-2">/</span>
                         <Link href="/propiedades" className="hover:text-red-600">Propiedades</Link>
+                        <span className="mx-2">/</span>
+                        <Link href={operationHref} className="hover:text-red-600">{operationLabel}</Link>
                         <span className="mx-2">/</span>
                         <span className="text-gray-900 font-medium">{property.title}</span>
                     </div>
@@ -206,6 +314,19 @@ export default function PropertyPage() {
                                             </div>
                                         </>
                                     )}
+                                    {/* Badge de Tour 360 */}
+                                    {video360 && (
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                handleOpenVideo360()
+                                            }}
+                                            className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 px-4 py-2 rounded-full z-10"
+                                        >
+                                            <Box className="h-4 w-4" />
+                                            <span className="text-sm font-semibold">Tour 360°</span>
+                                        </Button>
+                                    )}
                                 </>
                             ) : (
                                 <Image
@@ -235,7 +356,7 @@ export default function PropertyPage() {
                                         <div className="flex flex-col items-center p-4">
                                             <Home className="h-8 w-8 text-gray-600 mb-2" />
                                             <span className="text-lg font-bold text-gray-900">{property.bedrooms}</span>
-                                            <span className="text-sm text-gray-500">ambiente{property.bedrooms > 1 ? 's' : ''}</span>
+                                            <span className="text-sm text-gray-500">dormitorio{property.bedrooms > 1 ? 's' : ''}</span>
                                         </div>
                                     )}
                                     {property.bathrooms !== undefined && property.bathrooms > 0 && (
@@ -267,6 +388,7 @@ export default function PropertyPage() {
                                 {((property.bedrooms !== undefined && property.bedrooms > 0) ||
                                   (property.age !== undefined) ||
                                   (property.bathrooms !== undefined && property.bathrooms > 0) ||
+                                  (property.rooms !== undefined && property.rooms > 0) ||
                                   (property.disposition && property.disposition.trim() !== '') ||
                                   (property.property_condition && property.property_condition.trim() !== '') ||
                                   (property.situation && property.situation.trim() !== '') ||
@@ -278,7 +400,7 @@ export default function PropertyPage() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
                                             {property.bedrooms !== undefined && property.bedrooms > 0 && (
                                                 <div className="flex justify-between">
-                                                    <span className="text-gray-600">Ambiente:</span>
+                                                    <span className="text-gray-600">Dormitorio:</span>
                                                     <span className="font-medium">{property.bedrooms}</span>
                                                 </div>
                                             )}
@@ -294,6 +416,12 @@ export default function PropertyPage() {
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Baño:</span>
                                                     <span className="font-medium">{property.bathrooms}</span>
+                                                </div>
+                                            )}
+                                            {property.rooms !== undefined && property.rooms > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Ambientes:</span>
+                                                    <span className="font-medium">{property.rooms}</span>
                                                 </div>
                                             )}
                                             {property.disposition && property.disposition.trim() !== '' && (
@@ -336,10 +464,10 @@ export default function PropertyPage() {
                                     </div>
                                 )}
 
-                                {/* Ambientes */}
+                                {/* Dormitorios */}
                                 {property.tags && property.tags.filter((tag) => tag.type === 2).length > 0 && (
                                     <div className="mb-8">
-                                        <h2 className="text-2xl font-bold mb-6">Ambientes</h2>
+                                        <h2 className="text-2xl font-bold mb-6">Dormitorios</h2>
                                         <div className="flex flex-wrap gap-2">
                                             {property.tags
                                                 .filter((tag) => tag.type === 2)
@@ -376,6 +504,9 @@ export default function PropertyPage() {
 
                                 {/* Superficies y medidas */}
                                 {((property.total_surface !== undefined && property.total_surface > 0) ||
+                                  (property.land_surface !== undefined && property.land_surface > 0) ||
+                                  (property.front_meters !== undefined && property.front_meters > 0) ||
+                                  (property.depth_meters !== undefined && property.depth_meters > 0) ||
                                   (property.roofed_surface && parseFloat(property.roofed_surface) > 0) ||
                                   (property.semiroofed_surface && parseFloat(property.semiroofed_surface) > 0) ||
                                   (property.unroofed_surface && parseFloat(property.unroofed_surface) > 0)) && (
@@ -386,6 +517,24 @@ export default function PropertyPage() {
                                                 <div className="flex justify-between">
                                                     <span className="text-gray-600">Total construido:</span>
                                                     <span className="font-medium">{property.total_surface} m²</span>
+                                                </div>
+                                            )}
+                                            {property.land_surface !== undefined && property.land_surface > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Superficie del terreno:</span>
+                                                    <span className="font-medium">{property.land_surface} m²</span>
+                                                </div>
+                                            )}
+                                            {property.front_meters !== undefined && property.front_meters > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Frente:</span>
+                                                    <span className="font-medium">{property.front_meters} m</span>
+                                                </div>
+                                            )}
+                                            {property.depth_meters !== undefined && property.depth_meters > 0 && (
+                                                <div className="flex justify-between">
+                                                    <span className="text-gray-600">Fondo:</span>
+                                                    <span className="font-medium">{property.depth_meters} m</span>
                                                 </div>
                                             )}
                                             {property.roofed_surface && parseFloat(property.roofed_surface) > 0 && (
@@ -434,7 +583,23 @@ export default function PropertyPage() {
                                             'No hay descripción disponible'
                                         )}
                                     </div>
-                                    
+
+                                    {youtubeVideo && (
+                                        <div className="mt-8">
+                                            <h2 className="text-2xl font-bold mb-4">Video</h2>
+                                            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
+                                                <iframe
+                                                    src={youtubeVideo.player_url}
+                                                    title={`${property.title} - video`}
+                                                    className="absolute inset-0 h-full w-full border-0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowFullScreen
+                                                    loading="lazy"
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+
                                     {/* Información del agente */}
                                     {/* {property.producer && (
                                         <div className="mt-8 p-6 bg-gray-50 rounded-lg">
@@ -497,11 +662,65 @@ export default function PropertyPage() {
                                             Realizar consulta
                                         </Button>
                                     </div>
-                                    <Link href="/contacto">
+                                    <Button
+                                        variant="outline"
+                                        className="w-full border-2 border-gray-200 hover:bg-red-50 hover:text-red-600 flex items-center justify-center gap-2"
+                                        onClick={handleShareProperty}
+                                    >
+                                        <Share2 className="h-5 w-5" />
+                                        <span>Compartir propiedad</span>
+                                    </Button>
+                                    {producer && (
+                                        <div className="rounded-xl border border-gray-200 bg-white p-4">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-full border border-gray-200">
+                                                    {producerPicture ? (
+                                                        <Image
+                                                            src={producerPicture}
+                                                            alt={producerName}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    ) : (
+                                                        <div className="flex h-full w-full items-center justify-center bg-red-50 text-lg font-semibold text-red-600">
+                                                            {producerInitials || "B"}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="text-base font-semibold text-gray-900 truncate">{producerName}</p>
+                                                </div>
+                                            </div>
+                                            {producerWhatsappUrl ? (
+                                                <a
+                                                    href={producerWhatsappUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-green-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-green-700"
+                                                >
+                                                    <MessageCircle className="h-4 w-4" />
+                                                    Contactar por WhatsApp
+                                                </a>
+                                            ) : (
+                                                <p className="text-sm text-gray-500">Sin número de WhatsApp disponible.</p>
+                                            )}
+                                        </div>
+                                    )}
+                                    {video360 && (
+                                        <Button 
+                                            variant="outline"
+                                            className="w-full border-2 border-red-600 text-red-600 hover:bg-red-50 flex items-center justify-center gap-2"
+                                            onClick={handleOpenVideo360}
+                                        >
+                                            <Box className="h-5 w-5" />
+                                            <span>Ver Tour Virtual 360°</span>
+                                        </Button>
+                                    )}
+                                    {/* <Link href="/contacto">
                                         <Button variant="outline" className="w-full">
                                             Solicitar visita
                                         </Button>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
                         </div>
@@ -517,7 +736,7 @@ export default function PropertyPage() {
                     propertyId={property.id}
                     propertyTitle={property.title}
                     propertyPrice={formattedPrice}
-                    propertyOperation={property.operation_type}
+                    propertyOperation={consultOperation}
                     isOpen={isContactMethodModalOpen}
                     onClose={() => setIsContactMethodModalOpen(false)}
                     onSelectEmail={() => setIsConsultModalOpen(true)}
@@ -530,11 +749,27 @@ export default function PropertyPage() {
                     propertyId={property.id}
                     propertyTitle={property.title}
                     propertyPrice={formattedPrice}
-                    propertyOperation={property.operation_type}
+                    propertyOperation={consultOperation}
                     isOpen={isConsultModalOpen}
                     onClose={() => setIsConsultModalOpen(false)}
                 />
             )}
+
+            {/* Modal de video 360 */}
+            {property && property.videos && property.videos.length > 0 && (() => {
+                const video360 = property.videos.find(
+                    video => video.provider === "matterport" || video.provider_id === 3
+                )
+                if (!video360) return null
+                
+                return (
+                    <Video360Modal
+                        video={video360}
+                        isOpen={isVideo360ModalOpen}
+                        onClose={handleCloseVideo360Modal}
+                    />
+                )
+            })()}
 
             {isImageModalOpen && property?.images && (
                 <div 

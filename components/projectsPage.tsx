@@ -1,55 +1,18 @@
-"use client"
-
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { MapPin, Building, Calendar } from "lucide-react"
+import type { Development } from "@/lib/properties/types"
 
-const developments = [
-    {
-        id: "corrientes_65",
-        title: "Corrientes 65",
-        description: "Moderno complejo residencial en el corazón de la ciudad",
-        location: "Corrientes 65, Centro",
-        image: "/img/corrientes_65/c65_thumbnail.jpg",
-        status: "En construcción", // "En construcción", "Próximamente", "Entregado"
-        deliveryDate: "2025",
-        totalUnits: 24,
-        availableUnits: 8,
-        priceFrom: "USD 180.000"
-    },
+// Listado de emprendimientos de GVAmax. La versión con proyectos fijos quedó
+// comentada en legacy/proyectos-hardcodeados/projectsPage.tsx
 
-    {
-        id: "mate_de_luna_2197",
-        title: "Mate de Luna 2197",
-        description: "Edificio exclusivo sobre la Av. Mate de Luna, la avenida más importante de Tucumán",
-        location: "Av. Mate de Luna 2197, Tucumán",
-        image: "/img/mate_de_luna_2197/m2197_thumbnail.png",
-        status: "En Venta", // "En construcción", "Próximamente", "Entregado"
-        deliveryDate: "2025",
-        totalUnits: 48,
-        availableUnits: 32,
-        priceFrom: "Consultar"
-    },
-]
+interface ProjectsPageProps {
+    developments: Development[]
+}
 
-export default function ProjectsPage() {
-    const getStatusTag = (status: string) => {
-        const statusColors = {
-            "En construcción": "bg-red-600",
-            "En Venta": "bg-red-600",
-            "Próximamente": "bg-red-600", 
-            "Entregado": "bg-red-600"
-        }
-        
-        return (
-            <div className={`absolute top-4 right-4 ${statusColors[status as keyof typeof statusColors] || 'bg-gray-600'} text-white text-xs font-bold px-3 py-1 rounded-full`}>
-                {status}
-            </div>
-        )
-    }
-
+export default function ProjectsPage({ developments }: ProjectsPageProps) {
     return (
         <div className="min-h-screen bg-gray-50">
 
@@ -79,52 +42,7 @@ export default function ProjectsPage() {
                     {developments.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {developments.map((development) => (
-                                <Card
-                                    key={development.id}
-                                    className="border-0 overflow-hidden shadow-lg rounded-xl"
-                                >
-                                    <div className="relative h-[280px] w-full">
-                                        <Image 
-                                            src={development.image || "/placeholder.svg"} 
-                                            alt={development.title} 
-                                            fill 
-                                            className="object-cover" 
-                                        />
-                                        {getStatusTag(development.status)}
-                                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
-                                        <div className="absolute bottom-4 left-4 text-white">
-                                            <div className="text-sm font-medium">Desde</div>
-                                            <div className="text-2xl font-bold">{development.priceFrom}</div>
-                                        </div>
-                                    </div>
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-bold mb-2">{development.title}</h3>
-                                        <p className="text-gray-600 mb-3 text-sm">{development.description}</p>
-                                        <div className="flex items-center text-gray-500 mb-4">
-                                            <MapPin className="h-4 w-4 mr-1" />
-                                            <span className="text-sm">{development.location}</span>
-                                        </div>
-                                        <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-                                            <div className="flex items-center">
-                                                <Building className="h-4 w-4 mr-2 text-gray-400" />
-                                                <div>
-                                                    <div className="font-medium">{development.totalUnits} unidades</div>
-                                                    <div className="text-gray-500 text-xs">{development.availableUnits} disponibles</div>
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center">
-                                                <Calendar className="h-4 w-4 mr-2 text-gray-400" />
-                                                <div>
-                                                    <div className="font-medium">Entrega</div>
-                                                    <div className="text-gray-500 text-xs">{development.deliveryDate}</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <Link href={`/propiedades/proyectos/${development.id}`}>
-                                            <Button className="w-full bg-red-600 hover:bg-red-700">Ver Proyecto</Button>
-                                        </Link>
-                                    </div>
-                                </Card>
+                                <DevelopmentCard key={development.id} development={development} />
                             ))}
                         </div>
                     ) : (
@@ -162,5 +80,64 @@ export default function ProjectsPage() {
                 </div>
             </section>
         </div>
+    )
+}
+
+function DevelopmentCard({ development }: { development: Development }) {
+    const cover = development.images?.[0]?.image || "/placeholder.svg"
+    const location = development.full_location || development.address
+
+    return (
+        <Card className="border-0 overflow-hidden shadow-lg rounded-xl flex flex-col">
+            <div className="relative h-[280px] w-full">
+                <Image
+                    src={cover}
+                    alt={development.name}
+                    fill
+                    className="object-cover"
+                />
+                {development.status && (
+                    <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                        {development.status}
+                    </div>
+                )}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent h-24" />
+                <div className="absolute bottom-4 left-4 text-white">
+                    <div className="text-sm font-medium">Desde</div>
+                    <div className="text-2xl font-bold">{development.price || "Consultar"}</div>
+                </div>
+            </div>
+            <div className="p-6 flex flex-1 flex-col">
+                <h3 className="text-xl font-bold mb-2">{development.name}</h3>
+                {development.short_description && (
+                    <p className="text-gray-600 mb-3 text-sm line-clamp-3">{development.short_description}</p>
+                )}
+                {location && (
+                    <div className="flex items-center text-gray-500 mb-4">
+                        <MapPin className="h-4 w-4 mr-1 shrink-0" />
+                        <span className="text-sm truncate">{location}</span>
+                    </div>
+                )}
+                <div className="grid grid-cols-2 gap-4 mb-6 text-sm mt-auto">
+                    <div className="flex items-center">
+                        <Building className="h-4 w-4 mr-2 text-gray-400 shrink-0" />
+                        <div>
+                            <div className="font-medium">{development.type || "Desarrollo"}</div>
+                            <div className="text-gray-500 text-xs">Tipo</div>
+                        </div>
+                    </div>
+                    <div className="flex items-center">
+                        <Calendar className="h-4 w-4 mr-2 text-gray-400 shrink-0" />
+                        <div>
+                            <div className="font-medium">{development.status || "A confirmar"}</div>
+                            <div className="text-gray-500 text-xs">Estado de obra</div>
+                        </div>
+                    </div>
+                </div>
+                <Link href={`/propiedades/proyectos/${development.slug}`}>
+                    <Button className="w-full bg-red-600 hover:bg-red-700">Ver Proyecto</Button>
+                </Link>
+            </div>
+        </Card>
     )
 }

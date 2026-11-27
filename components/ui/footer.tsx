@@ -110,6 +110,11 @@ export function SiteFooter() {
 
                 <div className="border-t border-gray-800 mt-8 sm:mt-10 lg:mt-12 pt-6 sm:pt-8 text-center text-gray-400 text-xs sm:text-sm">
                     <p>&copy; {new Date().getFullYear()} Bunader Negocios Inmobiliarios. Todos los derechos reservados.</p>
+                    <p className="mt-2">
+                        <Link href="/politica-de-privacidad" className="text-gray-400 hover:text-white transition-colors text-sm sm:text-base">
+                            Política de Privacidad
+                        </Link>
+                    </p>
                 </div>
             </div>
         </footer>

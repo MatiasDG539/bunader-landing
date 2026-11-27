@@ -5,7 +5,8 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize, MapPin } from "lucide-react"
-import { getRentProperties, Property } from "@/actions/tokkoApi"
+import { getRentProperties } from "@/actions/gvamaxApi"
+import type { Property } from "@/lib/properties/types"
 import Link from "next/link"
 
 export function RentSection() {
@@ -194,7 +195,7 @@ export function RentSection() {
                                     {isValidValue(property.bedrooms) && (
                                         <div className="flex items-center">
                                             <Bed className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2 text-gray-400" />
-                                            <span>{property.bedrooms} Hab</span>
+                                            <span>{property.bedrooms} Dor</span>
                                         </div>
                                     )}
                                     {isValidValue(property.bathrooms) && (
