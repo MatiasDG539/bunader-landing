@@ -5,7 +5,8 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize, MapPin } from "lucide-react"
-import { getRentProperties, Property } from "@/actions/tokkoApi"
+import { getRentProperties } from "@/actions/gvamaxApi"
+import type { Property } from "@/lib/properties/types"
 import Link from "next/link"
 
 export function RentSection() {

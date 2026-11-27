@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize, MapPin } from "lucide-react"
-import { getSalesProperties, Property } from "@/actions/tokkoApi"
+import { getSalesProperties } from "@/actions/gvamaxApi"
+import type { Property } from "@/lib/properties/types"
 
 export function SalesSection() {
     const [salesProperties, setSalesProperties] = useState<Property[]>([])

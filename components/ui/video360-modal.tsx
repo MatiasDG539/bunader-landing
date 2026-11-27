@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { X } from "lucide-react"
-import { PropertyVideo } from "@/actions/tokkoApi"
+import type { PropertyVideo } from "@/lib/properties/types"
 
 interface Video360ModalProps {
     video: PropertyVideo
@@ -13,8 +13,9 @@ interface Video360ModalProps {
 export function Video360Modal({ video, isOpen, onClose }: Video360ModalProps) {
     if (!isOpen) return null
 
-    // Detectar si es un video de Matterport
+    // Recorrido 360°: Matterport (Tokko) o cualquier tour de GVAmax (provider_id 3)
     const isMatterport = video.provider === "matterport" || video.provider_id === 3
+    const externalUrl = video.url || video.player_url
 
     return (
         <div 
@@ -57,6 +58,18 @@ export function Video360Modal({ video, isOpen, onClose }: Video360ModalProps) {
                         </div>
                     )}
                 </div>
+
+                {/* Respaldo por si el proveedor del tour no permite mostrarse embebido */}
+                {isMatterport && externalUrl && (
+                    <a
+                        href={externalUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute top-2 left-2 sm:top-4 sm:left-4 z-10 rounded-full bg-black/60 px-3 py-1.5 text-xs sm:text-sm text-white hover:bg-black/80"
+                    >
+                        Abrir en nueva pestaña
+                    </a>
+                )}
 
                 {/* Título del video (opcional, en la parte inferior) */}
                 {video.title && (

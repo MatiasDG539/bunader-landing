@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getPropertyById } from '@/actions/tokkoApi';
+import { getPropertyById } from '@/actions/gvamaxApi';
 
 /**
- * Endpoint para redirigir propiedades desde Tokko
+ * Endpoint para redirigir propiedades (links compartidos / portales)
  * Formato esperado: http://bunader.com.ar/p/$id$-prop
  * 
- * Este endpoint consulta la propiedad en Tokko y redirige a la página correspondiente
+ * Consulta la propiedad en GVAmax y redirige a /propiedades/[id].
+ * (Versión Tokko original: legacy/tokko/redirects/p-id.route.ts)
  */
 export async function GET(
     request: Request,
@@ -13,7 +14,7 @@ export async function GET(
 ) {
     try {
         const { id } = await params;
-        // Remover el sufijo "-prop" si existe (Tokko puede incluir: $id$-prop)
+        // Remover el sufijo "-prop" si existe (formato heredado de Tokko: $id$-prop)
         const cleanId = id.replace(/-prop$/, '');
         const propertyId = parseInt(cleanId);
 
@@ -24,7 +25,7 @@ export async function GET(
             );
         }
 
-        // Obtener la propiedad desde Tokko
+        // Obtener la propiedad desde GVAmax
         const property = await getPropertyById(propertyId);
 
         if (!property) {

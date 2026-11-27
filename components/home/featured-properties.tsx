@@ -6,7 +6,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Bed, Bath, Maximize, MapPin } from "lucide-react"
-import { getFeaturedProperties, Property } from "@/actions/tokkoApi"
+import { getFeaturedProperties } from "@/actions/gvamaxApi"
+import type { Property } from "@/lib/properties/types"
 
 export function FeaturedProperties() {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
