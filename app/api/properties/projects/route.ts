@@ -7,6 +7,8 @@ export async function GET() {
     const developments = await getDevelopments();
     return NextResponse.json(developments.map((development) => ({
         id: development.id,
+        slug: development.slug,
+        url: `/propiedades/proyectos/${development.slug}`,
         title: development.name,
         location: development.address || '',
         full_location: development.full_location || '',

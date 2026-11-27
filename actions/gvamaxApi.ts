@@ -135,8 +135,15 @@ export const getDevelopments = async (): Promise<Development[]> => {
 export const getDevelopmentById = async (id: number): Promise<Development | null> => {
     if (!Number.isInteger(id) || id <= 0) return null;
     try {
-        const raw = await fetchEmprendimientoById(id);
-        return raw ? mapEmprendimiento(raw) : null;
+        const cached = unstable_cache(
+            async () => {
+                const raw = await fetchEmprendimientoById(id);
+                return raw ? mapEmprendimiento(raw) : null;
+            },
+            ['gvamax-development', String(id)],
+            { revalidate: REVALIDATE_SECONDS, tags: ['projects', `project-${id}`] }
+        );
+        return await cached();
     } catch (error) {
         console.error(`Error al obtener el emprendimiento con ID ${id} (GVAmax):`, error);
         return null;
@@ -144,31 +151,10 @@ export const getDevelopmentById = async (id: number): Promise<Development | null
 };
 
 /**
- * Convierte el nombre a slug (minúsculas, sin acentos, espacios → "_").
+ * Slug de la página del emprendimiento (/propiedades/proyectos/<slug>).
+ * Se genera solo a partir del nombre y el id de GVAmax: no hay que mapear nada a mano.
  */
-function generateSlugFromName(name: string): string {
-    return name
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '')
-        .replace(/[^a-z0-9\s-]/g, '')
-        .trim()
-        .replace(/\s+/g, '_')
-        .replace(/_+/g, '_');
-}
-
-/**
- * Mapeo de IDs de emprendimientos de GVAmax a las páginas de proyectos existentes
- * (app/propiedades/proyectos/<slug>). Completar cuando se conozcan los IDs.
- */
-const DEVELOPMENT_ID_TO_SLUG_MAP: Record<number, string> = {
-    // Ejemplo: 123: 'corrientes_65',
-};
-
 export const getDevelopmentSlug = async (developmentId: number): Promise<string | null> => {
-    if (DEVELOPMENT_ID_TO_SLUG_MAP[developmentId]) {
-        return DEVELOPMENT_ID_TO_SLUG_MAP[developmentId];
-    }
     const development = await getDevelopmentById(developmentId);
-    return development ? generateSlugFromName(development.name) : null;
+    return development ? development.slug : null;
 };

@@ -19,7 +19,35 @@ producción local conectado a la cuenta real de Bunader en GVAmax.
 | `app/api/properties/*` | Ahora son wrappers de `gvamaxApi`. |
 | `app/propiedades/[id]/page.tsx` | Video de YouTube, filas de ambientes, terreno, frente y fondo, e iniciales del asesor (GVAmax no envía foto). |
 | `components/ui/video360-modal.tsx` | Link "Abrir en nueva pestaña" por si un tour no permite mostrarse embebido. |
+| `app/propiedades/proyectos/page.tsx` + `components/projectsPage.tsx` | Listado de desarrollos desde los emprendimientos de GVAmax. |
+| `app/propiedades/proyectos/[slug]/page.tsx` | Página genérica de cada emprendimiento, con la estructura de la antigua página de Corrientes 65. |
+| `components/home/developments-section.tsx` | Sección "Nuestros Desarrollos" de la home desde GVAmax (se oculta si no hay emprendimientos). |
 | `legacy/tokko/` | Toda la integración Tokko, **comentada** (no se compila). Ver su `README.md` para volver atrás. |
+| `legacy/proyectos-hardcodeados/` | Las páginas fijas de Corrientes 65 y Mate de Luna 2197, **comentadas**. |
+
+## Desarrollos (emprendimientos)
+
+Toda la sección de desarrollos es automática desde GVAmax; no hay que tocar código.
+
+- **Listado** (`/propiedades/proyectos`) y **home**: muestran todos los emprendimientos
+  cargados en GVAmax, con foto, estado de obra, precio "desde", tipo y ubicación.
+- **Página de cada emprendimiento** (`/propiedades/proyectos/<nombre>-<id>`, ej.
+  `/propiedades/proyectos/canitas-mall-8`): misma estructura que la antigua página de
+  Corrientes 65 — hero con foto, estado y botones; tarjetas (tipo, estado, precio,
+  ubicación); "Sobre el proyecto"; galería; video y recorrido 360° si existen; mapa;
+  contacto por WhatsApp. Cada sección aparece solo si GVAmax tiene ese dato.
+- Si cambia el nombre en GVAmax, la URL vieja redirige sola a la nueva.
+- Las URLs viejas fijas (`/propiedades/proyectos/corrientes_65`) redirigen al listado.
+- El link `/d/<id>-dev` redirige a la página del emprendimiento.
+
+**GVAmax no envía** cantidad de unidades, fecha de entrega, amenities ni tipologías
+con planos (que sí tenía la página fija de Corrientes 65). Si se cargan en la
+descripción del emprendimiento, se muestran en "Sobre el proyecto".
+
+> **Estado actual:** la cuenta de Bunader tiene **0 emprendimientos** en GVAmax.
+> Hasta que se carguen, el listado muestra "Pronto tendremos nuevos desarrollos"
+> y la home oculta la sección. Corrientes 65 y Mate de Luna 2197 hay que cargarlos
+> en GVAmax para que vuelvan a aparecer.
 
 Variables de entorno (en `.env` y en el hosting):
 
@@ -93,7 +121,53 @@ Sin foto del asesor (GVAmax no la provee), se muestran sus iniciales.
 Las propiedades con `publicada = 0` no se muestran.
 ![No publicada](capturas/11-propiedad-no-publicada.jpg)
 
+### Celular: ficha de propiedad
+![Mobile ficha](capturas/12-mobile-ficha.jpg)
+![Mobile precio y WhatsApp](capturas/13-mobile-ficha-precio-whatsapp.jpg)
+
+## Capturas: desarrollos
+
+### Cuenta de Bunader hoy (0 emprendimientos cargados en GVAmax)
+![Sin emprendimientos](capturas/20-desarrollos-cuenta-bunader-sin-emprendimientos-mobile.jpg)
+
+Las siguientes capturas usan la **cuenta demo de GVAmax** (que sí tiene 4
+emprendimientos de prueba, en Córdoba) para mostrar cómo se ven las páginas con
+datos. Los textos y fotos son los de prueba de GVAmax.
+
+### Listado de desarrollos
+![Listado desarrollos](capturas/21-demo-listado-desarrollos.jpg)
+
+### Home: sección "Nuestros Desarrollos"
+![Home desarrollos](capturas/29-demo-home-seccion-desarrollos.jpg)
+
+### Página del emprendimiento: hero
+Misma estructura que la antigua página de Corrientes 65: volver, anterior/siguiente,
+estado de obra, nombre, descripción corta, dirección y botones.
+![Hero](capturas/22-demo-ficha-desarrollo-hero.jpg)
+
+### Página del emprendimiento: tipo, estado de obra, precio y ubicación
+![Datos](capturas/23-demo-ficha-desarrollo-datos.jpg)
+
+### Página del emprendimiento: sobre el proyecto
+![Descripción](capturas/24-demo-ficha-desarrollo-descripcion.jpg)
+
+### Página del emprendimiento: galería
+![Galería](capturas/25-demo-ficha-desarrollo-galeria.jpg)
+
+### Página del emprendimiento: ubicación
+![Ubicación](capturas/26-demo-ficha-desarrollo-ubicacion.jpg)
+
+### Página del emprendimiento: contacto
+![Contacto](capturas/30-demo-ficha-desarrollo-contacto.jpg)
+
+### Celular: listado y página del emprendimiento
+![Mobile listado](capturas/27-demo-mobile-listado-desarrollos.jpg)
+![Mobile ficha](capturas/28-demo-mobile-ficha-desarrollo.jpg)
+
 ## Pendiente de definir con Bunader
+
+- **Cargar los emprendimientos en GVAmax** (Corrientes 65, Mate de Luna 2197 y los
+  que correspondan). Hasta entonces la sección de desarrollos queda vacía.
 
 - **Propiedades no publicadas:** de 44 disponibles, 26 están marcadas como
   publicadas en GVAmax y son las que se ven en el sitio. Para mostrar otra,

@@ -397,26 +397,77 @@ export function mapInmueble(p: GvaInmueble): Property {
     };
 }
 
+// La documentación lista 1, 2 y 3; la cuenta demo de GVAmax además usa 7 para loteos.
 const DEVELOPMENT_TYPES: Record<string, string> = {
     '1': 'Housing',
     '2': 'Edificio',
     '3': 'Loteo',
+    '7': 'Loteo',
 };
 
+/** "Propio" | "Tercer" (así llega en la API) → texto para el sitio */
+function mapSituation(value: string): string | undefined {
+    if (!value) return undefined;
+    if (/^propi/i.test(value)) return 'Propio';
+    if (/^terc/i.test(value)) return 'Terceros';
+    return value;
+}
+
+function slugify(text: string): string {
+    return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+}
+
+/** URL del emprendimiento: "<nombre>-<id>". El id al final permite encontrarlo aunque cambie el nombre. */
+export function developmentSlug(name: string, id: number): string {
+    const base = slugify(name);
+    return base ? `${base}-${id}` : String(id);
+}
+
+/** "canitas-mall-8" → 8 · "corrientes_65" (URL vieja, sin id) → null */
+export function parseDevelopmentSlug(slug: string): number | null {
+    const match = slug.match(/(?:^|-)(\d+)$/);
+    if (!match) return null;
+    const id = parseInt(match[1], 10);
+    return Number.isInteger(id) && id > 0 ? id : null;
+}
+
+function excerpt(text: string, maxLength = 180): string {
+    const clean = text.replace(/\s+/g, ' ').trim();
+    if (clean.length <= maxLength) return clean;
+    const cut = clean.slice(0, maxLength);
+    return `${cut.slice(0, Math.max(cut.lastIndexOf(' '), maxLength - 30)).replace(/[\s,;.:-]+$/, '')}…`;
+}
+
 export function mapEmprendimiento(e: GvaEmprendimiento): Development {
+    const id = num(e.id);
     const location = mapLocation(e.ubicacion);
     const priceValue = parsePrice(e.precio);
     const currency = parseCurrency(undefined, e.precio);
+    const name = str(e.nombre) || location.address || 'Proyecto Inmobiliario';
+    const rawDescription = fixEncoding(e.descripcion || '');
+    const plainDescription = descriptionToPlainText(rawDescription);
 
     return {
-        id: num(e.id),
-        name: str(e.nombre) || location.address || 'Proyecto Inmobiliario',
+        id,
+        slug: developmentSlug(name, id),
+        name,
         address: location.address,
+        short_location: location.short_location,
         full_location: location.full_location,
         status: str(e.estado) || undefined,
+        situation: mapSituation(str(e.situacion)),
         images: mapImages(e.media, e.imagenPortada),
-        type: DEVELOPMENT_TYPES[String(e.idTipo ?? '')] || 'Desarrollo',
+        type: DEVELOPMENT_TYPES[String(e.idTipo ?? '').trim()],
         price: priceValue > 0 ? formatPrice(priceValue, currency) : undefined,
+        short_description: plainDescription ? excerpt(plainDescription) : undefined,
+        description_only: plainDescription || undefined,
+        rich_description: sanitizeDescriptionHtml(rawDescription) || undefined,
+        videos: mapVideos(e.media, id),
         geo_lat: location.geo_lat,
         geo_long: location.geo_long,
     };

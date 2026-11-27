@@ -90,15 +90,28 @@ export interface Property {
 
 export interface Development {
     id: number;
+    /** "<nombre>-<id>", ej: "canitas-mall-8". Es la URL: /propiedades/proyectos/<slug> */
+    slug: string;
     name: string;
     address?: string;
+    short_location?: string;
     full_location?: string;
+    /** Estado de obra según GVAmax: Ante Proyecto, Proyecto, En pozo, En construcción, Terminado */
     status?: string;
+    /** "Propio" | "Terceros" */
+    situation?: string;
     completion_date?: string;
     units?: number;
     images?: PropertyImage[];
     type?: string;
+    /** Precio formateado ("USD $70.000") o undefined si no hay precio */
     price?: string;
+    /** Primeras ~180 letras de la descripción, para tarjetas y el hero */
+    short_description?: string;
+    description_only?: string;
+    /** HTML saneado (solo etiquetas de formato básicas, sin atributos) */
+    rich_description?: string;
+    videos?: PropertyVideo[];
     geo_lat?: string;
     geo_long?: string;
 }
